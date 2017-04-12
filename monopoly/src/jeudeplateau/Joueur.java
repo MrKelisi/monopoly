@@ -1,11 +1,15 @@
 package jeudeplateau;
 
+import java.util.ArrayList;
+import jeumonopoly.CaseTerrain;
+
 public class Joueur {
 
 	private String nom;
 	private int argent = 1000;
 	private int position = 0;
 	private boolean estBanqueroute = false;
+	private ArrayList <CaseTerrain> terrains = new ArrayList <CaseTerrain>();
 	
 	public Joueur(String nom) {
 		super();
@@ -44,5 +48,23 @@ public class Joueur {
 		this.estBanqueroute = banqueroute;
 	}
 	
+	public void ajouterTerrain(CaseTerrain terrain) {
+		this.terrains.add(terrain);
+	}
+	public String listTerrains() {
+		String s = "<";
+		for(CaseTerrain t:this.terrains) {
+			s+=(t.getNom()+", ");
+		}
+		s+=">";
+		return s;
+	}
+	
+	public void tirerCarteChance() {
+		
+	}
+	public void tirerCarteCommunaute() {
+		
+	}
 	
 }

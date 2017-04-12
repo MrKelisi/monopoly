@@ -48,6 +48,9 @@ public abstract class Plateau {
 		return nbJoueursEnJeu <= 1;
 	}
 	
+	public int getJoueurActifID() {
+		return this.joueurActif;
+	}
 	public Joueur getJoueurActif() {
 		return this.joueurs[this.joueurActif];
 	}
@@ -61,6 +64,15 @@ public abstract class Plateau {
 	
 	public int getNbTours() {
 		return this.nombreDeTours;
+	}
+	
+	public Joueur estVainqueur() {
+		int res = 0;
+		for(int i=0; i<joueurs.length; i++) {
+			if(getJoueur(i).getArgent() > getJoueur(res).getArgent())
+				res = i;
+		}
+		return getJoueur(res);
 	}
 	
 }

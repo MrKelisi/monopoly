@@ -6,8 +6,8 @@ import jeudeplateau.Joueur;
 
 public class PlateauMonopoly extends jeudeplateau.Plateau {
 	
-	private String[] terrains = new String[] { "Rue ", "Avenue ", "Boulevard ", "Place " };
-	private String[] nomTerrains = new String[] { "de Belleville", "Lecourbe",  "Vaugirard", "de Courcelles", "de la République", "de la Vilette", "de Neuilly", "du Paradis", "Mozart", "Saint-Michel", "Pigalle" };
+	//private String[] terrains = new String[] { "Rue ", "Avenue ", "Boulevard ", "Place " };
+	//private String[] nomTerrains = new String[] { "de Belleville", "Lecourbe",  "Vaugirard", "de Courcelles", "de la République", "de la Vilette", "de Neuilly", "du Paradis", "Mozart", "Saint-Michel", "Pigalle" };
 	
 	public PlateauMonopoly(int nombreDeJoueurs) {
 		super(nombreDeJoueurs, 40);
@@ -27,8 +27,21 @@ public class PlateauMonopoly extends jeudeplateau.Plateau {
 				setCase(i, new CaseParcGratuit());
 			else if(i == 29)
 				setCase(i, new CaseAllerPrison());
+			else if(i == 5)
+				setCase(i, new CaseTerrain("Gare Montparnasse", 200));
+			else if(i == 15)
+				setCase(i, new CaseTerrain("Gare de Lyon", 200));
+			else if(i == 25)
+				setCase(i, new CaseTerrain("Gare du Nord", 200));
+			else if(i == 35)
+				setCase(i, new CaseTerrain("Gare Saint-Lazare", 200));
+			else if(i == 7 || i == 21 || i == 36)
+				setCase(i, new CaseChance());
+			else if(i == 2 || i == 17 || i == 33)
+				setCase(i, new CaseCommunaute());
 			else
-				setCase(i, new CaseTerrain(""+terrains[rand.nextInt(terrains.length)]+nomTerrains[rand.nextInt(nomTerrains.length)], 100+rand.nextInt(200)));
+				setCase(i, new CaseTerrain("Terrain"+i, 100+rand.nextInt(20)*10));
+				//setCase(i, new CaseTerrain(""+terrains[rand.nextInt(terrains.length)]+nomTerrains[rand.nextInt(nomTerrains.length)], 100+rand.nextInt(20)*10));
 		}
 	}
 	
