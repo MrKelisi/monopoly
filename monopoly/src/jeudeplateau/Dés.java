@@ -4,19 +4,25 @@ import java.util.Random;
 
 public class Dés {
 	
-	private int des;
+	private int de1;
+	private int de2;
+	private Random rand = new Random();
 	
 	public int getDes() {
-		return this.des;
+		return (this.de1 + this.de2);
+	}
+	
+	public int getDe1(){
+		return this.de1;
+	}
+	public int getDe2(){
+		return this.de2;
 	}
 	
 	public int lancerDes() {
-		Random rand = new Random();
-		int de1 = 1+rand.nextInt(6);
-		int de2 = 1+rand.nextInt(6);
-		
-		this.des = de1+de2;
-		return this.des;
+		this.de1 = 1+this.rand.nextInt(6);
+		this.de2 = 1+this.rand.nextInt(6);
+		return getDes();
 	}
 	
 }
