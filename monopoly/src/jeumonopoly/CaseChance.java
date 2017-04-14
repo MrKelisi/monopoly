@@ -11,7 +11,7 @@ public class CaseChance extends Case {
 
 	@Override
 	public void actionCase(Joueur joueur, PlateauMonopoly plateau) {
-		joueur.tirerCarteChance();
+		
 	}
 
 }

@@ -10,6 +10,7 @@ public abstract class Plateau {
 	private int nombreDeCases = 20;
 	private Case[] cases;
 	private int nombreDeTours;
+	public Dés des = new Dés();
 	
 	public Plateau(int nombreDeJoueurs, int nbCases) {
 		this.nombreDeJoueurs = nombreDeJoueurs;
@@ -45,7 +46,7 @@ public abstract class Plateau {
 		for(Joueur j:joueurs) {
 			if(!j.getEstBanqueroute()) nbJoueursEnJeu++;
 		}
-		return nbJoueursEnJeu <= 1;
+		return (nbJoueursEnJeu <= 1 && getJoueurActifID() == 0);
 	}
 	
 	public int getJoueurActifID() {

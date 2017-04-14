@@ -21,11 +21,11 @@ public class PlateauMonopoly extends jeudeplateau.Plateau {
 		for(int i = 0; i < this.getNbCases(); i++) {
 			if(i == 0)
 				setCase(i, new CaseDepart());
-			else if(i == 9)
+			else if(i == 10)
 				setCase(i, new CasePrison());
-			else if(i == 19)
+			else if(i == 20)
 				setCase(i, new CaseParcGratuit());
-			else if(i == 29)
+			else if(i == 30)
 				setCase(i, new CaseAllerPrison());
 			else if(i == 5)
 				setCase(i, new CaseTerrain("Gare Montparnasse", 200));
@@ -35,7 +35,7 @@ public class PlateauMonopoly extends jeudeplateau.Plateau {
 				setCase(i, new CaseTerrain("Gare du Nord", 200));
 			else if(i == 35)
 				setCase(i, new CaseTerrain("Gare Saint-Lazare", 200));
-			else if(i == 7 || i == 21 || i == 36)
+			else if(i == 7 || i == 22 || i == 36)
 				setCase(i, new CaseChance());
 			else if(i == 2 || i == 17 || i == 33)
 				setCase(i, new CaseCommunaute());
@@ -46,9 +46,18 @@ public class PlateauMonopoly extends jeudeplateau.Plateau {
 	}
 	
 	public void deplacerJoueur(Joueur joueur, int nombreDeCases) {
-		int pos = (joueur.getPosition() + nombreDeCases) % getNbCases();
-		if(!joueur.getEstBanqueroute())
+		int pos;
+		
+		if((joueur.getPosition() + nombreDeCases) >= getNbCases()) {
+			pos = (joueur.getPosition() + nombreDeCases) % getNbCases();
+			joueur.ajouterArgent(200);
+		}
+		else
+			pos = joueur.getPosition() + nombreDeCases;
+		
+		if(!joueur.getEstBanqueroute()) {
 			joueur.setPosition(pos);
+		}
 	}
 
 	@Override

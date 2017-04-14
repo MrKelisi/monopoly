@@ -10,8 +10,9 @@ public class CaseAllerPrison extends Case {
 	}
 	
 	public void actionCase(Joueur joueur, PlateauMonopoly plateau) {
-		plateau.deplacerJoueur(joueur, 19);
-		joueur.retirerArgent(500);
+		joueur.setEstPrison(true);
+		joueur.setPosition(10);
+		System.out.println("" + joueur.getNom() + " est envoyé en prison!");
 	}
 
 	@Override

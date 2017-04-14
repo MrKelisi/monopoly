@@ -1,12 +1,10 @@
 package jeumonopoly;
 
 import jeudeplateau.Case;
-import jeudeplateau.Dés;
 import jeudeplateau.Joueur;
 
 public class Partie {
 
-	private Dés des = new Dés();
 	private PlateauMonopoly plateauM;
 	
 	public Partie(int nombreDeJoueurs) {
@@ -31,13 +29,18 @@ public class Partie {
 			
 			if(!joueur.getEstBanqueroute()) {		
 				
-				lancé = des.lancerDes();
-				System.out.println("" + joueur.getNom() + " lance les dés et obtient un " + lancé);
+				lancé = plateauM.des.lancerDes();
 				
-				plateauM.deplacerJoueur(joueur, lancé);
+				if(!joueur.getEstPrison()) {
+					System.out.println("" + joueur.getNom() + " lance les dés... [" + plateauM.des.getDe1() + "][" + plateauM.des.getDe2() + "] ...et obtient un " + lancé + " !");
+					plateauM.deplacerJoueur(joueur, lancé);
+				}
+				else
+					System.out.println("Le joueur est en prison.");
 				
 				caze = plateauM.getCase(joueur.getPosition());
-				System.out.println("" + joueur.getNom() + " avance de " + lancé + " cases et atterit sur la case " + joueur.getPosition() + " : " + caze.getNom());
+				if(!joueur.getEstPrison())
+					System.out.println("" + joueur.getNom() + " avance de " + lancé + " cases et atterit sur la case " + joueur.getPosition() + " : " + caze.getNom());
 				
 				caze.actionCase(joueur, plateauM);
 				System.out.println("" + joueur.getNom() + " possède à la fin de son tour " + joueur.getArgent() + "€ et les terrains suivants :\n\t" + joueur.listTerrains());
@@ -53,7 +56,7 @@ public class Partie {
 
 	@Override
 	public String toString() {
-		return "Partie [des=" + des.getDes() + ", plateauM=" + plateauM.toString() + "]";
+		return "Partie [plateauM=" + plateauM.toString() + "]";
 	}
 	
 }

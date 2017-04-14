@@ -6,9 +6,11 @@ import jeumonopoly.CaseTerrain;
 public class Joueur {
 
 	private String nom;
-	private int argent = 1000;
+	private int argent = 1400;
 	private int position = 0;
 	private boolean estBanqueroute = false;
+	private boolean estPrison = false;
+	private int toursEnPrison = 1;
 	private ArrayList <CaseTerrain> terrains = new ArrayList <CaseTerrain>();
 	
 	public Joueur(String nom) {
@@ -19,6 +21,14 @@ public class Joueur {
 	public String getNom() {
 		return this.nom;
 	}
+
+	public int getToursEnPrison() {
+		return toursEnPrison;
+	}
+	public void setToursEnPrison(int toursEnPrison) {
+		this.toursEnPrison = toursEnPrison;
+	}
+	
 	public int getPosition() {
 		return this.position;
 	}
@@ -48,6 +58,13 @@ public class Joueur {
 		this.estBanqueroute = banqueroute;
 	}
 	
+	public boolean getEstPrison(){
+		return this.estPrison;
+	}
+	public void setEstPrison(boolean prison){
+		this.estPrison = prison;
+	}
+	
 	public void ajouterTerrain(CaseTerrain terrain) {
 		this.terrains.add(terrain);
 	}
@@ -58,13 +75,6 @@ public class Joueur {
 		}
 		s+=">";
 		return s;
-	}
-	
-	public void tirerCarteChance() {
-		
-	}
-	public void tirerCarteCommunaute() {
-		
 	}
 	
 }

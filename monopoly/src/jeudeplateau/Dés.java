@@ -24,5 +24,5 @@ public class Dés {
 		this.de2 = 1+this.rand.nextInt(6);
 		return getDes();
 	}
-	
+
 }

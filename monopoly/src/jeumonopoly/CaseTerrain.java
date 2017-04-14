@@ -20,12 +20,17 @@ public class CaseTerrain extends Case {
 		else if(this.getProprietaire().getNom() != joueur.getNom()) {
 			int loyer = 35;
 			String payerA = "la Banque";
-			joueur.retirerArgent(loyer);
-			if(!this.getProprietaire().getEstBanqueroute()) {
-				this.getProprietaire().ajouterArgent(loyer);
-				payerA = this.getProprietaire().getNom();
+			
+			if(!this.getProprietaire().getEstPrison()) {
+				joueur.retirerArgent(loyer);
+				if(!this.getProprietaire().getEstBanqueroute()) {
+					this.getProprietaire().ajouterArgent(loyer);
+					payerA = this.getProprietaire().getNom();
+				}
+				System.out.println("  > " + joueur.getNom() + " paye un loyer de " + loyer + "€ à " + payerA);
 			}
-			System.out.println("  > " + joueur.getNom() + " paye un loyer de " + loyer + "€ à " + payerA);
+			else
+				System.out.println("  > Le propriétaire est en prison. " + joueur.getNom() + " ne paye pas de loyer.");
 		}
 		else
 			System.out.println("  > " + joueur.getNom() + " est sur son propre terrain");
