@@ -5,7 +5,7 @@ import jeumonopoly.PlateauMonopoly;
 
 public abstract class Case {
 
-	String nom;
+	private String nom;
 	private int prix = 0;
 	private Joueur proprietaire;
 	

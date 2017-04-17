@@ -20,7 +20,6 @@ public class FenetrePrincipale {
 	private FenetreCarteChance fch = new FenetreCarteChance(this);
 	private FenetreCarteCommunaute fco = new FenetreCarteCommunaute(this);
 	private Partie partie;
-	private boolean enPause = false;
 
 	public FenetrePrincipale(Stage primaryStage) {
 		//Constructeur de la classe FenetrePrincipale
@@ -57,8 +56,8 @@ public class FenetrePrincipale {
 	public Partie getPartie() {
 		return partie;
 	}
-	public void setPartie(int choix) {
-		partie = new Partie(choix, this);
+	public void setPartie(int nbJoueurs) {
+		partie = new Partie(nbJoueurs, this);
 	}
 	
 	
@@ -74,20 +73,6 @@ public class FenetrePrincipale {
 			fco.afficherCarte();
 		}
 	}
-	
-	public void mettreEnPause() {
-		this.enPause = true;
-		while(enPause) {
-			try {
-	            Thread.sleep(500);
-	        }
-	        catch (InterruptedException e) {}
-		}
-	}
-	public void retirerPause() {
-		this.enPause = false;
-	}
-	
 	
 	private class EvtQuitter implements EventHandler<WindowEvent> {
 

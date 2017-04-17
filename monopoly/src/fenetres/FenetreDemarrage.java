@@ -74,6 +74,7 @@ public class FenetreDemarrage {
 			stage.close();
 		}
 	}
+	
 	private class EvtQuitter implements EventHandler<WindowEvent> {
 
 		@Override

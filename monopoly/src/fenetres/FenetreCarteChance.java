@@ -32,7 +32,7 @@ public class FenetreCarteChance {
 		this.stage = new Stage();
 		this.stage.setTitle("Carte Chance");
 		this.stage.initOwner(fp.getStage());
-		this.stage.initModality(Modality.APPLICATION_MODAL);
+		this.stage.initModality(Modality.WINDOW_MODAL);
 		
 		root = new HBox();
 		initRoot();
@@ -87,15 +87,12 @@ public class FenetreCarteChance {
 		Scene scene = new Scene(root,440,200);
 		stage.setScene(scene);
 		stage.show();
-
-		//fp.mettreEnPause();
 	}
 	
 	private class EvtValider implements EventHandler<ActionEvent> {
 
 		@Override
 		public void handle(ActionEvent event) {
-			fp.retirerPause();
 			stage.close();
 		}
 	}
@@ -103,7 +100,6 @@ public class FenetreCarteChance {
 
 		@Override
 		public void handle(WindowEvent event) {
-			fp.retirerPause();
 			stage.close();
 		}
 	}

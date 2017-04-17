@@ -19,10 +19,10 @@ public class CaseServicePublic extends Case {
 			this.setProprietaire(joueur);
 			joueur.retirerArgent(this.getPrix());
 			joueur.ajouterTerrain(this);
-			joueur.setNbGares(joueur.getNbGares() + 1);
+			joueur.setNbServices(joueur.getNbServices() + 1);
 			System.out.println(" > " + joueur.getNom() + " achète la " + this.getNom() + " pour " + this.getPrix() + "€");
 		}
-		else if(this.getProprietaire().getNom() != joueur.getNom()) {
+		else if(this.getProprietaire() != joueur) {
 			String beneficiaire = "la Banque";
 			
 			if(!this.getProprietaire().getEstPrison()) {

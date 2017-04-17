@@ -20,7 +20,7 @@ public class CaseGare extends Case {
 			joueur.setNbGares(joueur.getNbGares() + 1);
 			System.out.println(" > " + joueur.getNom() + " achète " + this.getNom() + " pour " + this.getPrix() + "€");
 		}
-		else if(this.getProprietaire().getNom() != joueur.getNom()) {
+		else if(this.getProprietaire() != joueur) {
 			int loyer = 50 * this.getProprietaire().getNbGares();
 			String beneficiaire = "la Banque";
 			

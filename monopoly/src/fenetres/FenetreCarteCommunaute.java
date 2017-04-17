@@ -93,7 +93,6 @@ public class FenetreCarteCommunaute {
 
 		@Override
 		public void handle(ActionEvent event) {
-			fp.retirerPause();
 			stage.close();
 		}
 	}
@@ -101,7 +100,6 @@ public class FenetreCarteCommunaute {
 
 		@Override
 		public void handle(WindowEvent event) {
-			fp.retirerPause();
 			stage.close();
 		}
 	}

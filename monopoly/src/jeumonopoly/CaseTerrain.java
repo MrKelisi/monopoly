@@ -25,7 +25,7 @@ public class CaseTerrain extends Case {
 			else
 				System.out.println(" > " + joueur.getNom() + " décide de ne pas acheter ce terrain.");
 		}
-		else if(this.getProprietaire().getNom() != joueur.getNom()) {
+		else if(this.getProprietaire() != joueur) {
 			double loyer_d = this.getPrix() * 0.4 / 10;
 			Math.ceil(loyer_d);
 			int loyer = (int) loyer_d * 10;
