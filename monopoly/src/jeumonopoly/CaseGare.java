@@ -1,34 +1,27 @@
 package jeumonopoly;
 
-import java.util.Random;
-
 import fenetres.FenetrePrincipale;
 import jeudeplateau.Case;
 import jeudeplateau.Joueur;
 
-public class CaseTerrain extends Case {
-	
-	public CaseTerrain(String nom, int montant) {
+public class CaseGare extends Case {
+
+	public CaseGare(String nom) {
 		super(nom);
-		this.setPrix(montant);
+		this.setPrix(200);
 	}
-	
+
+	@Override
 	public void actionCase(Joueur joueur, PlateauMonopoly plateau, FenetrePrincipale fp) {
 		if(this.getProprietaire() == null) {
-			Random rand = new Random();
-			if(rand.nextBoolean()) {
-				this.setProprietaire(joueur);
-				joueur.retirerArgent(this.getPrix());
-				joueur.ajouterTerrain(this);
-				System.out.println(" > " + joueur.getNom() + " achète " + this.getNom() + " pour " + this.getPrix() + "€");
-			}
-			else
-				System.out.println(" > " + joueur.getNom() + " décide de ne pas acheter ce terrain.");
+			this.setProprietaire(joueur);
+			joueur.retirerArgent(this.getPrix());
+			joueur.ajouterTerrain(this);
+			joueur.setNbGares(joueur.getNbGares() + 1);
+			System.out.println(" > " + joueur.getNom() + " achète " + this.getNom() + " pour " + this.getPrix() + "€");
 		}
 		else if(this.getProprietaire().getNom() != joueur.getNom()) {
-			double loyer_d = this.getPrix() * 0.4 / 10;
-			Math.ceil(loyer_d);
-			int loyer = (int) loyer_d * 10;
+			int loyer = 50 * this.getProprietaire().getNbGares();
 			String beneficiaire = "la Banque";
 			
 			if(!this.getProprietaire().getEstPrison()) {
@@ -43,12 +36,7 @@ public class CaseTerrain extends Case {
 				System.out.println(" > Le propriétaire est en prison. " + joueur.getNom() + " ne paye pas de loyer.");
 		}
 		else
-			System.out.println(" > " + joueur.getNom() + " est sur son propre terrain");
+			System.out.println(" > " + joueur.getNom() + " est dans sa propre gare.");
 	}
-	
-	@Override
-	public String toString() {
-		return "est sur la case " + this.getNom();
-	}
-	
+
 }

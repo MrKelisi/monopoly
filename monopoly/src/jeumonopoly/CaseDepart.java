@@ -1,5 +1,6 @@
 package jeumonopoly;
 
+import fenetres.FenetrePrincipale;
 import jeudeplateau.Case;
 import jeudeplateau.Joueur;
 
@@ -9,9 +10,9 @@ public class CaseDepart extends Case {
 		super("Depart");
 	}
 	
-	public void actionCase(Joueur joueur, PlateauMonopoly plateau) {
+	public void actionCase(Joueur joueur, PlateauMonopoly plateau, FenetrePrincipale fp) {
 		joueur.ajouterArgent(200);
-		System.out.println("Le joueur s'arrête sur la case départ: il reçoit 400€ !");
+		System.out.println(" > " + joueur.getNom() + " s'arrête sur la case départ: il reçoit 200€ supplémentaire !");
 	}
 
 	@Override

@@ -39,7 +39,7 @@ public class FenetreDemarrage {
 		Scene scene = new Scene(root,300,160);
 		stage.setScene(scene);
 		
-		stage.setOnHiding(new EvtQuitter());
+		//stage.setOnHiding(new EvtQuitter());
 	}
 	
 	private void initRoot() {
@@ -78,8 +78,7 @@ public class FenetreDemarrage {
 
 		@Override
 		public void handle(WindowEvent event) {
-			fp.setPartie(choix);
-			fp.getPartie().demarrerLaPartie();
+			System.exit(0);
 		}
 	}
 }

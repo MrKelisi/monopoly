@@ -1,20 +1,20 @@
 package jeudeplateau;
 
 import java.util.ArrayList;
-import jeumonopoly.CaseTerrain;
 
 public class Joueur {
 
 	private String nom;
-	private int argent = 1400;
+	private int argent = 1000;
 	private int position = 0;
 	private boolean estBanqueroute = false;
 	private boolean estPrison = false;
 	private int toursEnPrison = 1;
-	private ArrayList <CaseTerrain> terrains = new ArrayList <CaseTerrain>();
+	private int nombreGaresPossedees = 0;
+	private int nombreServicesPossedes = 0;
+	private ArrayList <Case> terrains = new ArrayList <Case>();
 	
 	public Joueur(String nom) {
-		super();
 		this.nom = nom;
 	}
 	
@@ -36,6 +36,20 @@ public class Joueur {
 		this.position = pos;
 	}
 	
+	public int getNbGares() {
+		return this.nombreGaresPossedees;
+	}
+	public void setNbGares(int nb) {
+		this.nombreGaresPossedees = nb;
+	}
+	
+	public int getNbServices() {
+		return this.nombreServicesPossedes;
+	}
+	public void setNbServices(int nb) {
+		this.nombreServicesPossedes = nb;
+	}
+	
 	public int getArgent() {
 		return this.argent;
 	}
@@ -43,9 +57,8 @@ public class Joueur {
 		this.argent+=montant;
 	}
 	public void retirerArgent(int montant) {
-		if(this.argent-montant > 0)
-			this.argent-=montant;
-		else {
+		this.argent = this.argent - montant;
+		if(this.argent <= 0) {
 			this.argent = 0;
 			this.setEstBanqueroute(true);
 		}
@@ -65,12 +78,12 @@ public class Joueur {
 		this.estPrison = prison;
 	}
 	
-	public void ajouterTerrain(CaseTerrain terrain) {
+	public void ajouterTerrain(Case terrain) {
 		this.terrains.add(terrain);
 	}
 	public String listTerrains() {
 		String s = "<";
-		for(CaseTerrain t:this.terrains) {
+		for(Case t:this.terrains) {
 			s+=(t.getNom()+", ");
 		}
 		s+=">";

@@ -1,14 +1,17 @@
 package jeumonopoly;
 
+import fenetres.FenetrePrincipale;
 import jeudeplateau.Case;
 import jeudeplateau.Joueur;
 
 public class Partie {
 
 	private PlateauMonopoly plateauM;
+	private FenetrePrincipale fp;
 	
-	public Partie(int nombreDeJoueurs) {
-		plateauM = new PlateauMonopoly(nombreDeJoueurs);
+	public Partie(int nombreDeJoueurs, FenetrePrincipale fp) {
+		this.plateauM = new PlateauMonopoly(nombreDeJoueurs);
+		this.fp = fp;
 	}
 	
 	public void demarrerLaPartie() {
@@ -32,17 +35,18 @@ public class Partie {
 				lancé = plateauM.des.lancerDes();
 				
 				if(!joueur.getEstPrison()) {
-					System.out.println("" + joueur.getNom() + " lance les dés... [" + plateauM.des.getDe1() + "][" + plateauM.des.getDe2() + "] ...et obtient un " + lancé + " !");
+					System.out.println("" + joueur.getNom() + " lance les dés... [" + plateauM.des.getDe1() + "][" + plateauM.des.getDe2() + "]... et obtient un " + lancé + " !");
 					plateauM.deplacerJoueur(joueur, lancé);
-				}
-				else
-					System.out.println("Le joueur est en prison.");
-				
-				caze = plateauM.getCase(joueur.getPosition());
-				if(!joueur.getEstPrison())
+					
+					caze = plateauM.getCase(joueur.getPosition());
 					System.out.println("" + joueur.getNom() + " avance de " + lancé + " cases et atterit sur la case " + joueur.getPosition() + " : " + caze.getNom());
+				}
+				else {
+					System.out.println("Le joueur est en prison.");
+					caze = plateauM.getCase(joueur.getPosition());
+				}
 				
-				caze.actionCase(joueur, plateauM);
+				caze.actionCase(joueur, plateauM, fp);
 				System.out.println("" + joueur.getNom() + " possède à la fin de son tour " + joueur.getArgent() + "€ et les terrains suivants :\n\t" + joueur.listTerrains());
 			}
 			else
