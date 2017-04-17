@@ -1,34 +1,85 @@
 package fenetres;
 
+import java.util.Random;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
+import jeumonopoly.Partie;
 
 public class FenetrePrincipale {
 	
+	private static final boolean MODE_CONSOLE = true;
 	private Stage stage;
-	private VBox window;
 	private VBox root;
+	public Random rand = new Random();
+	private FenetreDemarrage fd = new FenetreDemarrage(this);
+	private FenetreCarteChance fch = new FenetreCarteChance(this);
+	private FenetreCarteCommunaute fco = new FenetreCarteCommunaute(this);
+	private Partie partie;
 
-	public FenetrePrincipale(Stage stage) {
+	public FenetrePrincipale(Stage primaryStage) {
 		//Constructeur de la classe FenetrePrincipale
 		
-		this.stage = stage;
+		this.stage = primaryStage;
 		
-		window = new VBox();
-		initWindow();
-
-		Scene scene = new Scene(window,600,600);
-		//scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+		root = new VBox();
+		initRoot();
+		
+		Scene scene = new Scene(root,650,650);
+		stage.setScene(scene);
 		stage.setTitle("Monopoly");
 		
-		stage.setScene(scene);
-		stage.show();
+		if(!MODE_CONSOLE)
+			stage.show();
+		
+		fd.getStage().show();		
 	}
 	
-	private void initWindow() {
+	private void initRoot() {
+		root.setSpacing(15);
+		root.setStyle("-fx-background-color: #CDE6D0");
 		
-		window.setSpacing(15);
+		Image i_plateau = new Image("images/plateau.jpg");
+		ImageView iv_plateau = new ImageView(i_plateau);
+		
+		root.getChildren().add(iv_plateau);
+	}
+	
+	public Stage getStage() {
+		return stage;
+	}
+	
+	public Partie getPartie() {
+		return partie;
+	}
+	public void setPartie(int nbJoueurs) {
+		partie = new Partie(nbJoueurs, this);
+	}
+	
+	
+	public void tirerCarte(boolean carteChance, String titre, String description) {
+		if(carteChance) {
+			fch.setTitre(titre);
+			fch.setDescription(description);
+			fch.afficherCarte();
+		}
+		else {
+			fco.setTitre(titre);
+			fco.setDescription(description);
+			fco.afficherCarte();
+		}
+	}
+	
+	private class EvtQuitter implements EventHandler<WindowEvent> {
+
+		@Override
+		public void handle(WindowEvent event) {
+			stage.close();
+		}
 	}
 	
 }

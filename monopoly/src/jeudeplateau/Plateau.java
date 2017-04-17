@@ -10,6 +10,7 @@ public abstract class Plateau {
 	private int nombreDeCases = 20;
 	private Case[] cases;
 	private int nombreDeTours;
+	public Dés des = new Dés();
 	
 	public Plateau(int nombreDeJoueurs, int nbCases) {
 		this.nombreDeJoueurs = nombreDeJoueurs;
@@ -30,6 +31,7 @@ public abstract class Plateau {
 		return this.nombreDeCases;
 	}
 	
+	
 	public Joueur getJoueur(int i) {
 		return this.joueurs[i];
 	}
@@ -40,13 +42,6 @@ public abstract class Plateau {
 		return this.nombreDeJoueurs;
 	}
 	
-	public boolean finPartie() {
-		int nbJoueursEnJeu = 0;
-		for(Joueur j:joueurs) {
-			if(!j.getEstBanqueroute()) nbJoueursEnJeu++;
-		}
-		return nbJoueursEnJeu <= 1;
-	}
 	
 	public int getJoueurActifID() {
 		return this.joueurActif;
@@ -62,8 +57,17 @@ public abstract class Plateau {
 		}
 	}
 	
+	
 	public int getNbTours() {
 		return this.nombreDeTours;
+	}
+	
+	public boolean finPartie() {
+		int nbJoueursEnJeu = 0;
+		for(Joueur j:joueurs) {
+			if(!j.getEstBanqueroute()) nbJoueursEnJeu++;
+		}
+		return (nbJoueursEnJeu <= 1 && getJoueurActifID() == 0);
 	}
 	
 	public Joueur estVainqueur() {

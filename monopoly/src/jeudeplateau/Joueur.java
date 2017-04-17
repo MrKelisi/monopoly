@@ -1,7 +1,6 @@
 package jeudeplateau;
 
 import java.util.ArrayList;
-import jeumonopoly.CaseTerrain;
 
 public class Joueur {
 
@@ -9,21 +8,46 @@ public class Joueur {
 	private int argent = 1000;
 	private int position = 0;
 	private boolean estBanqueroute = false;
-	private ArrayList <CaseTerrain> terrains = new ArrayList <CaseTerrain>();
+	private boolean estPrison = false;
+	private int toursEnPrison = 1;
+	private int nombreGaresPossedees = 0;
+	private int nombreServicesPossedes = 0;
+	private ArrayList <Case> terrains = new ArrayList <Case>();
 	
 	public Joueur(String nom) {
-		super();
 		this.nom = nom;
 	}
 	
 	public String getNom() {
 		return this.nom;
 	}
+
+	public int getToursEnPrison() {
+		return toursEnPrison;
+	}
+	public void setToursEnPrison(int toursEnPrison) {
+		this.toursEnPrison = toursEnPrison;
+	}
+	
 	public int getPosition() {
 		return this.position;
 	}
 	public void setPosition(int pos) {
 		this.position = pos;
+	}
+	
+	public int getNbGares() {
+		return this.nombreGaresPossedees;
+	}
+	public void setNbGares(int nb) {
+		this.nombreGaresPossedees = nb;
+	}
+	
+	public int getNbServices() {
+		return this.nombreServicesPossedes;
+	}
+	public void setNbServices(int nb) {
+		this.nombreServicesPossedes = nb;
 	}
 	
 	public int getArgent() {
@@ -33,9 +57,8 @@ public class Joueur {
 		this.argent+=montant;
 	}
 	public void retirerArgent(int montant) {
-		if(this.argent-montant > 0)
-			this.argent-=montant;
-		else {
+		this.argent = this.argent - montant;
+		if(this.argent <= 0) {
 			this.argent = 0;
 			this.setEstBanqueroute(true);
 		}
@@ -48,23 +71,23 @@ public class Joueur {
 		this.estBanqueroute = banqueroute;
 	}
 	
-	public void ajouterTerrain(CaseTerrain terrain) {
+	public boolean getEstPrison(){
+		return this.estPrison;
+	}
+	public void setEstPrison(boolean prison){
+		this.estPrison = prison;
+	}
+	
+	public void ajouterTerrain(Case terrain) {
 		this.terrains.add(terrain);
 	}
 	public String listTerrains() {
 		String s = "<";
-		for(CaseTerrain t:this.terrains) {
+		for(Case t:this.terrains) {
 			s+=(t.getNom()+", ");
 		}
 		s+=">";
 		return s;
-	}
-	
-	public void tirerCarteChance() {
-		
-	}
-	public void tirerCarteCommunaute() {
-		
 	}
 	
 }

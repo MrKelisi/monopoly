@@ -21,21 +21,29 @@ public class PlateauMonopoly extends jeudeplateau.Plateau {
 		for(int i = 0; i < this.getNbCases(); i++) {
 			if(i == 0)
 				setCase(i, new CaseDepart());
-			else if(i == 9)
+			else if(i == 10)
 				setCase(i, new CasePrison());
-			else if(i == 19)
+			else if(i == 20)
 				setCase(i, new CaseParcGratuit());
-			else if(i == 29)
+			else if(i == 30)
 				setCase(i, new CaseAllerPrison());
 			else if(i == 5)
-				setCase(i, new CaseTerrain("Gare Montparnasse", 200));
+				setCase(i, new CaseGare("Gare Montparnasse"));
 			else if(i == 15)
-				setCase(i, new CaseTerrain("Gare de Lyon", 200));
+				setCase(i, new CaseGare("Gare de Lyon"));
 			else if(i == 25)
-				setCase(i, new CaseTerrain("Gare du Nord", 200));
+				setCase(i, new CaseGare("Gare du Nord"));
 			else if(i == 35)
-				setCase(i, new CaseTerrain("Gare Saint-Lazare", 200));
-			else if(i == 7 || i == 21 || i == 36)
+				setCase(i, new CaseGare("Gare Saint-Lazare"));
+			else if(i == 4)
+				setCase(i, new CaseImpots("Impots sur le revenu", 200));
+			else if(i == 38)
+				setCase(i, new CaseImpots("Taxe de Luxe", 100));
+			else if(i == 12)
+				setCase(i, new CaseServicePublic("Compagnie d'éléctricité"));
+			else if(i == 28)
+				setCase(i, new CaseServicePublic("Compagnie d'eau"));
+			else if(i == 7 || i == 22 || i == 36)
 				setCase(i, new CaseChance());
 			else if(i == 2 || i == 17 || i == 33)
 				setCase(i, new CaseCommunaute());
@@ -46,9 +54,19 @@ public class PlateauMonopoly extends jeudeplateau.Plateau {
 	}
 	
 	public void deplacerJoueur(Joueur joueur, int nombreDeCases) {
-		int pos = (joueur.getPosition() + nombreDeCases) % getNbCases();
-		if(!joueur.getEstBanqueroute())
+		int pos;
+		
+		if((joueur.getPosition() + nombreDeCases) >= getNbCases()) {
+			pos = (joueur.getPosition() + nombreDeCases) % getNbCases();
+			System.out.println(" > " + joueur.getNom() + " passe par la case départ et gagné 200€ !");
+			joueur.ajouterArgent(200);
+		}
+		else
+			pos = joueur.getPosition() + nombreDeCases;
+		
+		if(!joueur.getEstBanqueroute()) {
 			joueur.setPosition(pos);
+		}
 	}
 
 	@Override

@@ -1,37 +1,37 @@
 package jeumonopoly;
 
-import java.util.Random;
-
 import fenetres.FenetrePrincipale;
 import jeudeplateau.Case;
 import jeudeplateau.Joueur;
 
-public class CaseTerrain extends Case {
-	
-	public CaseTerrain(String nom, int montant) {
+public class CaseServicePublic extends Case {
+
+	public CaseServicePublic(String nom) {
+		// TODO Auto-generated constructor stub
 		super(nom);
-		this.setPrix(montant);
+		this.setPrix(150);
 	}
-	
+
+	@Override
 	public void actionCase(Joueur joueur, PlateauMonopoly plateau, FenetrePrincipale fp) {
+		
 		if(this.getProprietaire() == null) {
-			Random rand = new Random();
-			if(rand.nextBoolean()) {
-				this.setProprietaire(joueur);
-				joueur.retirerArgent(this.getPrix());
-				joueur.ajouterTerrain(this);
-				System.out.println(" > " + joueur.getNom() + " achète " + this.getNom() + " pour " + this.getPrix() + "€");
-			}
-			else
-				System.out.println(" > " + joueur.getNom() + " décide de ne pas acheter ce terrain.");
+			this.setProprietaire(joueur);
+			joueur.retirerArgent(this.getPrix());
+			joueur.ajouterTerrain(this);
+			joueur.setNbServices(joueur.getNbServices() + 1);
+			System.out.println(" > " + joueur.getNom() + " achète la " + this.getNom() + " pour " + this.getPrix() + "€");
 		}
 		else if(this.getProprietaire() != joueur) {
-			double loyer_d = this.getPrix() * 0.4 / 10;
-			Math.ceil(loyer_d);
-			int loyer = (int) loyer_d * 10;
 			String beneficiaire = "la Banque";
 			
 			if(!this.getProprietaire().getEstPrison()) {
+				
+				int loyer = plateau.des.lancerDes();
+				if(this.getProprietaire().getNbServices() == 2) loyer*=10;
+				else loyer*=4;
+				System.out.println(" > " + joueur.getNom() + " lance les dés... [" + plateau.des.getDe1() + "][" + plateau.des.getDe2() + "]... et obtient un " + plateau.des.getDes());
+				
 				joueur.retirerArgent(loyer);
 				if(!this.getProprietaire().getEstBanqueroute()) {
 					this.getProprietaire().ajouterArgent(loyer);
@@ -43,12 +43,7 @@ public class CaseTerrain extends Case {
 				System.out.println(" > Le propriétaire est en prison. " + joueur.getNom() + " ne paye pas de loyer.");
 		}
 		else
-			System.out.println(" > " + joueur.getNom() + " est sur son propre terrain");
+			System.out.println(" > " + joueur.getNom() + " possède la compagnie.");
 	}
-	
-	@Override
-	public String toString() {
-		return "est sur la case " + this.getNom();
-	}
-	
+
 }

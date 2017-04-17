@@ -1,10 +1,11 @@
 package jeudeplateau;
 
+import fenetres.FenetrePrincipale;
 import jeumonopoly.PlateauMonopoly;
 
 public abstract class Case {
 
-	String nom;
+	private String nom;
 	private int prix = 0;
 	private Joueur proprietaire;
 	
@@ -30,9 +31,6 @@ public abstract class Case {
 		this.proprietaire = proprietaire;
 	}
 
-	public abstract void actionCase(Joueur joueur, PlateauMonopoly plateau);
-	
-	
-	
+	public abstract void actionCase(Joueur joueur, PlateauMonopoly plateau, FenetrePrincipale fp);
 	
 }
