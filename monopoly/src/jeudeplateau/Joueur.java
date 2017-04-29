@@ -1,12 +1,14 @@
 package jeudeplateau;
 
 import java.util.ArrayList;
+import javafx.scene.shape.Circle;
 
 public class Joueur {
 
 	private String nom;
 	private int argent = 1000;
 	private int position = 0;
+	private Circle pion = new Circle(7);
 	private boolean estBanqueroute = false;
 	private boolean estPrison = false;
 	private int toursEnPrison = 1;
@@ -34,6 +36,10 @@ public class Joueur {
 	}
 	public void setPosition(int pos) {
 		this.position = pos;
+	}
+	
+	public Circle getPion() {
+		return this.pion;
 	}
 	
 	public int getNbGares() {
@@ -82,11 +88,10 @@ public class Joueur {
 		this.terrains.add(terrain);
 	}
 	public String listTerrains() {
-		String s = "<";
+		String s = "";
 		for(Case t:this.terrains) {
-			s+=(t.getNom()+", ");
+			s+=(t.getNom()+"\n");
 		}
-		s+=">";
 		return s;
 	}
 	

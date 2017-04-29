@@ -15,6 +15,7 @@ public class CaseGare extends Case {
 	public void actionCase(Joueur joueur, PlateauMonopoly plateau, FenetrePrincipale fp) {
 		if(this.getProprietaire() == null) {
 			this.setProprietaire(joueur);
+			fp.setMarqueurProprietaire(joueur);
 			joueur.retirerArgent(this.getPrix());
 			joueur.ajouterTerrain(this);
 			joueur.setNbGares(joueur.getNbGares() + 1);
