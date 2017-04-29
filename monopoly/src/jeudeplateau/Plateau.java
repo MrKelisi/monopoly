@@ -67,7 +67,7 @@ public abstract class Plateau {
 		for(Joueur j:joueurs) {
 			if(!j.getEstBanqueroute()) nbJoueursEnJeu++;
 		}
-		return (nbJoueursEnJeu <= 1 && getJoueurActifID() == 0);
+		return (nbJoueursEnJeu <= 1);
 	}
 	
 	public Joueur estVainqueur() {

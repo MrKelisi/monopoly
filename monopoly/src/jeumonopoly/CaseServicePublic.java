@@ -17,6 +17,7 @@ public class CaseServicePublic extends Case {
 		
 		if(this.getProprietaire() == null) {
 			this.setProprietaire(joueur);
+			fp.setMarqueurProprietaire(joueur);
 			joueur.retirerArgent(this.getPrix());
 			joueur.ajouterTerrain(this);
 			joueur.setNbServices(joueur.getNbServices() + 1);

@@ -25,6 +25,7 @@ public class CasePrison extends Case {
 				System.out.println("  OUI\n" + joueur.getNom() + " décide de payer 50€ pour sortir de prison.");
 				joueur.retirerArgent(50);
 				joueur.setEstPrison(false);
+				joueur.setToursEnPrison(1);
 				plateau.deplacerJoueur(joueur, lancé);
 			}
 			else{

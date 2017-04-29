@@ -9,6 +9,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -22,14 +24,14 @@ public class FenetreDemarrage {
 	private Label l_NbJoueurs;
 	private ListView<String> l_Nombre;
 	private Button b_Valider;
-	private int choix = 2;
+	private int choix = 0;
 	
 	public FenetreDemarrage(FenetrePrincipale f) {
 		
 		this.fp = f;
 		
 		this.stage = new Stage();
-		this.stage.setTitle("Nombre de joueurs");
+		this.stage.setTitle("Monopoly");
 		this.stage.initOwner(fp.getStage());
 		this.stage.initModality(Modality.APPLICATION_MODAL);
 		
@@ -39,7 +41,7 @@ public class FenetreDemarrage {
 		Scene scene = new Scene(root,300,160);
 		stage.setScene(scene);
 		
-		//stage.setOnHiding(new EvtQuitter());
+		stage.setOnHiding(new EvtQuitter());
 	}
 	
 	private void initRoot() {
@@ -49,9 +51,8 @@ public class FenetreDemarrage {
 		l_NbJoueurs = new Label("Nombre de joueurs :");
 		root.getChildren().add(l_NbJoueurs);
 		
-		ObservableList<String> items = FXCollections.observableArrayList("2", "3", "4");
 		l_Nombre = new ListView<String>();
-		l_Nombre.setItems(items);
+		l_Nombre.setItems(FXCollections.observableArrayList("2", "3", "4"));
 		l_Nombre.getSelectionModel().select(0);
 		root.getChildren().add(l_Nombre);
 		
@@ -69,6 +70,7 @@ public class FenetreDemarrage {
 		@Override
 		public void handle(ActionEvent event) {
 			choix = Integer.parseInt(l_Nombre.getFocusModel().getFocusedItem());
+			fp.getStage().show();
 			fp.setPartie(choix);
 			fp.getPartie().demarrerLaPartie();
 			stage.close();
@@ -79,7 +81,8 @@ public class FenetreDemarrage {
 
 		@Override
 		public void handle(WindowEvent event) {
-			System.exit(0);
+			if(choix == 0)
+				System.exit(0);
 		}
 	}
 }

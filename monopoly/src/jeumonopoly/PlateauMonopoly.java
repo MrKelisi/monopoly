@@ -1,56 +1,69 @@
 package jeumonopoly;
 
-import java.util.Random;
+import javafx.scene.paint.Color;
 
 import jeudeplateau.Joueur;
 
 public class PlateauMonopoly extends jeudeplateau.Plateau {
 	
-	//private String[] terrains = new String[] { "Rue ", "Avenue ", "Boulevard ", "Place " };
-	//private String[] nomTerrains = new String[] { "de Belleville", "Lecourbe",  "Vaugirard", "de Courcelles", "de la République", "de la Vilette", "de Neuilly", "du Paradis", "Mozart", "Saint-Michel", "Pigalle" };
-	
 	public PlateauMonopoly(int nombreDeJoueurs) {
 		super(nombreDeJoueurs, 40);
 		
+		Color[] Couleurs = new Color[] {Color.RED, Color.BLUE, Color.ORANGE, Color.GREEN};
+		
 		for(int i = 0; i < this.getNbJoueurs(); i++) {
 			this.setJoueur(i, new Joueur("Joueur" + (i + 1)));
+			this.getJoueur(i).getPion().setFill(Couleurs[i]);
 		}
 		
-		Random rand = new Random();
+		setCase(0, new CaseDepart());
+		setCase(2, new CaseCommunaute());
+		setCase(4, new CaseImpots("Impots sur le revenu", 200));
+		setCase(5, new CaseGare("Gare Montparnasse"));
+		setCase(7, new CaseChance());
+		setCase(10, new CasePrison());
+		setCase(12, new CaseServicePublic("Compagnie d'électricité"));
+		setCase(15, new CaseGare("Gare de Lyon"));
+		setCase(17, new CaseCommunaute());
+		setCase(20, new CaseParcGratuit());
+		setCase(22, new CaseChance());
+		setCase(25, new CaseGare("Gare du Nord"));
+		setCase(28, new CaseServicePublic("Compagnie des eaux"));
+		setCase(30, new CaseAllerPrison());
+		setCase(33, new CaseCommunaute());
+		setCase(35, new CaseGare("Gare Saint-Lazare"));
+		setCase(36, new CaseChance());
+		setCase(38, new CaseImpots("Taxe de Luxe", 100));
 		
-		for(int i = 0; i < this.getNbCases(); i++) {
-			if(i == 0)
-				setCase(i, new CaseDepart());
-			else if(i == 10)
-				setCase(i, new CasePrison());
-			else if(i == 20)
-				setCase(i, new CaseParcGratuit());
-			else if(i == 30)
-				setCase(i, new CaseAllerPrison());
-			else if(i == 5)
-				setCase(i, new CaseGare("Gare Montparnasse"));
-			else if(i == 15)
-				setCase(i, new CaseGare("Gare de Lyon"));
-			else if(i == 25)
-				setCase(i, new CaseGare("Gare du Nord"));
-			else if(i == 35)
-				setCase(i, new CaseGare("Gare Saint-Lazare"));
-			else if(i == 4)
-				setCase(i, new CaseImpots("Impots sur le revenu", 200));
-			else if(i == 38)
-				setCase(i, new CaseImpots("Taxe de Luxe", 100));
-			else if(i == 12)
-				setCase(i, new CaseServicePublic("Compagnie d'éléctricité"));
-			else if(i == 28)
-				setCase(i, new CaseServicePublic("Compagnie d'eau"));
-			else if(i == 7 || i == 22 || i == 36)
-				setCase(i, new CaseChance());
-			else if(i == 2 || i == 17 || i == 33)
-				setCase(i, new CaseCommunaute());
-			else
-				setCase(i, new CaseTerrain("Terrain"+i, 100+rand.nextInt(20)*10));
-				//setCase(i, new CaseTerrain(""+terrains[rand.nextInt(terrains.length)]+nomTerrains[rand.nextInt(nomTerrains.length)], 100+rand.nextInt(20)*10));
-		}
+		setCase(1, new CaseTerrain("Boulevard de Belleville", 60, 30, "brun"));
+		setCase(3, new CaseTerrain("Rue Lecourbe", 60, 30, "brun"));
+		
+		setCase(6, new CaseTerrain("Rue de Vaugirard", 100, 50, "turquoise"));
+		setCase(8, new CaseTerrain("Rue de Courcelles", 100, 50, "turquoise"));
+		setCase(9, new CaseTerrain("Avenue de la République", 120, 60, "turquoise"));
+		
+		setCase(11, new CaseTerrain("Boulevard la Villette", 140, 70, "mauve"));
+		setCase(13, new CaseTerrain("Avenue de Neuilly", 140, 70, "mauve"));
+		setCase(14, new CaseTerrain("Rue du Paradis", 160, 80, "mauve"));
+		
+		setCase(16, new CaseTerrain("Avenue Mozart", 180, 90, "orange"));
+		setCase(18, new CaseTerrain("Boulevard Saint-Victorien", 180, 90, "orange"));
+		setCase(19, new CaseTerrain("Place Pigalle", 200, 100, "orange"));
+		
+		setCase(21, new CaseTerrain("Avenue Matignon", 220, 110, "rouge"));
+		setCase(23, new CaseTerrain("Boulevard Malesherbes", 220, 110, "rouge"));
+		setCase(24, new CaseTerrain("Avenue Henri-Martin", 240, 120, "rouge"));
+		
+		setCase(26, new CaseTerrain("Faubourg Saint-Honoté", 260, 130, "jaune"));
+		setCase(27, new CaseTerrain("Place de la Bourse", 260, 130, "jaune"));
+		setCase(29, new CaseTerrain("Rue La Fayette", 280, 140, "jaune"));
+		
+		setCase(31, new CaseTerrain("Avenue de Breuteuil", 300, 150, "vert"));
+		setCase(32, new CaseTerrain("Avenue Foch", 300, 150, "vert"));
+		setCase(34, new CaseTerrain("Boulevard des Capucines", 320, 160, "vert"));
+		
+		setCase(37, new CaseTerrain("Avenue des Champs-Élysées", 350, 175, "bleu"));
+		setCase(39, new CaseTerrain("Rue de la Paix", 400, 200, "bleu"));
 	}
 	
 	public void deplacerJoueur(Joueur joueur, int nombreDeCases) {

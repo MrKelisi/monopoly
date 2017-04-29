@@ -1,6 +1,7 @@
 package jeumonopoly;
 
 import fenetres.FenetrePrincipale;
+import javafx.scene.control.Label;
 import jeudeplateau.Case;
 import jeudeplateau.Joueur;
 
