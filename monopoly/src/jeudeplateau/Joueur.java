@@ -11,10 +11,12 @@ public class Joueur {
 	private Circle pion = new Circle(7);
 	private boolean estBanqueroute = false;
 	private boolean estPrison = false;
+	private boolean possedeCouleurTerrain = false;
 	private int toursEnPrison = 1;
 	private int nombreGaresPossedees = 0;
 	private int nombreServicesPossedes = 0;
 	private ArrayList <Case> terrains = new ArrayList <Case>();
+	private ArrayList<String> couleur = new ArrayList <String>();
 	
 	public Joueur(String nom) {
 		this.nom = nom;
@@ -84,6 +86,13 @@ public class Joueur {
 		this.estPrison = prison;
 	}
 	
+	public boolean getPossedeCouleurTerrain(){
+		return this.possedeCouleurTerrain;
+	}
+	public void setPossedeCouleurTerrain(boolean possedeCouleurTerrain){
+		this.possedeCouleurTerrain = possedeCouleurTerrain;
+	}
+	
 	public void ajouterTerrain(Case terrain) {
 		this.terrains.add(terrain);
 	}
@@ -93,6 +102,54 @@ public class Joueur {
 			s+=(t.getNom()+"\n");
 		}
 		return s;
+	}
+	public ArrayList<Case> getTerrain(){
+		return this.terrains;
+	}
+	public ArrayList<String> getListeCouleur(){
+		int brun = 0;
+		int turquoise = 0;
+		int mauve = 0;
+		int orange = 0;
+		int rouge = 0;
+		int jaune = 0;
+		int vert = 0;
+		int bleu = 0;
+		for(Case t:this.getTerrain()){
+			if(t.getCouleur() == "brun")
+				brun += 1;
+			if(t.getCouleur() == "turquoise")
+				turquoise += 1;
+			if(t.getCouleur() == "mauve")
+			mauve += 1;
+			if(t.getCouleur() == "orange")
+				orange += 1;
+			if(t.getCouleur() == "rouge")
+				rouge += 1;
+			if(t.getCouleur() == "jaune")
+				jaune += 1;
+			if(t.getCouleur() == "vert")
+				vert += 1;
+			if(t.getCouleur() == "bleu")
+				bleu += 1;
+		}
+		if(brun == 2)
+			couleur.add("brun");
+		if(turquoise == 3)
+			couleur.add("turquoise");
+		if(mauve == 3)
+			couleur.add("orange");
+		if(orange == 3)
+			couleur.add("orange");
+		if(rouge == 3)
+			couleur.add("rouge");
+		if(jaune == 3)
+			couleur.add("jaune");
+		if(vert == 3)
+			couleur.add("vert");
+		if(bleu == 2)
+			couleur.add("bleu");
+		return this.couleur;
 	}
 	
 }

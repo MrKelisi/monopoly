@@ -1,5 +1,6 @@
 package jeumonopoly;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import fenetres.FenetrePrincipale;
@@ -8,11 +9,13 @@ import jeudeplateau.Joueur;
 
 public class CaseTerrain extends Case {
 	
-	public CaseTerrain(String nom, int montant, int loyer, String couleur) {
+	public CaseTerrain(String nom, int montant, ArrayList<Integer> loyer, int prixMaison, int nbMaison, String couleur) {
 		super(nom);
 		this.setPrix(montant);
 		this.setCouleur(couleur);
 		this.setLoyer(loyer);
+		this.setPrixMaison(prixMaison);
+		this.setNbMaison(nbMaison);
 	}
 	
 	public void actionCase(Joueur joueur, PlateauMonopoly plateau, FenetrePrincipale fp) {
@@ -42,8 +45,15 @@ public class CaseTerrain extends Case {
 			else
 				System.out.println(" > Le propriétaire est en prison. " + joueur.getNom() + " ne paye pas de loyer.");
 		}
-		else
+		else{
 			System.out.println(" > " + joueur.getNom() + " est sur son propre terrain");
+			if(this.getPeutMettreMaison()){
+				this.ajouterMaison(); 
+			}
+			else{	
+				System.out.println(" > " + joueur.getNom() + " ne peut pas acheter de maison");
+			}
+		}
 	}
 	
 	@Override

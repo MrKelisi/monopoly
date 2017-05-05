@@ -47,7 +47,7 @@ public class Partie {
                 			System.out.println("\nC'est au tour de " + joueur.getNom() + " (possède " + joueur.getArgent() + "€)");
                 			
                 			if(!joueur.getEstBanqueroute()) {
-                				Thread.sleep(800);
+                				Thread.sleep(80);
                 				
                 				lancé = plateauM.des.lancerDes();
                 				
@@ -55,7 +55,7 @@ public class Partie {
                 					System.out.println("" + joueur.getNom() + " lance les dés... [" + plateauM.des.getDe1() + "][" + plateauM.des.getDe2() + "]... et obtient un " + lancé + " !");
                 					plateauM.deplacerJoueur(joueur, lancé);
                 					fp.deplacerPion(plateauM);
-                					Thread.sleep(1000);
+                					Thread.sleep(100);
                 					
                 					caze = plateauM.getCase(joueur.getPosition());
                 					System.out.println("" + joueur.getNom() + " avance de " + lancé + " cases et atterit sur la case " + joueur.getPosition() + " : " + caze.getNom());
