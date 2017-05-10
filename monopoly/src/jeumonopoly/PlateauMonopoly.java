@@ -3,6 +3,7 @@ package jeumonopoly;
 import javafx.scene.paint.Color;
 import java.util.ArrayList;
 import java.util.Arrays;
+import jeumonopoly.CarteChance;
 
 import jeudeplateau.Joueur;
 
