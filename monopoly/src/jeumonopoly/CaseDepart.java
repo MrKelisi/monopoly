@@ -1,8 +1,8 @@
 package jeumonopoly;
 
 import fenetres.FenetrePrincipale;
+import io.Console;
 import jeudeplateau.Case;
-import jeudeplateau.Joueur;
 
 public class CaseDepart extends Case {
 	
@@ -10,14 +10,22 @@ public class CaseDepart extends Case {
 		super("Depart");
 	}
 	
-	public void actionCase(Joueur joueur, PlateauMonopoly plateau, FenetrePrincipale fp) {
+	public void actionCase(JoueurMonopoly joueur, PlateauMonopoly plateau, FenetrePrincipale fp) {
+		
+		Console es = new Console(fp);
+		
 		joueur.ajouterArgent(200);
-		System.out.println(" > " + joueur.getNom() + " s'arrête sur la case départ: il reçoit 200€ supplémentaire !");
+		es.println(" > " + joueur.getNom() + " s'arrête sur la case départ: il reçoit 200€ supplémentaire !");
 	}
 
 	@Override
 	public String toString() {
 		return "est sur la case depart : +1000!";
+	}
+
+	@Override
+	public void fenetreAction(FenetrePrincipale fp) {
+		fp.getPartie().reprendrePartie();
 	}
 	
 }

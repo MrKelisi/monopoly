@@ -1,7 +1,6 @@
 package fenetres;
 
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -9,8 +8,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -26,9 +23,9 @@ public class FenetreDemarrage {
 	private Button b_Valider;
 	private int choix = 0;
 	
-	public FenetreDemarrage(FenetrePrincipale f) {
+	public FenetreDemarrage(FenetrePrincipale fp) {
 		
-		this.fp = f;
+		this.fp = fp;
 		
 		this.stage = new Stage();
 		this.stage.setTitle("Monopoly");

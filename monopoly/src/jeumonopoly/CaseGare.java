@@ -1,8 +1,9 @@
 package jeumonopoly;
 
+import java.util.Random;
 import fenetres.FenetrePrincipale;
+import io.Console;
 import jeudeplateau.Case;
-import jeudeplateau.Joueur;
 
 public class CaseGare extends Case {
 
@@ -12,14 +13,19 @@ public class CaseGare extends Case {
 	}
 
 	@Override
-	public void actionCase(Joueur joueur, PlateauMonopoly plateau, FenetrePrincipale fp) {
+	public void actionCase(JoueurMonopoly joueur, PlateauMonopoly plateau, FenetrePrincipale fp) {
+		
+		Console es = new Console(fp);
+		
 		if(this.getProprietaire() == null) {
-			this.setProprietaire(joueur);
-			fp.setMarqueurProprietaire(joueur);
-			joueur.retirerArgent(this.getPrix());
-			joueur.ajouterTerrain(this);
-			joueur.setNbGares(joueur.getNbGares() + 1);
-			System.out.println(" > " + joueur.getNom() + " achète " + this.getNom() + " pour " + this.getPrix() + "€");
+			if(getAcheterTerrain()) {
+				setProprietaire(joueur, fp);
+				joueur.retirerArgent(this.getPrix());
+				es.println(" > " + joueur.getNom() + " achète " + this.getNom() + " pour " + this.getPrix() + "€");
+			}
+			else {
+				es.println(" > " + joueur.getNom() + " décide de ne pas acheter cette gare.");
+			}
 		}
 		else if(this.getProprietaire() != joueur) {
 			int loyer = 50 * this.getProprietaire().getNbGares();
@@ -31,13 +37,37 @@ public class CaseGare extends Case {
 					this.getProprietaire().ajouterArgent(loyer);
 					beneficiaire = this.getProprietaire().getNom();
 				}
-				System.out.println(" > " + joueur.getNom() + " paye un loyer de " + loyer + "€ à " + beneficiaire);
+				es.println(" > " + joueur.getNom() + " paye un loyer de " + loyer + "€ à " + beneficiaire);
 			}
-			else
-				System.out.println(" > Le propriétaire est en prison. " + joueur.getNom() + " ne paye pas de loyer.");
+			else {
+				es.println(" > Le propriétaire est en prison. " + joueur.getNom() + " ne paye pas de loyer.");
+			}
 		}
+		else {
+			es.println(" > " + joueur.getNom() + " est dans sa propre gare.");
+		}
+	}
+	
+	public void setProprietaire(JoueurMonopoly joueur, FenetrePrincipale fp) {
+		this.setProprietaire(joueur);
+		fp.setMarqueurProprietaire(joueur);
+		joueur.ajouterTerrain(this);
+		joueur.setNbGares(joueur.getNbGares() + 1);
+	}
+
+	@Override
+	public void fenetreAction(FenetrePrincipale fp) {
+		
+		if(fp.getPartie().PARTIE_AUTO) {
+			Random rand = new Random();
+			if(rand.nextBoolean())
+				setAcheterTerrain(true);
+			fp.getPartie().reprendrePartie();
+		}
+		else if(this.getProprietaire() == null)
+			fp.afficherFenetreAchatTerrain();
 		else
-			System.out.println(" > " + joueur.getNom() + " est dans sa propre gare.");
+			fp.getPartie().reprendrePartie();
 	}
 
 }

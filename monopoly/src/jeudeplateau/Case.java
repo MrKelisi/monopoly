@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import fenetres.FenetrePrincipale;
 import javafx.scene.paint.Color;
+import jeumonopoly.JoueurMonopoly;
 import jeumonopoly.PlateauMonopoly;
 
 public abstract class Case {
@@ -15,8 +16,9 @@ public abstract class Case {
 	private int prixMaison;
 	private boolean peutMettreMaison = false;
 	private int nbMaison;
-	private Joueur proprietaire;
-	
+	private JoueurMonopoly proprietaire;
+	private boolean acheterTerrain = false;
+
 	public Case(String nom) {
 		this.nom = nom;
 	}
@@ -40,7 +42,7 @@ public abstract class Case {
 	}
 	
 	public int getLoyer(){
-		return this.loyer.get(this.getNbMaison());
+		return loyer.get(getNbMaison());
 	}
 	public void setLoyer(ArrayList<Integer> loyer){
 		this.loyer = loyer;
@@ -53,7 +55,7 @@ public abstract class Case {
 	}
 	
 	public int getNbMaison(){
-		return this.nbMaison;
+		return nbMaison;
 	}
 	public void setNbMaison(int nbMaison){
 		this.nbMaison = nbMaison;
@@ -68,10 +70,10 @@ public abstract class Case {
 		this.peutMettreMaison = peutMettreMaison;
 	}
 	
-	public Joueur getProprietaire() {
+	public JoueurMonopoly getProprietaire() {
 		return proprietaire;
 	}
-	public void setProprietaire(Joueur proprietaire) {
+	public void setProprietaire(JoueurMonopoly proprietaire) {
 		this.proprietaire = proprietaire;
 	}
 	
@@ -84,7 +86,16 @@ public abstract class Case {
 			System.out.println("Félicitations, vous avez posé une maison");
 		}
 	}
+
+	public boolean getAcheterTerrain() {
+		return acheterTerrain;
+	}
+	public void setAcheterTerrain(boolean acheterTerrain) {
+		this.acheterTerrain = acheterTerrain;
+	}
+
+	public abstract void actionCase(JoueurMonopoly joueur, PlateauMonopoly plateau, FenetrePrincipale fp);
 	
-	public abstract void actionCase(Joueur joueur, PlateauMonopoly plateau, FenetrePrincipale fp);
+	public abstract void fenetreAction(FenetrePrincipale fp);
 	
 }

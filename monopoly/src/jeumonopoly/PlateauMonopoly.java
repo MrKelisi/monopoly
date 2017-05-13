@@ -1,24 +1,28 @@
 package jeumonopoly;
 
-import javafx.scene.paint.Color;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import jeudeplateau.Case;
+import jeudeplateau.Joueur;
 import jeumonopoly.CarteChance;
 
-import jeudeplateau.Joueur;
-
 public class PlateauMonopoly extends jeudeplateau.Plateau {
+
+	private ArrayList<JoueurMonopoly> joueurs = new ArrayList<JoueurMonopoly>();
+	private ArrayList<CarteChance> chance = new ArrayList<CarteChance>();
+	private ArrayList<CarteCommunaute> communauté = new ArrayList<CarteCommunaute>();
 	
 	public PlateauMonopoly(int nombreDeJoueurs) {
 		super(nombreDeJoueurs, 40);
 		
-		Color[] Couleurs = new Color[] {Color.RED, Color.BLUE, Color.ORANGE, Color.GREEN};
 		
+		/* INITIALISATION DES JOUEURS */
 		for(int i = 0; i < this.getNbJoueurs(); i++) {
-			this.setJoueur(i, new Joueur("Joueur" + (i + 1)));
-			this.getJoueur(i).getPion().setFill(Couleurs[i]);
+			this.joueurs.add(new JoueurMonopoly("Joueur"+(i+1), i));
 		}
 		
+		/* INITIALISATION DES CASES*/
 		setCase(0, new CaseDepart());
 		setCase(2, new CaseCommunaute());
 		setCase(4, new CaseImpots("Impots sur le revenu", 200));
@@ -38,6 +42,7 @@ public class PlateauMonopoly extends jeudeplateau.Plateau {
 		setCase(36, new CaseChance());
 		setCase(38, new CaseImpots("Taxe de Luxe", 100));
 		
+		/* INITIALISATION DES TERRAINS */
 		setCase(1, new CaseTerrain("Boulevard de Belleville", 60, new ArrayList<Integer>(Arrays.asList(2, 10, 30, 90, 160, 250)), 50, 0, "brun"));
 		setCase(3, new CaseTerrain("Rue Lecourbe", 60, new ArrayList<Integer>(Arrays.asList(4, 20, 60, 180, 320, 450)), 50, 0, "brun"));
 		
@@ -67,9 +72,29 @@ public class PlateauMonopoly extends jeudeplateau.Plateau {
 		
 		setCase(37, new CaseTerrain("Avenue des Champs-Élysées", 350, new ArrayList<Integer>(Arrays.asList(35, 175, 500, 1100, 1300, 1500)), 200, 0, "bleu"));
 		setCase(39, new CaseTerrain("Rue de la Paix", 400, new ArrayList<Integer>(Arrays.asList(50, 200, 600, 1400, 1700, 2000)), 200, 0, "bleu"));
+		
+		/* INITIALISATION DES CARTES */
+		chance.add(new CarteChance("Amende", "Amende pour excès de vitesse, payez 10€"));
+		chance.add(new CarteChance("Impot", "Réparation de la voirie : payez 40€/maison et 115€/hôtel"));
+		chance.add(new CarteChance("Frais de scolarité", "Payez 150€ de frais de scolarité"));
+		chance.add(new CarteChance("Prison", "Allez en prison"));
+		chance.add(new CarteChance("Reparation", "Payez 25€/maison et 100€/hôtel pour des réparations"));
+		chance.add(new CarteChance("Amende2", "Amende pour ivresse, payez 20€"));
+		chance.add(new CarteChance("Versement", "La banque vous verse un dividende de 50€"));
+		chance.add(new CarteChance("CaseDep", "Avancez jusqu'à la case départ et recevez 200€"));
+		chance.add(new CarteChance("Gain", "Vos terrains vous rapportent 150€"));
+		chance.add(new CarteChance("Gagne", "Vous avez gagné le prix de mots croisés ! Recevez 100€"));
+		chance.add(new CarteChance("Paix", "Rendez-vous Rue de la Paix"));
+		chance.add(new CarteChance("HM", "Rendez-vous à l'Avenue Henri-Martin. Si vous passez par la case départ, recevez 200€"));
+		chance.add(new CarteChance("Vilette", "Avancez au Boulevard de la Vilette. Si vous passez par la case départ, recevez 200€"));
+		chance.add(new CarteChance("Lyon", "Avancez à la gare de Lyon. Si vous passez par la case départ, recevez 200€"));
+		chance.add(new CarteChance("Recul", "Reculez de 3 cases"));
+		chance.add(new CarteChance("Sortie", "Carte pour sortir de prison (à conserver)"));
+		Collections.shuffle(chance);
+		
 	}
 	
-	public void deplacerJoueur(Joueur joueur, int nombreDeCases) {
+	public void deplacerJoueur(JoueurMonopoly joueur, int nombreDeCases) {
 		int pos;
 		
 		if((joueur.getPosition() + nombreDeCases) >= getNbCases()) {
@@ -83,6 +108,36 @@ public class PlateauMonopoly extends jeudeplateau.Plateau {
 		if(!joueur.getEstBanqueroute()) {
 			joueur.setPosition(pos);
 		}
+	}
+
+	public JoueurMonopoly getJoueurActif() {
+		return this.joueurs.get(getJoueurActifID());
+	}
+	public JoueurMonopoly getJoueur(int i) {
+		return this.joueurs.get(i);
+	}
+	
+	public Case getCaseActive() {
+		return getCase(getJoueurActif().getPosition());
+	}
+	
+	@Override
+	public boolean finPartie() {
+		int nbJoueursEnJeu = 0;
+		for(JoueurMonopoly j:joueurs) {
+			if(!j.getEstBanqueroute()) nbJoueursEnJeu++;
+		}
+		return (nbJoueursEnJeu <= 1);
+	}
+
+	@Override
+	public Joueur estVainqueur() {
+		int res = 0;
+		for(int i=0; i<joueurs.size(); i++) {
+			if(getJoueur(i).getArgent() > getJoueur(res).getArgent())
+				res = i;
+		}
+		return getJoueur(res);
 	}
 
 	@Override

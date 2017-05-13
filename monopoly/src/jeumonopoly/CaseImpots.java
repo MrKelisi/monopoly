@@ -1,8 +1,8 @@
 package jeumonopoly;
 
 import fenetres.FenetrePrincipale;
+import io.Console;
 import jeudeplateau.Case;
-import jeudeplateau.Joueur;
 
 public class CaseImpots extends Case {
 
@@ -11,13 +11,21 @@ public class CaseImpots extends Case {
 		this.setPrix(prix);
 	}
 	
-	public void actionCase(Joueur joueur, PlateauMonopoly plateau, FenetrePrincipale fp) {
-		System.out.println(" > " + joueur.getNom() + " dépose " + this.getPrix() + "€ au parc gratuit.");
+	public void actionCase(JoueurMonopoly joueur, PlateauMonopoly plateau, FenetrePrincipale fp) {
+		
+		Console es = new Console(fp);
+		
+		es.println(" > " + joueur.getNom() + " dépose " + this.getPrix() + "€ au parc gratuit.");
 		
 		joueur.retirerArgent(this.getPrix());
 		
 		int nouveauMontantParcGratuit = plateau.getCase(20).getPrix() + this.getPrix();
 		plateau.getCase(20).setPrix(nouveauMontantParcGratuit);
+	}
+
+	@Override
+	public void fenetreAction(FenetrePrincipale fp) {
+		fp.getPartie().reprendrePartie();
 	}
 	
 }

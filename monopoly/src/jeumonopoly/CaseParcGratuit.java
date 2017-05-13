@@ -1,9 +1,8 @@
 package jeumonopoly;
 
 import fenetres.FenetrePrincipale;
-import javafx.scene.control.Label;
+import io.Console;
 import jeudeplateau.Case;
-import jeudeplateau.Joueur;
 
 public class CaseParcGratuit extends Case {
 	
@@ -12,8 +11,11 @@ public class CaseParcGratuit extends Case {
 		this.setPrix(0);
 	}
 
-	public void actionCase(Joueur joueur, PlateauMonopoly plateau, FenetrePrincipale fp) {
-		System.out.println(" > " + joueur.getNom() + " ramasse " + this.getPrix() + "€ du parc gratuit !");
+	public void actionCase(JoueurMonopoly joueur, PlateauMonopoly plateau, FenetrePrincipale fp) {
+		
+		Console es = new Console(fp);
+		
+		es.println(" > " + joueur.getNom() + " ramasse " + this.getPrix() + "€ du parc gratuit !");
 		joueur.ajouterArgent(this.getPrix());
 		this.setPrix(0);
 	}
@@ -21,6 +23,11 @@ public class CaseParcGratuit extends Case {
 	@Override
 	public String toString() {
 		return "est sur la case parc gratuit";
+	}
+
+	@Override
+	public void fenetreAction(FenetrePrincipale fp) {
+		fp.getPartie().reprendrePartie();
 	}
 	
 }

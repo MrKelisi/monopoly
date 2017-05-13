@@ -2,23 +2,22 @@ package fenetres;
 
 import java.util.ArrayList;
 import java.util.Random;
-
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
-import javafx.concurrent.Task;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polygon;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 import javafx.util.Duration;
-import jeudeplateau.Joueur;
+import jeumonopoly.JoueurMonopoly;
 import jeumonopoly.Partie;
 import jeumonopoly.PlateauMonopoly;
 
@@ -29,10 +28,15 @@ public class FenetrePrincipale {
 	private Label l_ParcGratuit = new Label("0€");
 	private ArrayList <Label> l_Joueurs = new ArrayList <Label>();
 	private ArrayList <Label> l_ListeTerrains = new ArrayList <Label>();
+	private ArrayList <Circle> l_Pions = new ArrayList <Circle>();
+	private ArrayList<Label> l_Logs = new ArrayList<Label>();
+	private Button tourSuivant = new Button("Finir son tour");
+	private Button newPartie = new Button("Nouvelle partie");
 	public Random rand = new Random();
 	private FenetreDemarrage fd = new FenetreDemarrage(this);
 	private FenetreCarteChance fch = new FenetreCarteChance(this);
 	private FenetreCarteCommunaute fco = new FenetreCarteCommunaute(this);
+	private FenetreAcheterTerrain fat = new FenetreAcheterTerrain(this);
 	private Partie partie;
 
 	public FenetrePrincipale(Stage primaryStage) {
@@ -53,23 +57,46 @@ public class FenetrePrincipale {
 	private void initRoot() {
 		root.setStyle("-fx-background-image: url('images/plateau.png'); -fx-background-repeat: no-repeat");
 		root.setAlignment(Pos.TOP_LEFT);
-		root.getChildren().add(l_ParcGratuit);
+		
 		l_ParcGratuit.setTranslateX(3);
 		l_ParcGratuit.setTranslateY(68);
+		root.getChildren().add(l_ParcGratuit);
+
+		for(int i=0; i<10; i++) {
+			l_Logs.add(new Label(""));
+			l_Logs.get(i).setFont(Font.font("Consolas", 12));
+			l_Logs.get(i).setTranslateX(100);
+			l_Logs.get(i).setTranslateY(500 - i*16);
+			root.getChildren().add(l_Logs.get(i));
+		}
+
+		tourSuivant.setTranslateX(473);
+		tourSuivant.setTranslateY(533);
+		tourSuivant.setOnAction(new EvtTourSuivant());
+		if(!partie.PARTIE_AUTO)
+			root.getChildren().add(tourSuivant);
+	}
+	
+	public StackPane getRoot() {
+		return root;
 	}
 	
 	public Stage getStage() {
 		return stage;
 	}
 	
+	public Circle getPionActif() {
+		return l_Pions.get(partie.getPM().getJoueurActifID());
+	}
+	
 	public Partie getPartie() {
 		return partie;
 	}
 	public void setPartie(int nbJoueurs) {
-		partie = new Partie(nbJoueurs, this);
-		setDepartPions(partie.getPM());
 		
+		partie = new Partie(nbJoueurs, this);
 		Color[] Couleurs = new Color[] {Color.RED, Color.BLUE, Color.ORANGE, Color.GREEN};
+		
 		for(int i=0; i<nbJoueurs; i++) {
 			Label l_nomJoueur = new Label(partie.getPM().getJoueur(i).getNom());
 			l_nomJoueur.setTextFill(Couleurs[i]);
@@ -88,9 +115,35 @@ public class FenetrePrincipale {
 			l_ListeTerrains.get(i).setTranslateY(140);
 			l_ListeTerrains.get(i).setMaxWidth(110);
 			root.getChildren().add(l_ListeTerrains.get(i));
+			
+			l_Pions.add(new Circle(7));
+			l_Pions.get(i).setFill(Couleurs[i]);
+			if(i<2) {
+				l_Pions.get(i).setTranslateX(598 + i*15);
+				l_Pions.get(i).setTranslateY(605);
+			}
+			else {
+				l_Pions.get(i).setTranslateX(598 + (i-2)*15);
+				l_Pions.get(i).setTranslateY(620);
+			}
+			root.getChildren().add(l_Pions.get(i));
 		}
 		
+		refreshLabels(partie.getPM());
+		
 	}
+	
+	public void logMessages(String msg) {
+		Platform.runLater(new Runnable() {
+            @Override public void run() {
+            	for(int i=l_Logs.size()-1; i>0; i--) {
+            		l_Logs.get(i).setText(l_Logs.get(i-1).getText());
+            	}
+            	l_Logs.get(0).setText(msg);
+            }
+        });
+	}
+	
 	public void refreshLabels(PlateauMonopoly pm) {
 		
 		Platform.runLater(new Runnable() {
@@ -107,45 +160,43 @@ public class FenetrePrincipale {
         });
 	}
 	
-	public void tirerCarte(boolean carteChance, String titre, String description) {
-		if(carteChance) {
-			fch.setTitre(titre);
-			fch.setDescription(description);
-			fch.afficherCarte();
-		}
-		else {
-			fco.setTitre(titre);
-			fco.setDescription(description);
-			fco.afficherCarte();
-		}
-	}
-	
-	public StackPane getRoot() {
-		return root;
-	}
-	
-	public void setDepartPions(PlateauMonopoly pm) {
-		for(int i=0; i< 2; i++) {
-			pm.getJoueur(i).getPion().setTranslateX(598 + i*15);
-			pm.getJoueur(i).getPion().setTranslateY(605);
-			root.getChildren().add(pm.getJoueur(i).getPion());
-		}
-		for(int i=2; i< pm.getNbJoueurs(); i++) {
-			pm.getJoueur(i).getPion().setTranslateX(598 + (i-2)*15);
-			pm.getJoueur(i).getPion().setTranslateY(620);
-			root.getChildren().add(pm.getJoueur(i).getPion());
-		}
+	public void afficherFenetreAchatTerrain() {
 		
+		Platform.runLater(new Runnable() {
+            @Override public void run() {
+            	
+            	fat.afficherFenetre();
+            }
+		});
 	}
 	
-	public void setMarqueurProprietaire(Joueur j) {
+	public void tirerCarte(boolean carteChance, String titre, String description) {
+		
+		Platform.runLater(new Runnable() {
+            @Override public void run() {
+            	
+				if(carteChance) {
+					fch.setTitre(titre);
+					fch.setDescription(description);
+					fch.afficherCarte();
+				}
+				else {
+					fco.setTitre(titre);
+					fco.setDescription(description);
+					fco.afficherCarte();
+				}
+            }
+		});
+	}
+	
+	public void setMarqueurProprietaire(JoueurMonopoly j) {
 		
 		Platform.runLater(new Runnable() {
             @Override public void run() {
             	
         		//Rectangle r = new Rectangle(8,8,j.getPion().getFill());
             	Polygon r = new Polygon();
-            	r.setFill(j.getPion().getFill());
+            	r.setFill(getPionActif().getFill());
             	
             	double x = 100, y = 100;
         		int pos = j.getPosition();
@@ -185,14 +236,11 @@ public class FenetrePrincipale {
         });
 	}
 	
-	public void deplacerPion(PlateauMonopoly pm){
-		
-		Joueur j = pm.getJoueurActif();
-		int idJoueur = pm.getJoueurActifID();
-		
+	public void deplacerPion(JoueurMonopoly j){
+
 		double x, y;
 		int pos = j.getPosition();
-		TranslateTransition tt = new TranslateTransition(Duration.millis(500), j.getPion());
+		TranslateTransition tt = new TranslateTransition(Duration.millis(500), getPionActif());
 		
 		if(j.getEstBanqueroute()) {
 			x = 103;
@@ -207,7 +255,7 @@ public class FenetrePrincipale {
 				x = 47;
 				y = 598;
 			}
-			else if(idJoueur == 0 || idJoueur == 1){
+			else if(j.getID() == 0 || j.getID() == 1){
 				x = 16;
 				y = 644;
 			}
@@ -245,15 +293,17 @@ public class FenetrePrincipale {
 			y = -50;
 		}
 		
-		if	    (idJoueur==0) { x-=8;	y-=8; }
-		else if (idJoueur==1) { x+=8; 	y-=8; }
-		else if (idJoueur==2) { x-=8; 	y+=8; }
-		else			   { x+=8; 	y+=8; }
+		switch(j.getID()) {
+		case 0: x-=8; y-=8; break;
+		case 1: x+=8; y-=8; break;
+		case 2: x-=8; y+=8; break;
+		case 3: x+=8; y+=8; break;
+		default: break;
+		}
 		
 	    tt.setToX(x);
 	    tt.setToY(y);
 	    tt.play();
-	    
 	}
 	
 	public void afficherVainqueur(PlateauMonopoly pm) {
@@ -262,14 +312,51 @@ public class FenetrePrincipale {
             @Override public void run() {
             	
             	Label vainqueur = new Label("Le vainqueur est "+pm.estVainqueur().getNom()+" !");
-            	vainqueur.setTextFill(pm.estVainqueur().getPion().getFill());
+            	vainqueur.setTextFill(l_Pions.get(pm.estVainqueur().getID()).getFill());
             	vainqueur.setFont(Font.font("Arial", 30));
             	vainqueur.setTranslateX(150);
-            	vainqueur.setTranslateY(440);
+            	vainqueur.setTranslateY(310);
             	
         		root.getChildren().add(vainqueur);
+        		
+        		root.getChildren().remove(tourSuivant);
+        		
+        		newPartie.setTranslateX(463);
+        		newPartie.setTranslateY(533);
+        		newPartie.setOnAction(new EvtNewPartie());
+        		root.getChildren().add(newPartie);
+        		
             }
 		});
+	}
+	
+	public void resetElementsGraphiques() {
+		l_ParcGratuit.setText("0€");
+		l_Joueurs.clear();
+		l_ListeTerrains.clear();
+		l_Pions.clear();
+		l_Logs.clear();
+	}
+	
+	private class EvtTourSuivant implements EventHandler<ActionEvent> {
+		
+		@Override
+		public void handle(ActionEvent event) {
+			partie.reprendrePartie();
+		}
+	}
+	private class EvtNewPartie implements EventHandler<ActionEvent> {
+		
+		@Override
+		public void handle(ActionEvent event) {
+			stage.close();
+			resetElementsGraphiques();
+			root = new StackPane();
+			initRoot();
+			Scene scene = new Scene(root,655,655);
+			stage.setScene(scene);
+			fd.getStage().show();
+		}
 	}
 	
 }
