@@ -9,7 +9,6 @@ public class JoueurMonopoly extends Joueur {
 	private int argent = 1000;
 	private boolean estBanqueroute = false;
 	private boolean estPrison = false;
-	private boolean possedeCouleurTerrain = false;
 	private int toursEnPrison = 1;
 	private boolean possedeCarteSortiePrison = false;
 	private int nombreGaresPossedees = 0;
@@ -17,15 +16,27 @@ public class JoueurMonopoly extends Joueur {
 	private ArrayList <Case> terrains = new ArrayList <Case>();
 	private ArrayList<String> couleurs = new ArrayList <String>();
 	
+	/* CONSTRUCTEUR */
+	
 	public JoueurMonopoly(String nom, int id) {
 		super(nom, id);
 	}
 
+	
+	/* PARTIE PRISON  */
+	
 	public int getToursEnPrison() {
 		return toursEnPrison;
 	}
 	public void setToursEnPrison(int toursEnPrison) {
 		this.toursEnPrison = toursEnPrison;
+	}
+	
+	public boolean getEstPrison(){
+		return this.estPrison;
+	}
+	public void setEstPrison(boolean prison){
+		this.estPrison = prison;
 	}
 	
 	public boolean getCarteSortiePrison() {
@@ -35,6 +46,9 @@ public class JoueurMonopoly extends Joueur {
 		possedeCarteSortiePrison = b;
 	}
 	
+	/*  PARTIE TERRAINS  */
+	
+		// GARES ET SERVICES
 	public int getNbGares() {
 		return this.nombreGaresPossedees;
 	}
@@ -49,44 +63,11 @@ public class JoueurMonopoly extends Joueur {
 		this.nombreServicesPossedes = nb;
 	}
 	
-	public int getArgent() {
-		return this.argent;
-	}
-	public void ajouterArgent(int montant) {
-		this.argent+=montant;
-	}
-	public void retirerArgent(int montant) {
-		this.argent = this.argent - montant;
-		if(this.argent <= 0) {
-			this.argent = 0;
-			this.setEstBanqueroute(true);
-		}
-	}
-	
-	public boolean getEstBanqueroute() {
-		return this.estBanqueroute;
-	}
-	public void setEstBanqueroute(boolean banqueroute) {
-		this.estBanqueroute = banqueroute;
-	}
-	
-	public boolean getEstPrison(){
-		return this.estPrison;
-	}
-	public void setEstPrison(boolean prison){
-		this.estPrison = prison;
-	}
-	
-	public boolean getPossedeCouleurTerrain(){
-		return this.possedeCouleurTerrain;
-	}
-	public void setPossedeCouleurTerrain(boolean possedeCouleurTerrain){
-		this.possedeCouleurTerrain = possedeCouleurTerrain;
-	}
-	
+		// TERRAINS
 	public void ajouterTerrain(Case terrain) {
 		this.terrains.add(terrain);
 	}
+	
 	public String listTerrains() {
 		String s = "";
 		for(Case t:this.terrains) {
@@ -94,9 +75,12 @@ public class JoueurMonopoly extends Joueur {
 		}
 		return s;
 	}
+	
 	public ArrayList<Case> getTerrain(){
 		return this.terrains;
 	}
+		
+	// COULEURS				(A AMELIORER JE PENSE)
 	public ArrayList<String> getListeCouleur(){
 		int brun = 0;
 		int turquoise = 0;
@@ -150,6 +134,32 @@ public class JoueurMonopoly extends Joueur {
 			couleurs.add("bleu");
 		
 		return this.couleurs;
+	}
+	
+	/* PARTIE ARGENT */
+	
+	public int getArgent() {
+		return this.argent;
+	}
+	
+	public void ajouterArgent(int montant) {
+		this.argent+=montant;
+	}
+	
+	public void retirerArgent(int montant) {
+		this.argent = this.argent - montant;
+		if(this.argent <= 0) {
+			this.argent = 0;
+			this.setEstBanqueroute(true);
+		}
+	}
+	
+	public boolean getEstBanqueroute() {
+		return this.estBanqueroute;
+	}
+	
+	public void setEstBanqueroute(boolean banqueroute) {
+		this.estBanqueroute = banqueroute;
 	}
 	
 }

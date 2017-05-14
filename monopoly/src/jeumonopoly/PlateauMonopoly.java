@@ -87,7 +87,7 @@ public class PlateauMonopoly extends jeudeplateau.Plateau {
 		
 		/* INITIALISATION DES CARTES CHANCES */
 		chance.add(new CartePayerArgent("Amende", "Amende pour excès de vitesse : 15€.", 15));
-		chance.add(new CartePayerArgent("Amende", "Amende pour ivresse : 20€.", 20));
+		chance.add(new CartePayerArgent("Lanuel", "Vous avez manqué de respect à Mr Lanuel : 50€.", 50));
 		chance.add(new CartePayerArgent("Président du conseil d'administration", "Vous avez été élu président du conseil d'administration. \nVersez 50€ à chaque joueur.", 50));
 		
 		chance.add(new CarteRecevoirArgent("Versement", "La banque vous verse un dividende de 50€.", 50));
@@ -100,15 +100,16 @@ public class PlateauMonopoly extends jeudeplateau.Plateau {
 		chance.add(new CarteDeplacement("Boulevard de la Villette", "Avancez au Boulevard de la Vilette. \nSi vous passez par la case départ, recevez 200€.", 11, false));
 		chance.add(new CarteDeplacement("Gare de Lyon", "Avancez à la gare de Lyon. Si vous passez par la case départ, recevez 200€.", 15, false));
 		chance.add(new CarteDeplacement("Reculez", "Reculez de 3 cases.", 3, true));
+		chance.add(new CarteDeplacement("Nv Depart", "Le joueur déménage et prend un nouveau départ au Technopole ", 0, false));
 
 		chance.add(new CarteDeplacement("Prison", "Allez en prison. \nAvancez tout droit en prison. \nNe passez pas par la case départ, ne recevez pas 200€.", 10, false));
 		chance.add(new CarteSortirPrison("Sortie", "Vous êtes libéré de prison. \n(Cette carte doit être conservée)"));
 		
-		Collections.shuffle(chance);
+		Collections.shuffle(chance); //Mélange des cartes
 		
 		
 		/* INITIALISATION DES CARTES COMMUNAUTÉS */
-		communauté.add(new CartePayerArgent("Frais de scolarité", "Payez 150€ de frais de scolarité.", 50));
+		communauté.add(new CartePayerArgent("Frais de scolarité", "Payez 150€ de frais de scolarité.", 150));
 		communauté.add(new CartePayerArgent("Frais d'hospitalisation", "Payez 100€ de frais d'hospitalisation.", 100));
 		communauté.add(new CartePayerArgent("Médecin", "Visite chez le médecin : payez 50€.", 50));
 		
@@ -122,11 +123,13 @@ public class PlateauMonopoly extends jeudeplateau.Plateau {
 		communauté.add(new CarteRecevoirArgent("Placement", "Votre placement vous rapporte. \nRecevez 100€.", 100));
 		communauté.add(new CarteRecevoirArgent("Erreur de la Banque", "Erreur de la Banque en votre faveur. \nRecevez 200€.", 200));
 		
-		chance.add(new CarteDeplacement("Prison", "Allez en prison. \nAvancez tout droit en prison. \nNe passez pas par la case départ, ne recevez pas 200€.", 10, false));
-		chance.add(new CarteSortirPrison("Sortie", "Vous êtes libéré de prison. \n(Cette carte doit être conservée)"));
+		communauté.add(new CarteDeplacement("Prison", "Allez en prison. \nAvancez tout droit en prison. \nNe passez pas par la case départ, ne recevez pas 200€.", 10, false));
+		communauté.add(new CarteSortirPrison("Sortie", "Vous êtes libéré de prison. \n(Cette carte doit être conservée)"));
 		
-		Collections.shuffle(communauté);
+		Collections.shuffle(communauté); //Mélange des cartes
 	}
+	
+	/* PARTIE JOUEUR */
 	
 	public void deplacerJoueur(JoueurMonopoly joueur, int nombreDeCases) {
 		int pos;
@@ -147,23 +150,11 @@ public class PlateauMonopoly extends jeudeplateau.Plateau {
 	public JoueurMonopoly getJoueurActif() {
 		return this.joueurs.get(getJoueurActifID());
 	}
+	
 	public JoueurMonopoly getJoueur(int i) {
 		return this.joueurs.get(i);
 	}
 	
-	public Case getCaseActive() {
-		return getCase(getJoueurActif().getPosition());
-	}
-	
-	@Override
-	public boolean finPartie() {
-		int nbJoueursEnJeu = 0;
-		for(JoueurMonopoly j:joueurs) {
-			if(!j.getEstBanqueroute()) nbJoueursEnJeu++;
-		}
-		return (nbJoueursEnJeu <= 1);
-	}
-
 	@Override
 	public Joueur estVainqueur() {
 		int res = 0;
@@ -174,18 +165,39 @@ public class PlateauMonopoly extends jeudeplateau.Plateau {
 		return getJoueur(res);
 	}
 	
+	/* PARTIE CASE */
+	
+	public Case getCaseActive() {
+		return getCase(getJoueurActif().getPosition());
+	}
+	
+	/* PARTIE JEU */
+	
+	@Override
+	public boolean finPartie() {
+		int nbJoueursEnJeu = 0;
+		for(JoueurMonopoly j:joueurs) {
+			if(!j.getEstBanqueroute()) nbJoueursEnJeu++;
+		}
+		return (nbJoueursEnJeu <= 1);
+	}
+
+	/*PARTIE CARTE */
+	
 	public Carte tirerCarteChance() {
 		Carte c = chance.remove(0);
 		if(!c.getNom().equals("Sortie"))
 			chance.add(c);
 		return c;
 	}
+	
 	public Carte tirerCarteCommunauté() {
 		Carte c = communauté.remove(0);
 		if(!c.getNom().equals("Sortie"))
 			communauté.add(c);
 		return c;
 	}
+	
 	public void remettreCarteSortiePrisonDansPaquet() {
 		
 		boolean carteDansPaquetChance = false;
@@ -200,6 +212,8 @@ public class PlateauMonopoly extends jeudeplateau.Plateau {
 			communauté.add(new CarteSortirPrison("Sortie", "Carte pour sortir de prison (à conserver)"));
 	}
 
+	
+	/* TOSTRING */
 	@Override
 	public String toString() {
 		return "PlateauMonopoly [toString()=" + super.getCase(1) + "]";

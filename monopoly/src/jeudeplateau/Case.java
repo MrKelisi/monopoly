@@ -26,30 +26,46 @@ public abstract class Case {
 	public String getNom() {
 		return nom;
 	}
-
+	
+	/* PARTIE COULEUR */
+	
 	public String getCouleur(){
 		return couleur;
 	}
+	
 	public void setCouleur(String couleur){
 		this.couleur = couleur;
 	}
 	
+	/* PARTIE SUR L ARGENT */
+	
 	public int getPrix() {
 		return prix;
 	}
+	
 	public void setPrix(int prix) {
 		this.prix = prix;
 	}
 	
 	public int getLoyer(){
-		return loyer.get(getNbMaison());
+		int apayer;
+		if(proprietaire.getListeCouleur().contains(this.getCouleur()))
+			apayer = loyer.get(0) * 2;			// loyer double si le joueur possède tous les terrains d'une couleur
+		else
+			apayer = loyer.get(getNbMaison());
+		return apayer;
 	}
+	
 	public void setLoyer(ArrayList<Integer> loyer){
 		this.loyer = loyer;
 	}
+	
+	/* PARTIE MAISON */
+	
 	public int getPrixMaison(){
 		return prixMaison;
 	}
+	
 	public void setPrixMaison(int prixMaison){
 		this.prixMaison = prixMaison;
 	}
@@ -57,24 +73,21 @@ public abstract class Case {
 	public int getNbMaison(){
 		return nbMaison;
 	}
+	
 	public void setNbMaison(int nbMaison){
 		this.nbMaison = nbMaison;
 	}
 	
 	public boolean getPeutMettreMaison(){
-		if(proprietaire.getListeCouleur().contains(this.getCouleur()))
-				this.peutMettreMaison = true;
+		if(proprietaire.getListeCouleur().contains(this.getCouleur())){
+			
+			this.peutMettreMaison = true;
+		}
 		return this.peutMettreMaison;
 	}
+	
 	public void setPeutMettreMaison(boolean peutMettreMaison){
 		this.peutMettreMaison = peutMettreMaison;
-	}
-	
-	public JoueurMonopoly getProprietaire() {
-		return proprietaire;
-	}
-	public void setProprietaire(JoueurMonopoly proprietaire) {
-		this.proprietaire = proprietaire;
 	}
 	
 	public void ajouterMaison(){
@@ -86,16 +99,29 @@ public abstract class Case {
 			System.out.println("Félicitations, vous avez posé une maison");
 		}
 	}
+	
+	/* PARTIE JOUEUR */
+	
+	public JoueurMonopoly getProprietaire() {
+		return proprietaire;
+	}
+	
+	public void setProprietaire(JoueurMonopoly proprietaire) {
+		this.proprietaire = proprietaire;
+	}
+	
+	/* PARTIE TERRAIN */
 
 	public boolean getReponseQuestion() {
 		return reponseQuestion;
 	}
+	
 	public void setReponseQuestion(boolean acheterTerrain) {
 		this.reponseQuestion = acheterTerrain;
 	}
 
+	/* PARTIE ABSTRAITE */ 
 	public abstract void actionCase(JoueurMonopoly joueur, PlateauMonopoly plateau, FenetrePrincipale fp);
-	
 	public abstract void fenetreAction(FenetrePrincipale fp);
 	
 }

@@ -17,6 +17,8 @@ public class Partie {
 	public final static long VITESSE_PARTIE = 1000;
 	public final static boolean PARTIE_AUTO = false;
 	
+	/* CONSTRUCTEUR PARTIE */
+	
 	public Partie(int nombreDeJoueurs, FenetrePrincipale fp) {
 		this.pm = new PlateauMonopoly(nombreDeJoueurs);
 		this.fp = fp;

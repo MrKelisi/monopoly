@@ -9,6 +9,7 @@ public abstract class Plateau {
 	private int nombreDeCases = 20;
 	private int nombreDeTours = 1;
 	private ArrayList<Case> cases = new ArrayList<Case>();
+	private ArrayList<Case> couleur = new ArrayList<Case>();
 	public Dés des = new Dés();
 	
 	public Plateau(int nombreDeJoueurs, int nbCases) {
@@ -19,25 +20,33 @@ public abstract class Plateau {
 		}
 	}
 	
+	/* PARTIE CASE */
+	
 	public Case getCase(int i) {
 		return this.cases.get(i);
 	}
+	
 	public void setCase(int i, Case caze) {
 		this.cases.set(i, caze);
 	}
+	
 	public int getNbCases() {
 		return this.nombreDeCases;
 	}
 	
+	/*public void setCouleur(String coul, Case caze){
+		this.couleur.set(coul, caze);
+	}*/
+	/* PARTIE JOUEUR */
 	
 	public int getNbJoueurs() {
 		return this.nombreDeJoueurs;
 	}
 	
-	
 	public int getJoueurActifID() {
 		return this.joueurActifID;
 	}
+	
 	public void setJoueurSuivant() {
 		this.joueurActifID++;
 		if(this.joueurActifID >= this.nombreDeJoueurs) {
@@ -46,10 +55,13 @@ public abstract class Plateau {
 		}
 	}
 	
+	/* PARTIE PLATEAU */
+	
 	public int getNbTours() {
 		return this.nombreDeTours;
 	}
 	
+	/* PARTIE ABSTRAITE */
 	public abstract boolean finPartie();
 	public abstract Joueur estVainqueur();
 	
