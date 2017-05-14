@@ -15,6 +15,13 @@ public abstract class Carte {
 		this.description = description;
 	}
 	
+	public String getNom() {
+		return this.titre;
+	}
+	public String getDesc() {
+		return this.description;
+	}
+	
 	public abstract void actionCarte(JoueurMonopoly joueur, PlateauMonopoly plateau, FenetrePrincipale fp);
 	
 }

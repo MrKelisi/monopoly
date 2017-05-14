@@ -16,7 +16,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
-public class FenetreAcheterTerrain {
+public class FenetreSortirPrison {
 	
 	private FenetrePrincipale fp;
 	private Stage stage;
@@ -25,12 +25,12 @@ public class FenetreAcheterTerrain {
 	private Button b_Oui;
 	private Button b_Non;
 	
-	public FenetreAcheterTerrain(FenetrePrincipale fp) {
+	public FenetreSortirPrison(FenetrePrincipale fp) {
 		
 		this.fp = fp;
 		
 		this.stage = new Stage();
-		this.stage.setTitle("Acheter ce terrain ?");
+		this.stage.setTitle("Sortir de prison ?");
 		this.stage.initOwner(fp.getStage());
 		this.stage.initModality(Modality.APPLICATION_MODAL);
 		
@@ -39,32 +39,16 @@ public class FenetreAcheterTerrain {
 	
 	private void initRoot() {
 		root.setPadding(new Insets(10,10,10,10));
-		root.setSpacing(10);
-		root.setStyle("-fx-background-color: #CDE6D0; ");
+		root.setSpacing(5);
 		
-		Image i_terrain;
-		
-		switch(fp.getPartie().getPM().getCaseActive().getNom()) {
-		case "Gare Montparnasse": i_terrain = new Image("images/gare.jpg"); break;
-		case "Gare de Lyon": i_terrain = new Image("images/gare.jpg"); break;
-		case "Gare du Nord": i_terrain = new Image("images/gare.jpg"); break;
-		case "Gare Saint-Lazare": i_terrain = new Image("images/gare.jpg"); break;
-		case "Compagnie des eaux": i_terrain = new Image("images/eau.jpg"); break;
-		case "Compagnie d'électricité": i_terrain = new Image("images/elec.jpg"); break;
-		default: {
-			String couleur = fp.getPartie().getPM().getCaseActive().getCouleur();
-			i_terrain = new Image("images/m_"+couleur+".jpg");
-		}; break;
-		}
-		
-		ImageView iv_terrain = new ImageView(i_terrain);
-		root.getChildren().add(iv_terrain);
+		Image i_prison = new Image("images/prison.jpg");
+		ImageView iv_prison = new ImageView(i_prison);
+		root.getChildren().add(iv_prison);
 		
 		VBox aside = new VBox();
-		aside.setSpacing(15);
 		root.getChildren().add(aside);
 		
-		l_Texte = new Label("Voulez vous acheter " + fp.getPartie().getPM().getCaseActive().getNom() + " pour " + fp.getPartie().getPM().getCaseActive().getPrix() + "€ ?");
+		l_Texte = new Label("Voulez vous acheter payer 50€ pour sortir de prison ?");
 		aside.getChildren().add(l_Texte);
 
 		HBox buttons_horiz = new HBox();
@@ -95,7 +79,7 @@ public class FenetreAcheterTerrain {
 		root = new HBox();
 		initRoot();
 		
-		Scene scene = new Scene(root,450,130);
+		Scene scene = new Scene(root,400,80);
 		stage.setScene(scene);
 		stage.show();
 	}
@@ -108,8 +92,8 @@ public class FenetreAcheterTerrain {
 
 		@Override
 		public void handle(ActionEvent event) {
-			fp.getPartie().getPM().getCaseActive().setReponseQuestion(true);
 			stage.close();
+			fp.getPartie().getPM().getCaseActive().setReponseQuestion(true);
 			event.consume();
 		}
 	}

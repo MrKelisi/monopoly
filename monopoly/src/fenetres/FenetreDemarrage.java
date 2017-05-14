@@ -8,6 +8,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -56,6 +58,12 @@ public class FenetreDemarrage {
 		b_Valider = new Button("Valider");
 		b_Valider.setOnAction(new EvtValider());
 		root.getChildren().add(b_Valider);
+		
+		l_Nombre.addEventHandler(KeyEvent.KEY_PRESSED, ev -> {
+	        if (ev.getCode() == KeyCode.ENTER) {
+	        	b_Valider.fire();
+	        }
+	    });
 	}
 	
 	public Stage getStage() {
@@ -67,10 +75,10 @@ public class FenetreDemarrage {
 		@Override
 		public void handle(ActionEvent event) {
 			choix = Integer.parseInt(l_Nombre.getFocusModel().getFocusedItem());
-			fp.getStage().show();
 			fp.setPartie(choix);
-			fp.getPartie().demarrerLaPartie();
+			fp.getStage().show();
 			stage.close();
+			event.consume();
 		}
 	}
 	
@@ -80,6 +88,7 @@ public class FenetreDemarrage {
 		public void handle(WindowEvent event) {
 			if(choix == 0)
 				System.exit(0);
+			event.consume();
 		}
 	}
 }

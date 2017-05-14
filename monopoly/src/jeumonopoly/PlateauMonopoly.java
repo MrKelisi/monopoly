@@ -3,15 +3,26 @@ package jeumonopoly;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import cartes.*;
+import cases.CaseAllerPrison;
+import cases.CaseChance;
+import cases.CaseCommunaute;
+import cases.CaseDepart;
+import cases.CaseGare;
+import cases.CaseImpots;
+import cases.CaseParcGratuit;
+import cases.CasePrison;
+import cases.CaseServicePublic;
+import cases.CaseTerrain;
+import jeudeplateau.Carte;
 import jeudeplateau.Case;
 import jeudeplateau.Joueur;
-import jeumonopoly.CarteChance;
 
 public class PlateauMonopoly extends jeudeplateau.Plateau {
 
 	private ArrayList<JoueurMonopoly> joueurs = new ArrayList<JoueurMonopoly>();
-	private ArrayList<CarteChance> chance = new ArrayList<CarteChance>();
-	private ArrayList<CarteCommunaute> communauté = new ArrayList<CarteCommunaute>();
+	private ArrayList<Carte> chance = new ArrayList<Carte>();
+	private ArrayList<Carte> communauté = new ArrayList<Carte>();
 	
 	public PlateauMonopoly(int nombreDeJoueurs) {
 		super(nombreDeJoueurs, 40);
@@ -73,25 +84,48 @@ public class PlateauMonopoly extends jeudeplateau.Plateau {
 		setCase(37, new CaseTerrain("Avenue des Champs-Élysées", 350, new ArrayList<Integer>(Arrays.asList(35, 175, 500, 1100, 1300, 1500)), 200, 0, "bleu"));
 		setCase(39, new CaseTerrain("Rue de la Paix", 400, new ArrayList<Integer>(Arrays.asList(50, 200, 600, 1400, 1700, 2000)), 200, 0, "bleu"));
 		
-		/* INITIALISATION DES CARTES */
-		chance.add(new CarteChance("Amende", "Amende pour excès de vitesse, payez 10€"));
-		chance.add(new CarteChance("Impot", "Réparation de la voirie : payez 40€/maison et 115€/hôtel"));
-		chance.add(new CarteChance("Frais de scolarité", "Payez 150€ de frais de scolarité"));
-		chance.add(new CarteChance("Prison", "Allez en prison"));
-		chance.add(new CarteChance("Reparation", "Payez 25€/maison et 100€/hôtel pour des réparations"));
-		chance.add(new CarteChance("Amende2", "Amende pour ivresse, payez 20€"));
-		chance.add(new CarteChance("Versement", "La banque vous verse un dividende de 50€"));
-		chance.add(new CarteChance("CaseDep", "Avancez jusqu'à la case départ et recevez 200€"));
-		chance.add(new CarteChance("Gain", "Vos terrains vous rapportent 150€"));
-		chance.add(new CarteChance("Gagne", "Vous avez gagné le prix de mots croisés ! Recevez 100€"));
-		chance.add(new CarteChance("Paix", "Rendez-vous Rue de la Paix"));
-		chance.add(new CarteChance("HM", "Rendez-vous à l'Avenue Henri-Martin. Si vous passez par la case départ, recevez 200€"));
-		chance.add(new CarteChance("Vilette", "Avancez au Boulevard de la Vilette. Si vous passez par la case départ, recevez 200€"));
-		chance.add(new CarteChance("Lyon", "Avancez à la gare de Lyon. Si vous passez par la case départ, recevez 200€"));
-		chance.add(new CarteChance("Recul", "Reculez de 3 cases"));
-		chance.add(new CarteChance("Sortie", "Carte pour sortir de prison (à conserver)"));
+		
+		/* INITIALISATION DES CARTES CHANCES */
+		chance.add(new CartePayerArgent("Amende", "Amende pour excès de vitesse : 15€.", 15));
+		chance.add(new CartePayerArgent("Amende", "Amende pour ivresse : 20€.", 20));
+		chance.add(new CartePayerArgent("Président du conseil d'administration", "Vous avez été élu président du conseil d'administration. \nVersez 50€ à chaque joueur.", 50));
+		
+		chance.add(new CarteRecevoirArgent("Versement", "La banque vous verse un dividende de 50€.", 50));
+		chance.add(new CarteRecevoirArgent("Gain", "Vos terrains vous rapportent. Touchez 150€.", 150));
+		chance.add(new CarteRecevoirArgent("Mots croisés", "Vous avez gagné le prix de mots croisés ! \nRecevez 100€.", 100));
+		
+		chance.add(new CarteDeplacement("Case Départ", "Avancez jusqu'à la case départ. \n(Recevez 200€)", 0, false));
+		chance.add(new CarteDeplacement("Rue de la Paix", "Rendez-vous Rue de la Paix.", 39, false));
+		chance.add(new CarteDeplacement("Henri-Martin", "Rendez-vous à l'Avenue Henri-Martin. \nSi vous passez par la case départ, recevez 200€.", 24, false));
+		chance.add(new CarteDeplacement("Boulevard de la Villette", "Avancez au Boulevard de la Vilette. \nSi vous passez par la case départ, recevez 200€.", 11, false));
+		chance.add(new CarteDeplacement("Gare de Lyon", "Avancez à la gare de Lyon. Si vous passez par la case départ, recevez 200€.", 15, false));
+		chance.add(new CarteDeplacement("Reculez", "Reculez de 3 cases.", 3, true));
+
+		chance.add(new CarteDeplacement("Prison", "Allez en prison. \nAvancez tout droit en prison. \nNe passez pas par la case départ, ne recevez pas 200€.", 10, false));
+		chance.add(new CarteSortirPrison("Sortie", "Vous êtes libéré de prison. \n(Cette carte doit être conservée)"));
+		
 		Collections.shuffle(chance);
 		
+		
+		/* INITIALISATION DES CARTES COMMUNAUTÉS */
+		communauté.add(new CartePayerArgent("Frais de scolarité", "Payez 150€ de frais de scolarité.", 50));
+		communauté.add(new CartePayerArgent("Frais d'hospitalisation", "Payez 100€ de frais d'hospitalisation.", 100));
+		communauté.add(new CartePayerArgent("Médecin", "Visite chez le médecin : payez 50€.", 50));
+		
+		communauté.add(new CarteRecevoirArgent("Remboursement", "Les impôts vous remboursent 20€.", 20));
+		communauté.add(new CarteRecevoirArgent("Assurance vie", "Votre assurance vie vous rapporte 100€.", 100));
+		communauté.add(new CarteRecevoirArgent("Anniversaire", "C'est votre anniversaire : \nchaque joueur doit vous donner 10€.", 10));
+		communauté.add(new CarteRecevoirArgent("Commission d'expert", "Commission d'expert immobilier. \nRecevez 25€.", 25));
+		communauté.add(new CarteRecevoirArgent("Prix de beauté", "Vous avez gagné le deuxième prix de beauté. \nRecevez 10€.", 10));
+		communauté.add(new CarteRecevoirArgent("Stock", "La vente de votre stock vous rapporte 50€.", 50));
+		communauté.add(new CarteRecevoirArgent("Héritage", "Vous héritez de 100€.", 100));
+		communauté.add(new CarteRecevoirArgent("Placement", "Votre placement vous rapporte. \nRecevez 100€.", 100));
+		communauté.add(new CarteRecevoirArgent("Erreur de la Banque", "Erreur de la Banque en votre faveur. \nRecevez 200€.", 200));
+		
+		chance.add(new CarteDeplacement("Prison", "Allez en prison. \nAvancez tout droit en prison. \nNe passez pas par la case départ, ne recevez pas 200€.", 10, false));
+		chance.add(new CarteSortirPrison("Sortie", "Vous êtes libéré de prison. \n(Cette carte doit être conservée)"));
+		
+		Collections.shuffle(communauté);
 	}
 	
 	public void deplacerJoueur(JoueurMonopoly joueur, int nombreDeCases) {
@@ -99,7 +133,7 @@ public class PlateauMonopoly extends jeudeplateau.Plateau {
 		
 		if((joueur.getPosition() + nombreDeCases) >= getNbCases()) {
 			pos = (joueur.getPosition() + nombreDeCases) % getNbCases();
-			System.out.println(" > " + joueur.getNom() + " passe par la case départ et gagné 200€ !");
+			System.out.println(" > " + joueur.getNom() + " passe par la case départ et gagne 200€ !");
 			joueur.ajouterArgent(200);
 		}
 		else
@@ -138,6 +172,32 @@ public class PlateauMonopoly extends jeudeplateau.Plateau {
 				res = i;
 		}
 		return getJoueur(res);
+	}
+	
+	public Carte tirerCarteChance() {
+		Carte c = chance.remove(0);
+		if(!c.getNom().equals("Sortie"))
+			chance.add(c);
+		return c;
+	}
+	public Carte tirerCarteCommunauté() {
+		Carte c = communauté.remove(0);
+		if(!c.getNom().equals("Sortie"))
+			communauté.add(c);
+		return c;
+	}
+	public void remettreCarteSortiePrisonDansPaquet() {
+		
+		boolean carteDansPaquetChance = false;
+		for(Carte c:chance) {
+			if(c.getNom().equals("Sortie"))
+				carteDansPaquetChance = true;  // TRÈS TRÈS MOCHE, OUI
+		}
+		
+		if(carteDansPaquetChance)
+			chance.add(new CarteSortirPrison("Sortie", "Carte pour sortir de prison (à conserver)"));
+		else
+			communauté.add(new CarteSortirPrison("Sortie", "Carte pour sortir de prison (à conserver)"));
 	}
 
 	@Override

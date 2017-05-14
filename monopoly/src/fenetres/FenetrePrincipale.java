@@ -37,6 +37,7 @@ public class FenetrePrincipale {
 	private FenetreCarteChance fch = new FenetreCarteChance(this);
 	private FenetreCarteCommunaute fco = new FenetreCarteCommunaute(this);
 	private FenetreAcheterTerrain fat = new FenetreAcheterTerrain(this);
+	private FenetreSortirPrison fprison = new FenetreSortirPrison(this);
 	private Partie partie;
 
 	public FenetrePrincipale(Stage primaryStage) {
@@ -67,12 +68,15 @@ public class FenetrePrincipale {
 			l_Logs.get(i).setFont(Font.font("Consolas", 12));
 			l_Logs.get(i).setTranslateX(100);
 			l_Logs.get(i).setTranslateY(500 - i*16);
+			l_Logs.get(i).setMaxWidth(460);
+			l_Logs.get(i).setMaxHeight(16);
 			root.getChildren().add(l_Logs.get(i));
 		}
 
 		tourSuivant.setTranslateX(473);
 		tourSuivant.setTranslateY(533);
 		tourSuivant.setOnAction(new EvtTourSuivant());
+		tourSuivant.setDefaultButton(true);
 		if(!partie.PARTIE_AUTO)
 			root.getChildren().add(tourSuivant);
 	}
@@ -130,7 +134,7 @@ public class FenetrePrincipale {
 		}
 		
 		refreshLabels(partie.getPM());
-		
+		partie.demarrerLaPartie();
 	}
 	
 	public void logMessages(String msg) {
@@ -170,7 +174,17 @@ public class FenetrePrincipale {
 		});
 	}
 	
-	public void tirerCarte(boolean carteChance, String titre, String description) {
+	public void afficherFenetrePrison() {
+		
+		Platform.runLater(new Runnable() {
+            @Override public void run() {
+            	
+            	fprison.afficherFenetre();
+            }
+		});
+	}
+	
+	public void afficherFenetreCarte(boolean carteChance, String titre, String description) {
 		
 		Platform.runLater(new Runnable() {
             @Override public void run() {

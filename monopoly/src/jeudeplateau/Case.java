@@ -17,7 +17,7 @@ public abstract class Case {
 	private boolean peutMettreMaison = false;
 	private int nbMaison;
 	private JoueurMonopoly proprietaire;
-	private boolean acheterTerrain = false;
+	private boolean reponseQuestion = false;
 
 	public Case(String nom) {
 		this.nom = nom;
@@ -87,11 +87,11 @@ public abstract class Case {
 		}
 	}
 
-	public boolean getAcheterTerrain() {
-		return acheterTerrain;
+	public boolean getReponseQuestion() {
+		return reponseQuestion;
 	}
-	public void setAcheterTerrain(boolean acheterTerrain) {
-		this.acheterTerrain = acheterTerrain;
+	public void setReponseQuestion(boolean acheterTerrain) {
+		this.reponseQuestion = acheterTerrain;
 	}
 
 	public abstract void actionCase(JoueurMonopoly joueur, PlateauMonopoly plateau, FenetrePrincipale fp);

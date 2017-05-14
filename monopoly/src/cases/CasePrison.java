@@ -1,6 +1,8 @@
-package jeumonopoly;
+package cases;
 
 import jeudeplateau.Case;
+import jeumonopoly.JoueurMonopoly;
+import jeumonopoly.PlateauMonopoly;
 
 import java.util.Random;
 
@@ -26,15 +28,15 @@ public class CasePrison extends Case {
 			
 			es.println("Voulez vous payer 50€ pour sortir de prison ? ");
 			
-			Random rand = new Random();
-			boolean rep = rand.nextBoolean();
-			
-			if(rep){
+			if(getReponseQuestion()){
 				es.println("OUI : " + joueur.getNom() + " décide de payer 50€ pour sortir de prison.");
 				joueur.retirerArgent(50);
+				setReponseQuestion(false);
 				joueur.setEstPrison(false);
 				joueur.setToursEnPrison(1);
 				plateau.deplacerJoueur(joueur, lancé);
+				es.println("" + joueur.getNom() + " lance les dés... [" + d1 + "][" + d2 + "]... et obtient un " + lancé + " !");
+				es.println("" + joueur.getNom() + " avance de " + lancé + " cases et atterit sur " + plateau.getCaseActive().getNom());
 			}
 			else{
 				if(tour > 2) {
@@ -43,6 +45,8 @@ public class CasePrison extends Case {
 					joueur.setEstPrison(false);
 					joueur.setToursEnPrison(1);
 					plateau.deplacerJoueur(joueur, lancé);
+					es.println("" + joueur.getNom() + " lance les dés... [" + d1 + "][" + d2 + "]... et obtient un " + lancé + " !");
+					es.println("" + joueur.getNom() + " avance de " + lancé + " cases et atterit sur " + plateau.getCaseActive().getNom());
 				}
 				else{
 					es.println("NON : " + joueur.getNom() + " (tour " + tour + ") décide de ne pas payer et lance ses dés...");
@@ -62,6 +66,7 @@ public class CasePrison extends Case {
 		else{
 			es.println(" > Le joueur observe les criminels");
 		}
+		
 	}
 	
 	@Override
@@ -71,7 +76,17 @@ public class CasePrison extends Case {
 
 	@Override
 	public void fenetreAction(FenetrePrincipale fp) {
-		fp.getPartie().reprendrePartie();
+		
+		if(fp.getPartie().PARTIE_AUTO) {
+			Random rand = new Random();
+			if(rand.nextBoolean())
+				setReponseQuestion(true);
+			fp.getPartie().reprendrePartie();
+		}
+		else if(fp.getPartie().getPM().getJoueurActif().getEstPrison())
+			fp.afficherFenetrePrison();
+		else
+			fp.getPartie().reprendrePartie();
 	}
 	
 }

@@ -22,7 +22,7 @@ public class FenetreCarteChance {
 	private HBox root;
 	private VBox carte;
 	private Button b_Ok;
-	private Label l_Titre = new Label("?");
+	private Label l_Titre = new Label("CHANCE");
 	private Label l_Description = new Label("?");
 	
 	public FenetreCarteChance(FenetrePrincipale f) {
@@ -32,7 +32,7 @@ public class FenetreCarteChance {
 		this.stage = new Stage();
 		this.stage.setTitle("Carte Chance");
 		this.stage.initOwner(fp.getStage());
-		this.stage.initModality(Modality.WINDOW_MODAL);
+		this.stage.initModality(Modality.APPLICATION_MODAL);
 		
 		root = new HBox();
 		initRoot();
@@ -64,6 +64,7 @@ public class FenetreCarteChance {
 		carte.getChildren().add(l_Description);
 		
 		b_Ok = new Button("OK");
+		b_Ok.setDefaultButton(true);
 		b_Ok.setOnAction(new EvtValider());
 		carte.getChildren().add(b_Ok);
 		
@@ -74,7 +75,7 @@ public class FenetreCarteChance {
 		return stage;
 	}
 	public void setTitre(String titre) {
-		l_Titre = new Label(titre);
+		l_Titre = new Label("CHANCE");
 	}
 	public void setDescription(String description) {
 		l_Description = new Label(description);
@@ -94,13 +95,15 @@ public class FenetreCarteChance {
 		@Override
 		public void handle(ActionEvent event) {
 			stage.close();
+			event.consume();
 		}
 	}
 	private class EvtQuitter implements EventHandler<WindowEvent> {
 
 		@Override
 		public void handle(WindowEvent event) {
-			stage.close();
+			fp.getPartie().reprendrePartie();
+			event.consume();
 		}
 	}
 }

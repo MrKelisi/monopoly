@@ -11,6 +11,7 @@ public class JoueurMonopoly extends Joueur {
 	private boolean estPrison = false;
 	private boolean possedeCouleurTerrain = false;
 	private int toursEnPrison = 1;
+	private boolean possedeCarteSortiePrison = false;
 	private int nombreGaresPossedees = 0;
 	private int nombreServicesPossedes = 0;
 	private ArrayList <Case> terrains = new ArrayList <Case>();
@@ -25,6 +26,13 @@ public class JoueurMonopoly extends Joueur {
 	}
 	public void setToursEnPrison(int toursEnPrison) {
 		this.toursEnPrison = toursEnPrison;
+	}
+	
+	public boolean getCarteSortiePrison() {
+		return possedeCarteSortiePrison;
+	}
+	public void setCarteSortiePrison(boolean b) {
+		possedeCarteSortiePrison = b;
 	}
 	
 	public int getNbGares() {

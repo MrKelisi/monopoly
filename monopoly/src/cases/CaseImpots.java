@@ -1,8 +1,10 @@
-package jeumonopoly;
+package cases;
 
 import fenetres.FenetrePrincipale;
 import io.Console;
 import jeudeplateau.Case;
+import jeumonopoly.JoueurMonopoly;
+import jeumonopoly.PlateauMonopoly;
 
 public class CaseImpots extends Case {
 

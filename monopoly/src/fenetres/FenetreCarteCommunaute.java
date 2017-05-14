@@ -22,7 +22,7 @@ public class FenetreCarteCommunaute {
 	private HBox root;
 	private VBox carte;
 	private Button b_Ok;
-	private Label l_Titre = new Label("?");
+	private Label l_Titre = new Label("COMMUNAUTÉ");
 	private Label l_Description = new Label("?");
 	
 	public FenetreCarteCommunaute(FenetrePrincipale f) {
@@ -64,6 +64,7 @@ public class FenetreCarteCommunaute {
 		carte.getChildren().add(l_Description);
 		
 		b_Ok = new Button("OK");
+		b_Ok.setDefaultButton(true);
 		b_Ok.setOnAction(new EvtValider());
 		carte.getChildren().add(b_Ok);
 		
@@ -74,7 +75,7 @@ public class FenetreCarteCommunaute {
 		return stage;
 	}
 	public void setTitre(String titre) {
-		l_Titre = new Label(titre);
+		l_Titre = new Label("COMMUNAUTÉ");
 	}
 	public void setDescription(String description) {
 		l_Description = new Label(description);
@@ -94,13 +95,15 @@ public class FenetreCarteCommunaute {
 		@Override
 		public void handle(ActionEvent event) {
 			stage.close();
+			event.consume();
 		}
 	}
 	private class EvtQuitter implements EventHandler<WindowEvent> {
 
 		@Override
 		public void handle(WindowEvent event) {
-			stage.close();
+			fp.getPartie().reprendrePartie();
+			event.consume();
 		}
 	}
 }

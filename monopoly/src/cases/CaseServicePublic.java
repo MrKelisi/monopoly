@@ -1,9 +1,11 @@
-package jeumonopoly;
+package cases;
 
 import java.util.Random;
 import fenetres.FenetrePrincipale;
 import io.Console;
 import jeudeplateau.Case;
+import jeumonopoly.JoueurMonopoly;
+import jeumonopoly.PlateauMonopoly;
 
 public class CaseServicePublic extends Case {
 
@@ -18,7 +20,7 @@ public class CaseServicePublic extends Case {
 		Console es = new Console(fp);
 		
 		if(this.getProprietaire() == null) {
-			if(getAcheterTerrain()) {
+			if(getReponseQuestion()) {
 				setProprietaire(joueur, fp);
 				joueur.retirerArgent(this.getPrix());
 				es.println(" > " + joueur.getNom() + " achète " + this.getNom() + " pour " + this.getPrix() + "€");
@@ -65,7 +67,7 @@ public class CaseServicePublic extends Case {
 		if(fp.getPartie().PARTIE_AUTO) {
 			Random rand = new Random();
 			if(rand.nextBoolean())
-				setAcheterTerrain(true);
+				setReponseQuestion(true);
 			fp.getPartie().reprendrePartie();
 		}
 		else if(this.getProprietaire() == null)

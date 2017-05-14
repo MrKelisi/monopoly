@@ -14,6 +14,7 @@ public class Partie {
 	private PlateauMonopoly pm;
 	private FenetrePrincipale fp;
 	private boolean pausePartie = false;
+	public final static long VITESSE_PARTIE = 1000;
 	public final static boolean PARTIE_AUTO = false;
 	
 	public Partie(int nombreDeJoueurs, FenetrePrincipale fp) {
@@ -65,7 +66,7 @@ public class Partie {
                 					
                 					caze = pm.getCase(joueur.getPosition());
                 				}
-            					Thread.sleep(1000);
+            					Thread.sleep(VITESSE_PARTIE);
 
                 				pausePartie = true;
             					caze.fenetreAction(fp);
@@ -85,7 +86,7 @@ public class Partie {
                 			fp.deplacerPion(joueur);
                 			fp.refreshLabels(pm);
                 			
-                			pausePartie = true;
+                			pausePartie = !joueur.getEstBanqueroute();
                 			while(pausePartie && !PARTIE_AUTO){ Thread.sleep(200); }
                 			
                 			es.println("");
