@@ -1,7 +1,6 @@
 package fenetres;
 
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -26,9 +25,9 @@ public class FenetreDemarrage {
 	private Button b_Valider;
 	private int choix = 0;
 	
-	public FenetreDemarrage(FenetrePrincipale f) {
+	public FenetreDemarrage(FenetrePrincipale fp) {
 		
-		this.fp = f;
+		this.fp = fp;
 		
 		this.stage = new Stage();
 		this.stage.setTitle("Monopoly");
@@ -59,6 +58,12 @@ public class FenetreDemarrage {
 		b_Valider = new Button("Valider");
 		b_Valider.setOnAction(new EvtValider());
 		root.getChildren().add(b_Valider);
+		
+		l_Nombre.addEventHandler(KeyEvent.KEY_PRESSED, ev -> {
+	        if (ev.getCode() == KeyCode.ENTER) {
+	        	b_Valider.fire();
+	        }
+	    });
 	}
 	
 	public Stage getStage() {
@@ -70,10 +75,10 @@ public class FenetreDemarrage {
 		@Override
 		public void handle(ActionEvent event) {
 			choix = Integer.parseInt(l_Nombre.getFocusModel().getFocusedItem());
-			fp.getStage().show();
 			fp.setPartie(choix);
-			fp.getPartie().demarrerLaPartie();
+			fp.getStage().show();
 			stage.close();
+			event.consume();
 		}
 	}
 	
@@ -83,6 +88,7 @@ public class FenetreDemarrage {
 		public void handle(WindowEvent event) {
 			if(choix == 0)
 				System.exit(0);
+			event.consume();
 		}
 	}
 }

@@ -1,23 +1,26 @@
 package jeumonopoly;
 
 import fenetres.FenetrePrincipale;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
+import io.Console;
+import jeudeplateau.Case;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Worker;
-import javafx.scene.control.Label;
-import jeudeplateau.Case;
-import jeudeplateau.Joueur;
 
 public class Partie {
 
-	private PlateauMonopoly plateauM;
+	private PlateauMonopoly pm;
 	private FenetrePrincipale fp;
-	private Label l_PG = new Label("0 €");
+	private boolean pausePartie = false;
+	public final static long VITESSE_PARTIE = 1000;
+	public final static boolean PARTIE_AUTO = false;
+	
+	/* CONSTRUCTEUR PARTIE */
 	
 	public Partie(int nombreDeJoueurs, FenetrePrincipale fp) {
-		this.plateauM = new PlateauMonopoly(nombreDeJoueurs);
+		this.pm = new PlateauMonopoly(nombreDeJoueurs);
 		this.fp = fp;
 	}
 	
@@ -31,64 +34,79 @@ public class Partie {
 
                     @Override
                     protected Void call() throws Exception {
-                    	System.out.println("La partie démarre!");
+                    	Console es = new Console(fp);
+                    	es.println("La partie démarre!");
                 		
-                		Joueur joueur;
+                		JoueurMonopoly joueur;
                 		int lancé;
                 		Case caze;
                 		
-                		while(!plateauM.finPartie() && plateauM.getNbTours() <= 100) {
+                		while(!pm.finPartie() && pm.getNbTours() <= 100) {
                 			
-                			joueur = plateauM.getJoueurActif();
+                			joueur = pm.getJoueurActif();
                 			
-                			if(plateauM.getJoueurActifID() == 0)
-                				System.out.println("\n==================\n DEBUT DU TOUR " + plateauM.getNbTours() + "\n==================");
+                			if(pm.getJoueurActifID() == 0)
+                				es.println("=== DEBUT DU TOUR " + pm.getNbTours() + " ===");
                 				
-                			System.out.println("\nC'est au tour de " + joueur.getNom() + " (possède " + joueur.getArgent() + "€)");
+                			es.println("C'est au tour de " + joueur.getNom() + " (possède " + joueur.getArgent() + "€)");
                 			
                 			if(!joueur.getEstBanqueroute()) {
-                				Thread.sleep(800);
+                				Thread.sleep(VITESSE_PARTIE);
                 				
-                				lancé = plateauM.des.lancerDes();
+                				lancé = pm.des.lancerDes();
                 				
                 				if(!joueur.getEstPrison()) {
-                					System.out.println("" + joueur.getNom() + " lance les dés... [" + plateauM.des.getDe1() + "][" + plateauM.des.getDe2() + "]... et obtient un " + lancé + " !");
-                					plateauM.deplacerJoueur(joueur, lancé);
-                					fp.deplacerPion(plateauM);
-                					Thread.sleep(1000);
+                					es.println("" + joueur.getNom() + " lance les dés... [" + pm.des.getDe1() + "][" + pm.des.getDe2() + "]... et obtient un " + lancé + " !");
+                					pm.deplacerJoueur(joueur, lancé);
+                					fp.deplacerPion(joueur);
                 					
-                					caze = plateauM.getCase(joueur.getPosition());
-                					System.out.println("" + joueur.getNom() + " avance de " + lancé + " cases et atterit sur la case " + joueur.getPosition() + " : " + caze.getNom());
+                					caze = pm.getCase(joueur.getPosition());
+                					es.println("" + joueur.getNom() + " avance de " + lancé + " cases et atterit sur " + caze.getNom());
                 				}
                 				else {
-                					System.out.println("Le joueur est en prison.");
+                					es.println("Le joueur est en prison.");
                 					
-                					caze = plateauM.getCase(joueur.getPosition());
+                					caze = pm.getCase(joueur.getPosition());
                 				}
-                				
-                				caze.actionCase(joueur, plateauM, fp);
-                				System.out.println("" + joueur.getNom() + " possède à la fin de son tour " + joueur.getArgent() + "€ et les terrains suivants :\n" + joueur.listTerrains());
+            					Thread.sleep(VITESSE_PARTIE);
+
+                				pausePartie = true;
+            					caze.fenetreAction(fp);
+            					
+                    			while(pausePartie && !PARTIE_AUTO){ Thread.sleep(200); }
+                    			
+                				caze.actionCase(joueur, pm, fp);
+                    			
+                				es.println("" + joueur.getNom() + " possède à la fin de son tour " + joueur.getArgent() + "€");
+                				System.out.println("et les terrains suivants :\n" + joueur.getListeStringTerrains());
                 			}
                 			else {
-                				System.out.println("" + plateauM.getJoueurActif().getNom() + " est en banqueroute, il ne joue pas.");
+                				es.println("" + pm.getJoueurActif().getNom() + " est en banqueroute, il ne joue pas.");
                 			}
-
-                			fp.deplacerPion(plateauM);
-                			fp.refreshLabels(plateauM);
-                			plateauM.setJoueurSuivant();
+                			
+                			Thread.sleep(400);
+                			fp.deplacerPion(joueur);
+                			fp.refreshLabels(pm);
+                			
+                			pausePartie = !joueur.getEstBanqueroute();
+                			while(pausePartie && !PARTIE_AUTO){ Thread.sleep(200); }
+                			
+                			es.println("");
+                			pm.setJoueurSuivant();
                 			
                 		}
                 		
-                		System.out.println("\n============================\n Fin de la partie");
-                		System.out.println(" Le vainqueur est " + plateauM.estVainqueur().getNom() + " !\n============================");
+                		es.println("=== Fin de la partie ===");
+                		es.println(" Le vainqueur est " + pm.estVainqueur().getNom() + " !");
                         
-                		fp.afficherVainqueur(plateauM);
+                		fp.afficherVainqueur(pm);
                 		
                 		return null;
                     }
                 };
             }
         };
+        
         /*
         partieService.stateProperty().addListener(new ChangeListener<Worker.State>() {
 
@@ -104,19 +122,16 @@ public class Partie {
 	}
 	
 	public PlateauMonopoly getPM() {
-		return this.plateauM;
+		return this.pm;
 	}
 	
-	public Label getLabelPG() {
-		return this.l_PG;
-	}
-	public void setLabelPG(String s) {
-		this.l_PG.setText(s);
+	public void reprendrePartie() {
+		this.pausePartie = false;
 	}
 
 	@Override
 	public String toString() {
-		return "Partie [plateauM=" + plateauM.toString() + "]";
+		return "Partie [plateauM=" + pm.toString() + "]";
 	}
 	
 }

@@ -1,82 +1,65 @@
 package jeudeplateau;
 
-import jeudeplateau.Joueur;
+import java.util.ArrayList;
 
 public abstract class Plateau {
 
-	private int joueurActif;
-	private int nombreDeJoueurs;
-	private Joueur[] joueurs;
+	private int joueurActifID = 0;
+	private int nombreDeJoueurs = 2;
 	private int nombreDeCases = 20;
-	private Case[] cases;
-	private int nombreDeTours;
+	private int nombreDeTours = 1;
+	private ArrayList<Case> cases = new ArrayList<Case>();
 	public Dés des = new Dés();
 	
 	public Plateau(int nombreDeJoueurs, int nbCases) {
 		this.nombreDeJoueurs = nombreDeJoueurs;
-		this.joueurActif = 0;
 		this.nombreDeCases = nbCases;
-		this.nombreDeTours = 1;
-		this.cases = new Case[this.nombreDeCases];
-		this.joueurs = new Joueur[this.nombreDeJoueurs];
+		for(int i=0; i<nombreDeCases; i++) {
+			cases.add(null);
+		}
 	}
 	
+	/* PARTIE CASE */
+	
 	public Case getCase(int i) {
-		return this.cases[i];
+		return this.cases.get(i);
 	}
+	
 	public void setCase(int i, Case caze) {
-		this.cases[i] = caze;
+		this.cases.set(i, caze);
+		cases.get(i).setId(i);
 	}
+	
 	public int getNbCases() {
 		return this.nombreDeCases;
 	}
+
+	/* PARTIE JOUEUR */
 	
-	
-	public Joueur getJoueur(int i) {
-		return this.joueurs[i];
-	}
-	public void setJoueur(int i, Joueur joueur) {
-		this.joueurs[i] = joueur;
-	}
 	public int getNbJoueurs() {
 		return this.nombreDeJoueurs;
 	}
 	
-	
 	public int getJoueurActifID() {
-		return this.joueurActif;
+		return this.joueurActifID;
 	}
-	public Joueur getJoueurActif() {
-		return this.joueurs[this.joueurActif];
-	}
+	
 	public void setJoueurSuivant() {
-		this.joueurActif++;
-		if(this.joueurActif >= this.nombreDeJoueurs) {
-			this.joueurActif = 0;
+		this.joueurActifID++;
+		if(this.joueurActifID >= this.nombreDeJoueurs) {
+			this.joueurActifID = 0;
 			this.nombreDeTours++;
 		}
 	}
 	
+	/* PARTIE PLATEAU */
 	
 	public int getNbTours() {
 		return this.nombreDeTours;
 	}
 	
-	public boolean finPartie() {
-		int nbJoueursEnJeu = 0;
-		for(Joueur j:joueurs) {
-			if(!j.getEstBanqueroute()) nbJoueursEnJeu++;
-		}
-		return (nbJoueursEnJeu <= 1);
-	}
-	
-	public Joueur estVainqueur() {
-		int res = 0;
-		for(int i=0; i<joueurs.length; i++) {
-			if(getJoueur(i).getArgent() > getJoueur(res).getArgent())
-				res = i;
-		}
-		return getJoueur(res);
-	}
+	/* PARTIE ABSTRAITE */
+	public abstract boolean finPartie();
+	public abstract Joueur estVainqueur();
 	
 }

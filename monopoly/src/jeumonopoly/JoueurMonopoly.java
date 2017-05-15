@@ -1,0 +1,183 @@
+package jeumonopoly;
+
+import java.util.ArrayList;
+import javafx.application.Platform;
+import javafx.scene.paint.Color;
+import jeudeplateau.Case;
+import jeudeplateau.Joueur;
+
+public class JoueurMonopoly extends Joueur {
+
+	private int argent = 1200;
+	private boolean estBanqueroute = false;
+	private boolean estPrison = false;
+	private int toursEnPrison = 1;
+	private boolean possedeCarteSortiePrison = false;
+	private int nombreGaresPossedees = 0;
+	private int nombreServicesPossedes = 0;
+	private ArrayList<Case> terrains = new ArrayList<Case>();
+	private ArrayList<String> couleurs = new ArrayList<String>();
+	
+	/* CONSTRUCTEUR */
+	
+	public JoueurMonopoly(String nom, int id) {
+		super(nom, id);
+	}
+
+	
+	/* PARTIE PRISON  */
+	
+	public int getToursEnPrison() {
+		return toursEnPrison;
+	}
+	public void setToursEnPrison(int toursEnPrison) {
+		this.toursEnPrison = toursEnPrison;
+	}
+	
+	public boolean getEstPrison(){
+		return this.estPrison;
+	}
+	public void setEstPrison(boolean prison){
+		this.estPrison = prison;
+	}
+	
+	public boolean getCarteSortiePrison() {
+		return possedeCarteSortiePrison;
+	}
+	public void setCarteSortiePrison(boolean b) {
+		possedeCarteSortiePrison = b;
+	}
+	
+	/*  PARTIE TERRAINS  */
+	
+		// GARES ET SERVICES
+	public int getNbGares() {
+		return this.nombreGaresPossedees;
+	}
+	public void setNbGares(int nb) {
+		this.nombreGaresPossedees = nb;
+	}
+	
+	public int getNbServices() {
+		return this.nombreServicesPossedes;
+	}
+	public void setNbServices(int nb) {
+		this.nombreServicesPossedes = nb;
+	}
+	
+		// TERRAINS
+	public void ajouterTerrain(Case terrain) {
+		this.terrains.add(terrain);
+	}
+	
+	public String getListeStringTerrains() {
+		String s = "";
+		for(Case t:this.terrains) {
+			s+=(t.getNom()+"\n");
+		}
+		return s;
+	}
+	
+	public ArrayList<Case> getTerrains(){
+		return this.terrains;
+	}
+		
+	// COULEURS				(A AMELIORER JE PENSE)
+	public ArrayList<String> getListeCouleur(){
+		int brun = 0;
+		int turquoise = 0;
+		int mauve = 0;
+		int orange = 0;
+		int rouge = 0;
+		int jaune = 0;
+		int vert = 0;
+		int bleu = 0;
+		for(Case t:this.getTerrains()){
+			if(t.getCouleur() == "brun")
+				brun += 1;
+			if(t.getCouleur() == "turquoise")
+				turquoise += 1;
+			if(t.getCouleur() == "mauve")
+				mauve += 1;
+			if(t.getCouleur() == "orange")
+				orange += 1;
+			if(t.getCouleur() == "rouge")
+				rouge += 1;
+			if(t.getCouleur() == "jaune")
+				jaune += 1;
+			if(t.getCouleur() == "vert")
+				vert += 1;
+			if(t.getCouleur() == "bleu")
+				bleu += 1;
+		}
+		
+		if(brun == 2 && !couleurs.contains("brun"))
+			couleurs.add("brun");
+		
+		if(turquoise == 3 && !couleurs.contains("turquoise"))
+			couleurs.add("turquoise");
+		
+		if(mauve == 3 && !couleurs.contains("mauve"))
+			couleurs.add("mauve");
+		
+		if(orange == 3 && !couleurs.contains("orange"))
+			couleurs.add("orange");
+		
+		if(rouge == 3 && !couleurs.contains("rouge"))
+			couleurs.add("rouge");
+		
+		if(jaune == 3 && !couleurs.contains("jaune"))
+			couleurs.add("jaune");
+		
+		if(vert == 3 && !couleurs.contains("vert"))
+			couleurs.add("vert");
+		
+		if(bleu == 2 && !couleurs.contains("bleu"))
+			couleurs.add("bleu");
+		
+		return this.couleurs;
+	}
+	
+	/* PARTIE ARGENT */
+	
+	public int getArgent() {
+		return this.argent;
+	}
+	
+	public void ajouterArgent(int montant) {
+		this.argent+=montant;
+	}
+	
+	public void retirerArgent(int montant) {
+		this.argent = this.argent - montant;
+		if(this.argent <= 0) {
+			this.argent = 0;
+			this.setEstBanqueroute(true);
+		}
+	}
+	
+	public boolean getEstBanqueroute() {
+		return this.estBanqueroute;
+	}
+	
+	public void setEstBanqueroute(boolean banqueroute) {
+		this.estBanqueroute = banqueroute;
+		clearMarqueurs();
+		this.terrains.clear();
+		
+	}
+	public void clearMarqueurs() {
+
+		for(Case t:getTerrains()){
+			t.setProprietaire(null);
+			
+			Platform.runLater(new Runnable() {
+	            @Override public void run() {
+			
+	            	t.getMarqueur().setFill(Color.web("#DAE9D4"));
+	            }
+			});
+		}
+	}
+	
+}
