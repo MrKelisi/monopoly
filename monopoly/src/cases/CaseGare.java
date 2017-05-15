@@ -52,7 +52,7 @@ public class CaseGare extends Case {
 	
 	public void setProprietaire(JoueurMonopoly joueur, FenetrePrincipale fp) {
 		this.setProprietaire(joueur);
-		fp.setMarqueurProprietaire(joueur);
+		fp.setMarqueurProprietaire(joueur, this);
 		joueur.ajouterTerrain(this);
 		joueur.setNbGares(joueur.getNbGares() + 1);
 	}

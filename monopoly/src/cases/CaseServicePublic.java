@@ -56,7 +56,7 @@ public class CaseServicePublic extends Case {
 	
 	public void setProprietaire(JoueurMonopoly joueur, FenetrePrincipale fp) {
 		this.setProprietaire(joueur);
-		fp.setMarqueurProprietaire(joueur);
+		fp.setMarqueurProprietaire(joueur, this);
 		joueur.ajouterTerrain(this);
 		joueur.setNbServices(joueur.getNbServices() + 1);
 	}

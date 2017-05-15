@@ -1,5 +1,6 @@
 package jeumonopoly;
 
+import cases.CaseTerrain;
 import fenetres.FenetrePrincipale;
 import io.Console;
 import javafx.beans.value.ChangeListener;
@@ -15,7 +16,7 @@ public class Partie {
 	private FenetrePrincipale fp;
 	private boolean pausePartie = false;
 	public final static long VITESSE_PARTIE = 1000;
-	public final static boolean PARTIE_AUTO = false;
+	public final static boolean PARTIE_AUTO = true;
 	
 	/* CONSTRUCTEUR PARTIE */
 	
@@ -40,6 +41,16 @@ public class Partie {
                 		JoueurMonopoly joueur;
                 		int lancé;
                 		Case caze;
+
+                		joueur = pm.getJoueur(0);
+                		//joueur.ajouterTerrain(6);
+                		CaseTerrain c = (CaseTerrain) pm.getCase(6);
+                		c.setProprietaire(joueur, fp);
+                		c = (CaseTerrain) pm.getCase(8);
+                		c.setProprietaire(joueur, fp);
+                		c = (CaseTerrain) pm.getCase(9);
+                		c.setProprietaire(joueur, fp);
+                		
                 		
                 		while(!pm.finPartie() && pm.getNbTours() <= 100) {
                 			

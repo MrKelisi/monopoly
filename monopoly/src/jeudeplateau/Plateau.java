@@ -9,7 +9,6 @@ public abstract class Plateau {
 	private int nombreDeCases = 20;
 	private int nombreDeTours = 1;
 	private ArrayList<Case> cases = new ArrayList<Case>();
-	private ArrayList<Case> couleur = new ArrayList<Case>();
 	public Dés des = new Dés();
 	
 	public Plateau(int nombreDeJoueurs, int nbCases) {
@@ -28,15 +27,13 @@ public abstract class Plateau {
 	
 	public void setCase(int i, Case caze) {
 		this.cases.set(i, caze);
+		cases.get(i).setId(i);
 	}
 	
 	public int getNbCases() {
 		return this.nombreDeCases;
 	}
-	
-	/*public void setCouleur(String coul, Case caze){
-		this.couleur.set(coul, caze);
-	}*/
+
 	/* PARTIE JOUEUR */
 	
 	public int getNbJoueurs() {

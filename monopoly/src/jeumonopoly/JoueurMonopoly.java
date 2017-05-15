@@ -1,6 +1,9 @@
 package jeumonopoly;
 
 import java.util.ArrayList;
+
+import javafx.application.Platform;
+import javafx.scene.paint.Color;
 import jeudeplateau.Case;
 import jeudeplateau.Joueur;
 
@@ -160,6 +163,17 @@ public class JoueurMonopoly extends Joueur {
 	
 	public void setEstBanqueroute(boolean banqueroute) {
 		this.estBanqueroute = banqueroute;
+		
+		for(Case t:this.getTerrain()){
+			t.setProprietaire(null);
+			Platform.runLater(new Runnable() {
+	            @Override public void run() {
+	            	t.getPolygon().setFill(Color.WHITE);
+	            }
+			});
+		}
+		this.terrains.clear();
+		
 	}
 	
 }

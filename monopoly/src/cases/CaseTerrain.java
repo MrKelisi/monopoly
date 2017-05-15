@@ -34,6 +34,8 @@ public class CaseTerrain extends Case {
 			}
 		}
 		else if(this.getProprietaire() != joueur) {
+
+			getPeutMettreMaison();
 			String beneficiaire = "la Banque";
 			
 			if(!this.getProprietaire().getEstPrison()) {
@@ -49,10 +51,13 @@ public class CaseTerrain extends Case {
 			}
 		}
 		else {
+
+			getPeutMettreMaison();
 			es.println(" > " + joueur.getNom() + " est sur son propre terrain");
 			
 			if(this.getPeutMettreMaison()){
-				this.ajouterMaison(); 
+				this.ajouterMaison();
+				fp.setMaison(this);
 				es.println(" > " + joueur.getNom() + " pose une maison et possede desormais " + getNbMaison() + " maison sur ce terrain.");
 			}
 			else {
@@ -63,7 +68,7 @@ public class CaseTerrain extends Case {
 	
 	public void setProprietaire(JoueurMonopoly joueur, FenetrePrincipale fp) {
 		this.setProprietaire(joueur);
-		fp.setMarqueurProprietaire(joueur);
+		fp.setMarqueurProprietaire(joueur, this);
 		joueur.ajouterTerrain(this);
 	}
 	

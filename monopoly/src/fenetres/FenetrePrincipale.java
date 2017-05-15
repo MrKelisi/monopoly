@@ -20,6 +20,7 @@ import javafx.util.Duration;
 import jeumonopoly.JoueurMonopoly;
 import jeumonopoly.Partie;
 import jeumonopoly.PlateauMonopoly;
+import jeudeplateau.Case;
 
 public class FenetrePrincipale {
 	
@@ -203,35 +204,41 @@ public class FenetrePrincipale {
 		});
 	}
 	
-	public void setMarqueurProprietaire(JoueurMonopoly j) {
+	public void setMarqueurProprietaire(JoueurMonopoly j, Case caze) {
 		
 		Platform.runLater(new Runnable() {
             @Override public void run() {
             	
         		//Rectangle r = new Rectangle(8,8,j.getPion().getFill());
-            	Polygon r = new Polygon();
-            	r.setFill(getPionActif().getFill());
+            	
+            	caze.getPolygon().setFill(getPionActif().getFill());
             	
             	double x = 100, y = 100;
         		int pos = j.getPosition();
         		
+        		if(caze.getPolygon().getPoints().isEmpty())
+        			root.getChildren().add(caze.getPolygon());
         		if(pos > 0 && pos < 10) {
-                	r.getPoints().addAll(new Double[] {0.,0.,0.,12.,12.,12.});
+        			if(caze.getPolygon().getPoints().isEmpty())
+        				caze.getPolygon().getPoints().addAll(new Double[] {0.,0.,0.,12.,12.,12.});
         			x = 517 - ((pos-1) * 54);
         			y = 642;
         		}
         		else if(pos > 10 && pos < 20) {
-                	r.getPoints().addAll(new Double[] {0.,12.,12.,12.,12.,0.});
+        			if(caze.getPolygon().getPoints().isEmpty())
+        				caze.getPolygon().getPoints().addAll(new Double[] {0.,12.,12.,12.,12.,0.});
         			x = 51;
         			y = 558 - ((pos-11) * 54);
         		}
         		else if(pos > 20 && pos < 30) {
-                	r.getPoints().addAll(new Double[] {0.,0.,0.,12.,12.,12.});
+        			if(caze.getPolygon().getPoints().isEmpty())
+        				caze.getPolygon().getPoints().addAll(new Double[] {0.,0.,0.,12.,12.,12.});
         			x = 85 + ((pos-21) * 54);
         			y = 51;
         		}
         		else if(pos > 30 && pos < 40) {
-                	r.getPoints().addAll(new Double[] {0.,0.,12.,0.,0.,12.});
+        				if(caze.getPolygon().getPoints().isEmpty())
+        			caze.getPolygon().getPoints().addAll(new Double[] {0.,0.,12.,0.,0.,12.});
         			x = 592;
         			y = 85 + ((pos-31) * 54);
         		}
@@ -243,12 +250,27 @@ public class FenetrePrincipale {
         		else if(pos == 35)
         			x-=21;
         		
-        		r.setTranslateX(x);
-        		r.setTranslateY(y);
-        		root.getChildren().add(r);
+        		caze.getPolygon().setTranslateX(x);
+        		caze.getPolygon().setTranslateY(y);
             }
         });
 	}
+	
+	public void setMaison(Case caze){
+		
+		Platform.runLater(new Runnable() {
+            @Override public void run() {
+            	
+            	Polygon maison = new Polygon();
+            	maison.getPoints().addAll(new Double[] {0., 13., 0., 3., 5., 0., 10., 3., 10., 13.});
+            	maison.setTranslateX(325);
+            	maison.setTranslateY(300);
+            	
+            	root.getChildren().add(maison);
+            }
+		});
+	}
+	
 	
 	public void deplacerPion(JoueurMonopoly j){
 
