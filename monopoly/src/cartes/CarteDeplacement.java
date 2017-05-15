@@ -14,7 +14,7 @@ public class CarteDeplacement extends Carte {
 	public CarteDeplacement(String titre, String description, int pos, boolean deplacementRelatif) {
 		super(titre, description);
 		this.position = pos;
-		
+		this.deplacementRelatif = deplacementRelatif;
 	}
 
 	@Override
@@ -25,9 +25,21 @@ public class CarteDeplacement extends Carte {
 		if(deplacementRelatif) //Pour les cartes "Reculez/avancez et X cases"
 			plateau.deplacerJoueur(joueur, position);
 		else {
-			if(getNom().equals("Prison"))
-				joueur.setEstPrison(true);
-			plateau.deplacerJoueur(joueur, position-joueur.getPosition());
+			if(getNom().equals("Prison")) {
+				if(joueur.getCarteSortiePrison()) {
+					es.println(" > " + joueur.getNom() + " utilise sa carte et évite la prison !");
+					joueur.setCarteSortiePrison(false);
+					plateau.remettreCarteSortiePrisonDansPaquet();
+				}
+				else {
+					joueur.setEstPrison(true);
+					plateau.deplacerJoueur(joueur, position-joueur.getPosition());
+				}
+			}
+			else if(position-joueur.getPosition()<0)
+				plateau.deplacerJoueur(joueur, position-joueur.getPosition()+40);
+			else
+				plateau.deplacerJoueur(joueur, position-joueur.getPosition());
 		}
 		
 		if(getNom().equals("Prison"))

@@ -1,7 +1,6 @@
 package jeumonopoly;
 
 import java.util.ArrayList;
-
 import javafx.application.Platform;
 import javafx.scene.paint.Color;
 import jeudeplateau.Case;
@@ -9,15 +8,15 @@ import jeudeplateau.Joueur;
 
 public class JoueurMonopoly extends Joueur {
 
-	private int argent = 1000;
+	private int argent = 1200;
 	private boolean estBanqueroute = false;
 	private boolean estPrison = false;
 	private int toursEnPrison = 1;
 	private boolean possedeCarteSortiePrison = false;
 	private int nombreGaresPossedees = 0;
 	private int nombreServicesPossedes = 0;
-	private ArrayList <Case> terrains = new ArrayList <Case>();
-	private ArrayList<String> couleurs = new ArrayList <String>();
+	private ArrayList<Case> terrains = new ArrayList<Case>();
+	private ArrayList<String> couleurs = new ArrayList<String>();
 	
 	/* CONSTRUCTEUR */
 	
@@ -71,7 +70,7 @@ public class JoueurMonopoly extends Joueur {
 		this.terrains.add(terrain);
 	}
 	
-	public String listTerrains() {
+	public String getListeStringTerrains() {
 		String s = "";
 		for(Case t:this.terrains) {
 			s+=(t.getNom()+"\n");
@@ -79,7 +78,7 @@ public class JoueurMonopoly extends Joueur {
 		return s;
 	}
 	
-	public ArrayList<Case> getTerrain(){
+	public ArrayList<Case> getTerrains(){
 		return this.terrains;
 	}
 		
@@ -93,7 +92,7 @@ public class JoueurMonopoly extends Joueur {
 		int jaune = 0;
 		int vert = 0;
 		int bleu = 0;
-		for(Case t:this.getTerrain()){
+		for(Case t:this.getTerrains()){
 			if(t.getCouleur() == "brun")
 				brun += 1;
 			if(t.getCouleur() == "turquoise")
@@ -163,17 +162,22 @@ public class JoueurMonopoly extends Joueur {
 	
 	public void setEstBanqueroute(boolean banqueroute) {
 		this.estBanqueroute = banqueroute;
+		clearMarqueurs();
+		this.terrains.clear();
 		
-		for(Case t:this.getTerrain()){
+	}
+	public void clearMarqueurs() {
+
+		for(Case t:getTerrains()){
 			t.setProprietaire(null);
+			
 			Platform.runLater(new Runnable() {
 	            @Override public void run() {
-	            	t.getPolygon().setFill(Color.WHITE);
+			
+	            	t.getMarqueur().setFill(Color.web("#DAE9D4"));
 	            }
 			});
 		}
-		this.terrains.clear();
-		
 	}
 	
 }

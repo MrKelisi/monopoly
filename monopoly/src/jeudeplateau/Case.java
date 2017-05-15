@@ -1,9 +1,7 @@
 package jeudeplateau;
 
 import java.util.ArrayList;
-
 import fenetres.FenetrePrincipale;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import jeumonopoly.JoueurMonopoly;
 import jeumonopoly.PlateauMonopoly;
@@ -17,10 +15,10 @@ public abstract class Case {
 	private ArrayList<Integer> loyer = new ArrayList<Integer>();
 	private int prixMaison;
 	private boolean peutMettreMaison = false;
-	private int nbMaison;
+	private int nbMaison = 0;
 	private JoueurMonopoly proprietaire;
 	private boolean reponseQuestion = false;
-	private Polygon r = new Polygon();
+	private Polygon marqueur = new Polygon();
 	
 	
 	public Case(String nom) {
@@ -58,11 +56,10 @@ public abstract class Case {
 	}
 	
 	public int getLoyer(){
-		int apayer;
-		if(proprietaire.getListeCouleur().contains(this.getCouleur()))
-			apayer = loyer.get(0) * 2;			// loyer double si le joueur possède tous les terrains d'une couleur
-		else
-			apayer = loyer.get(getNbMaison());
+		int apayer = loyer.get(getNbMaison());
+		if(proprietaire.getListeCouleur().contains(this.getCouleur()) && getNbMaison() == 0)
+			apayer*=2;			// loyer double si le joueur possède tous les terrains d'une couleur, sans maison.
+		
 		return apayer;
 	}
 	
@@ -92,7 +89,7 @@ public abstract class Case {
 		if(proprietaire.getListeCouleur().contains(this.getCouleur())){
 
 			ArrayList<Case> couleur = new ArrayList<Case>();
-			for(Case c: proprietaire.getTerrain())
+			for(Case c: proprietaire.getTerrains())
 				if(c.getCouleur() == this.getCouleur() && c != this)
 					couleur.add(c);
 			
@@ -101,26 +98,31 @@ public abstract class Case {
 				if(!(this.getNbMaison() == c.getNbMaison() || this.getNbMaison() == c.getNbMaison() - 1))
 					this.peutMettreMaison = false;
 			}
+			
+			if(proprietaire.getArgent() < this.getPrixMaison()) {
+				this.peutMettreMaison = false;
+				System.out.println("Vous n'avez pas assez d'argent pour acheter une maison !");
+			}
+			if(getNbMaison() == 4) {
+				this.peutMettreMaison = false;
+				System.out.println("Le quota de maisons est atteint !");
+			}
 		}
 		else
 			this.peutMettreMaison = false;
-		System.out.println(peutMettreMaison);
+		
 		return this.peutMettreMaison;
 	}
-	
 	public void setPeutMettreMaison(boolean peutMettreMaison){
 		this.peutMettreMaison = peutMettreMaison;
 	}
 	
 	public void ajouterMaison(){
-		if(proprietaire.getArgent() < this.getPrixMaison())
-			System.out.println("Pas assez d'argent pour acheter une maison !");
-		else{
-			this.setNbMaison(getNbMaison() + 1);
-			proprietaire.retirerArgent(this.getPrixMaison());
-			
-			System.out.println("Félicitations, vous avez posé une maison");
-		}
+		
+		setNbMaison(getNbMaison() + 1);
+		proprietaire.retirerArgent(this.getPrixMaison());
+		
+		System.out.println("Félicitations, vous avez posé une maison !");
 	}
 	
 	/* PARTIE JOUEUR */
@@ -145,11 +147,11 @@ public abstract class Case {
 	
 	/* PARTIE GRAPHIQUE (déso pas déso) */
 	
-	public Polygon getPolygon(){
-		return this.r;
+	public Polygon getMarqueur(){
+		return this.marqueur;
 	}
-	public void setPolygon(Polygon r){
-		this.r = r;
+	public void setMarqueur(Polygon r){
+		this.marqueur = r;
 	}
 
 	/* PARTIE ABSTRAITE */ 

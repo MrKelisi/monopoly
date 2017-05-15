@@ -39,16 +39,18 @@ public class FenetreSortirPrison {
 	
 	private void initRoot() {
 		root.setPadding(new Insets(10,10,10,10));
-		root.setSpacing(5);
+		root.setSpacing(10);
+		root.setStyle("-fx-background-color: #CDE6D0; ");
 		
 		Image i_prison = new Image("images/prison.jpg");
 		ImageView iv_prison = new ImageView(i_prison);
 		root.getChildren().add(iv_prison);
 		
 		VBox aside = new VBox();
+		aside.setSpacing(15);
 		root.getChildren().add(aside);
 		
-		l_Texte = new Label("Voulez vous acheter payer 50€ pour sortir de prison ?");
+		l_Texte = new Label("Voulez vous payer 50€ pour sortir de prison ?");
 		aside.getChildren().add(l_Texte);
 
 		HBox buttons_horiz = new HBox();
@@ -79,7 +81,7 @@ public class FenetreSortirPrison {
 		root = new HBox();
 		initRoot();
 		
-		Scene scene = new Scene(root,400,80);
+		Scene scene = new Scene(root,420,130);
 		stage.setScene(scene);
 		stage.show();
 	}

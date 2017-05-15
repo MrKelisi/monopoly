@@ -1,6 +1,7 @@
 package fenetres;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
@@ -10,6 +11,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -34,11 +36,13 @@ public class FenetrePrincipale {
 	private Button tourSuivant = new Button("Finir son tour");
 	private Button newPartie = new Button("Nouvelle partie");
 	public Random rand = new Random();
+	public Color[] Couleurs = new Color[] {Color.RED, Color.BLUE, Color.ORANGE, Color.GREEN};
 	private FenetreDemarrage fd = new FenetreDemarrage(this);
 	private FenetreCarteChance fch = new FenetreCarteChance(this);
 	private FenetreCarteCommunaute fco = new FenetreCarteCommunaute(this);
 	private FenetreAcheterTerrain fat = new FenetreAcheterTerrain(this);
 	private FenetreSortirPrison fprison = new FenetreSortirPrison(this);
+	private FenetreActionSurTerrain fact_ter = new FenetreActionSurTerrain(this);
 	private Partie partie;
 
 	public FenetrePrincipale(Stage primaryStage) {
@@ -47,6 +51,7 @@ public class FenetrePrincipale {
 		this.stage = primaryStage;
 		
 		root = new StackPane();
+		root.setOnMouseClicked(new EvtClicRoot());
 		initRoot();
 		
 		Scene scene = new Scene(root,655,655);
@@ -64,7 +69,7 @@ public class FenetrePrincipale {
 		l_ParcGratuit.setTranslateY(68);
 		root.getChildren().add(l_ParcGratuit);
 
-		for(int i=0; i<10; i++) {
+		for(int i=0; i<9; i++) {
 			l_Logs.add(new Label(""));
 			l_Logs.get(i).setFont(Font.font("Consolas", 12));
 			l_Logs.get(i).setTranslateX(100);
@@ -100,7 +105,6 @@ public class FenetrePrincipale {
 	public void setPartie(int nbJoueurs) {
 		
 		partie = new Partie(nbJoueurs, this);
-		Color[] Couleurs = new Color[] {Color.RED, Color.BLUE, Color.ORANGE, Color.GREEN};
 		
 		for(int i=0; i<nbJoueurs; i++) {
 			Label l_nomJoueur = new Label(partie.getPM().getJoueur(i).getNom());
@@ -141,7 +145,9 @@ public class FenetrePrincipale {
 	public void logMessages(String msg) {
 		Platform.runLater(new Runnable() {
             @Override public void run() {
-            	for(int i=l_Logs.size()-1; i>0; i--) {
+            	l_Logs.get(l_Logs.size()-1).setText("TOUR "+getPartie().getPM().getNbTours()+" : "+getPartie().getPM().getJoueurActif().getNom());
+            	l_Logs.get(l_Logs.size()-1).setTextFill(Couleurs[getPartie().getPM().getJoueurActifID()]);
+            	for(int i=l_Logs.size()-2; i>0; i--) {
             		l_Logs.get(i).setText(l_Logs.get(i-1).getText());
             	}
             	l_Logs.get(0).setText(msg);
@@ -157,8 +163,8 @@ public class FenetrePrincipale {
         		l_ParcGratuit.setText(""+pm.getCase(20).getPrix()+"€");
         		
         		for(int i=0; i<pm.getNbJoueurs(); i++) {
-            		l_Joueurs.get(i).setText(""+pm.getJoueur(i).getArgent()+"€");
-            		l_ListeTerrains.get(i).setText(pm.getJoueur(i).listTerrains());
+            		l_Joueurs.get(i).setText(""+pm.getJoueur(i).getArgent()+"€ "+(pm.getJoueur(i).getCarteSortiePrison()?"[Sortie]":""));
+            		l_ListeTerrains.get(i).setText(pm.getJoueur(i).getListeStringTerrains());
         		}
         		
             }
@@ -209,36 +215,35 @@ public class FenetrePrincipale {
 		Platform.runLater(new Runnable() {
             @Override public void run() {
             	
-        		//Rectangle r = new Rectangle(8,8,j.getPion().getFill());
-            	
-            	caze.getPolygon().setFill(getPionActif().getFill());
+            	caze.getMarqueur().setFill(getPionActif().getFill());
             	
             	double x = 100, y = 100;
         		int pos = j.getPosition();
         		
-        		if(caze.getPolygon().getPoints().isEmpty())
-        			root.getChildren().add(caze.getPolygon());
+        		if(caze.getMarqueur().getPoints().isEmpty())
+        			root.getChildren().add(caze.getMarqueur());
+        		
         		if(pos > 0 && pos < 10) {
-        			if(caze.getPolygon().getPoints().isEmpty())
-        				caze.getPolygon().getPoints().addAll(new Double[] {0.,0.,0.,12.,12.,12.});
+        			if(caze.getMarqueur().getPoints().isEmpty())
+        				caze.getMarqueur().getPoints().addAll(new Double[] {0.,0.,0.,12.,12.,12.});
         			x = 517 - ((pos-1) * 54);
         			y = 642;
         		}
         		else if(pos > 10 && pos < 20) {
-        			if(caze.getPolygon().getPoints().isEmpty())
-        				caze.getPolygon().getPoints().addAll(new Double[] {0.,12.,12.,12.,12.,0.});
+        			if(caze.getMarqueur().getPoints().isEmpty())
+        				caze.getMarqueur().getPoints().addAll(new Double[] {0.,12.,12.,12.,12.,0.});
         			x = 51;
         			y = 558 - ((pos-11) * 54);
         		}
         		else if(pos > 20 && pos < 30) {
-        			if(caze.getPolygon().getPoints().isEmpty())
-        				caze.getPolygon().getPoints().addAll(new Double[] {0.,0.,0.,12.,12.,12.});
+        			if(caze.getMarqueur().getPoints().isEmpty())
+        				caze.getMarqueur().getPoints().addAll(new Double[] {0.,0.,0.,12.,12.,12.});
         			x = 85 + ((pos-21) * 54);
         			y = 51;
         		}
         		else if(pos > 30 && pos < 40) {
-        				if(caze.getPolygon().getPoints().isEmpty())
-        			caze.getPolygon().getPoints().addAll(new Double[] {0.,0.,12.,0.,0.,12.});
+        				if(caze.getMarqueur().getPoints().isEmpty())
+        			caze.getMarqueur().getPoints().addAll(new Double[] {0.,0.,12.,0.,0.,12.});
         			x = 592;
         			y = 85 + ((pos-31) * 54);
         		}
@@ -250,8 +255,8 @@ public class FenetrePrincipale {
         		else if(pos == 35)
         			x-=21;
         		
-        		caze.getPolygon().setTranslateX(x);
-        		caze.getPolygon().setTranslateY(y);
+        		caze.getMarqueur().setTranslateX(x);
+        		caze.getMarqueur().setTranslateY(y);
             }
         });
 	}
@@ -262,10 +267,31 @@ public class FenetrePrincipale {
             @Override public void run() {
             	
             	Polygon maison = new Polygon();
-            	maison.getPoints().addAll(new Double[] {0., 13., 0., 3., 5., 0., 10., 3., 10., 13.});
-            	maison.setTranslateX(325);
-            	maison.setTranslateY(300);
+            	maison.getPoints().addAll(new Double[] {0., 11., 0., 3., 5., 0., 10., 3., 10., 11.});
             	
+            	int x = -50;
+            	int y = -50;
+            	int pos = caze.getId();
+            	
+            	if(pos > 0 && pos < 10) {
+        			x = 520 - ((pos-1) * 54) + (caze.getNbMaison()-1)*12;
+        			y = 577;
+        		}
+        		else if(pos > 10 && pos < 20) {
+        			x = 69;
+        			y = 519 - ((pos-11) * 54) + (caze.getNbMaison()-1)*13;
+        		}
+        		else if(pos > 20 && pos < 30) {
+        			x = 87 + ((pos-21) * 54)  + (caze.getNbMaison()-1)*12;
+        			y = 69;
+        		}
+        		else if(pos > 30 && pos < 40) {
+        			x = 576;
+        			y = 87 + ((pos-31) * 54) + (caze.getNbMaison()-1)*13;
+        		}
+            	
+            	maison.setTranslateX(x);
+            	maison.setTranslateY(y);
             	root.getChildren().add(maison);
             }
 		});
@@ -349,9 +375,9 @@ public class FenetrePrincipale {
             	
             	Label vainqueur = new Label("Le vainqueur est "+pm.estVainqueur().getNom()+" !");
             	vainqueur.setTextFill(l_Pions.get(pm.estVainqueur().getID()).getFill());
-            	vainqueur.setFont(Font.font("Arial", 30));
-            	vainqueur.setTranslateX(150);
-            	vainqueur.setTranslateY(310);
+            	vainqueur.setFont(Font.font("Arial", 26));
+            	vainqueur.setTranslateX(145);
+            	vainqueur.setTranslateY(525);
             	
         		root.getChildren().add(vainqueur);
         		
@@ -392,6 +418,50 @@ public class FenetrePrincipale {
 			Scene scene = new Scene(root,655,655);
 			stage.setScene(scene);
 			fd.getStage().show();
+		}
+	}
+public class EvtClicRoot implements EventHandler<MouseEvent> {
+		
+		@Override
+		public void handle(MouseEvent event) {
+			
+			int pos = -1;
+			
+			if(event.getSceneX() < 84) {
+				if(event.getSceneY() < 84)
+					pos = 20;
+				else if(event.getSceneY() < 570)
+					pos = 19 - (int)((event.getSceneY()-84)/54);
+				else
+					pos = 10;
+			}
+			else if(event.getSceneX() < 570) {
+				if(event.getSceneY() < 84)
+					pos = 21 + (int)((event.getSceneX()-84)/54);
+				else if(event.getSceneY() >= 570)
+					pos = 9 - (int)((event.getSceneX()-84)/54);
+			}
+			else {
+				if(event.getSceneY() < 84)
+					pos = 30;
+				else if(event.getSceneY() < 570)
+					pos = 31 + (int)((event.getSceneY()-84)/54);
+				else
+					pos = 0;
+			}
+			
+			ArrayList<Integer> CasesInterdites = new ArrayList<Integer>();
+			for(int i=0; i<40; i++) {
+				CasesInterdites.add(i);
+			}
+			CasesInterdites.add(-1);
+			for(Case t:getPartie().getPM().getJoueurActif().getTerrains()) {
+				CasesInterdites.remove((Object)(t.getId()));
+			}
+			
+			if(!CasesInterdites.contains(pos)) {
+				fact_ter.afficherFenetre(pos);
+			}
 		}
 	}
 	

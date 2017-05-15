@@ -52,16 +52,12 @@ public class CaseTerrain extends Case {
 		}
 		else {
 
-			getPeutMettreMaison();
 			es.println(" > " + joueur.getNom() + " est sur son propre terrain");
 			
-			if(this.getPeutMettreMaison()){
+			if(this.getPeutMettreMaison() && fp.getPartie().PARTIE_AUTO){
 				this.ajouterMaison();
 				fp.setMaison(this);
-				es.println(" > " + joueur.getNom() + " pose une maison et possede desormais " + getNbMaison() + " maison sur ce terrain.");
-			}
-			else {
-				es.println(" > " + joueur.getNom() + " ne peut pas acheter de maison");
+				es.println(" > " + joueur.getNom() + " possède désormais " + getNbMaison() + " maison(s) sur ce terrain.");
 			}
 		}
 	}

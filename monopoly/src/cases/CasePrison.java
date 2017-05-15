@@ -22,7 +22,6 @@ public class CasePrison extends Case {
 		int lancé = plateau.des.getDes();
 		int d1 = plateau.des.getDe1();
 		int d2 = plateau.des.getDe2();
-		int tour = joueur.getToursEnPrison();
 		
 		if(joueur.getEstPrison() == true){
 			
@@ -39,7 +38,7 @@ public class CasePrison extends Case {
 				es.println("" + joueur.getNom() + " avance de " + lancé + " cases et atterit sur " + plateau.getCaseActive().getNom());
 			}
 			else{
-				if(tour > 2) {
+				if(joueur.getToursEnPrison() > 2) {
 					es.println("NON : " + joueur.getNom() + " est a son 3e tour en prison, il sort et paye 50€.");
 					joueur.retirerArgent(50);
 					joueur.setEstPrison(false);
@@ -49,7 +48,7 @@ public class CasePrison extends Case {
 					es.println("" + joueur.getNom() + " avance de " + lancé + " cases et atterit sur " + plateau.getCaseActive().getNom());
 				}
 				else{
-					es.println("NON : " + joueur.getNom() + " (tour " + tour + ") décide de ne pas payer et lance ses dés...");
+					es.println("NON : " + joueur.getNom() + " (tour " + joueur.getToursEnPrison() + ") décide de ne pas payer et lance ses dés...");
 					if(d1 == d2){
 						es.println("  [" + d1 + "][" + d2 + "] Gagné! " + joueur.getNom() + " sort de prison sans payer!");
 						joueur.setEstPrison(false);
@@ -58,9 +57,9 @@ public class CasePrison extends Case {
 					}
 					else{
 						es.println("  [" + d1 + "][" + d2 + "] Perdu!");
+						joueur.setToursEnPrison(joueur.getToursEnPrison() + 1);
 					}
 				}
-				joueur.setToursEnPrison(tour + 1);
 			}
 		}
 		else{

@@ -1,14 +1,13 @@
 package jeumonopoly;
 
-import cases.CaseTerrain;
 import fenetres.FenetrePrincipale;
 import io.Console;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
+import jeudeplateau.Case;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Worker;
-import jeudeplateau.Case;
 
 public class Partie {
 
@@ -16,7 +15,7 @@ public class Partie {
 	private FenetrePrincipale fp;
 	private boolean pausePartie = false;
 	public final static long VITESSE_PARTIE = 1000;
-	public final static boolean PARTIE_AUTO = true;
+	public final static boolean PARTIE_AUTO = false;
 	
 	/* CONSTRUCTEUR PARTIE */
 	
@@ -41,16 +40,6 @@ public class Partie {
                 		JoueurMonopoly joueur;
                 		int lancé;
                 		Case caze;
-
-                		joueur = pm.getJoueur(0);
-                		//joueur.ajouterTerrain(6);
-                		CaseTerrain c = (CaseTerrain) pm.getCase(6);
-                		c.setProprietaire(joueur, fp);
-                		c = (CaseTerrain) pm.getCase(8);
-                		c.setProprietaire(joueur, fp);
-                		c = (CaseTerrain) pm.getCase(9);
-                		c.setProprietaire(joueur, fp);
-                		
                 		
                 		while(!pm.finPartie() && pm.getNbTours() <= 100) {
                 			
@@ -62,7 +51,7 @@ public class Partie {
                 			es.println("C'est au tour de " + joueur.getNom() + " (possède " + joueur.getArgent() + "€)");
                 			
                 			if(!joueur.getEstBanqueroute()) {
-                				Thread.sleep(800);
+                				Thread.sleep(VITESSE_PARTIE);
                 				
                 				lancé = pm.des.lancerDes();
                 				
@@ -89,13 +78,13 @@ public class Partie {
                 				caze.actionCase(joueur, pm, fp);
                     			
                 				es.println("" + joueur.getNom() + " possède à la fin de son tour " + joueur.getArgent() + "€");
-                				System.out.println("et les terrains suivants :\n" + joueur.listTerrains());
+                				System.out.println("et les terrains suivants :\n" + joueur.getListeStringTerrains());
                 			}
                 			else {
                 				es.println("" + pm.getJoueurActif().getNom() + " est en banqueroute, il ne joue pas.");
                 			}
                 			
-                			Thread.sleep(200);
+                			Thread.sleep(400);
                 			fp.deplacerPion(joueur);
                 			fp.refreshLabels(pm);
                 			
