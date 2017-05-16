@@ -131,7 +131,10 @@ public class FenetreActionSurTerrain {
 
 		@Override
 		public void handle(ActionEvent event) {
-			l_TexteErreur.setText("Pas disponible (pour l'instant ?)");
+			fp.getPartie().getPM().getJoueurActif().getTerrains().remove(fp.getPartie().getPM().getCase(position));
+			fp.getPartie().getPM().getCase(position).getMarqueur().setFill(Color.web("#DAE9D4"));
+			fp.getPartie().getPM().getJoueurActif().ajouterArgent(fp.getPartie().getPM().getCase(position).getPrix() + fp.getPartie().getPM().getCase(position).getNbMaison()*fp.getPartie().getPM().getCase(position).getPrixMaison());
+			stage.close();
 			event.consume();
 		}
 	}
