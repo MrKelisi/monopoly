@@ -46,7 +46,7 @@ public class CaseCommunaute extends Case {
 		if(fp.getPartie().PARTIE_AUTO)
 			fp.getPartie().reprendrePartie();
 		else
-			fp.afficherFenetreCarte(false, c.getNom(), c.getDesc());
+			fp.afficherFenetreCarteCommunauté(c.getNom(), c.getDesc());
 	}
 	
 }

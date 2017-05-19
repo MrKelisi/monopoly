@@ -6,16 +6,33 @@ import jeudeplateau.Carte;
 import jeumonopoly.JoueurMonopoly;
 import jeumonopoly.PlateauMonopoly;
 
+/**
+ * Type de {@link Carte} pour les payements des joueurs.<br><br>
+ * &nbsp; <b>Liste des champs :</b>
+ * <ul><li><b>montant</b> : int - montant à retirer au joueur.</li></ul>
+ * @see Carte
+ */
 public class CartePayerArgent extends Carte {
 	
 	private int montant;
 	
+	/**
+	 * Unique constructeur de la clase {@link CartePayerArgent}.
+	 * @param titre String
+	 * @param description String
+	 * @param montant int
+	 */
 	public CartePayerArgent(String titre, String description, int montant) {
 		super(titre, description);
 		this.montant = montant;
-		
 	}
 
+	/**
+	 * Méthode réalisant l'action de la carte. 
+	 * @param joueur JoueurMonopoly
+	 * @param plateau PlateauMonopoly
+	 * @param fp FenetrePrincipale
+	 */
 	@Override
 	public void actionCarte(JoueurMonopoly joueur, PlateauMonopoly plateau, FenetrePrincipale fp) {
 		

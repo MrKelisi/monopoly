@@ -1,5 +1,6 @@
 package fenetres;
 
+import cases.CaseTerrain;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -16,6 +17,11 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
+/**
+ * Fenêtre à afficher lorqu'on atterit sur une {@link CaseTerrain} sans propriétaire.<br><br>
+ * ** <b>Action réalisable : </b> Acheter le terrain
+ * @see FenetrePrincipale
+ */
 public class FenetreAcheterTerrain {
 	
 	private FenetrePrincipale fp;
@@ -25,6 +31,11 @@ public class FenetreAcheterTerrain {
 	private Button b_Oui;
 	private Button b_Non;
 	
+	/**
+	 * Unique constructeur de la classe {@link FenetreAcheterTerrain}, prenant en paramètre la {@link FenetrePrincipale} fp.
+	 * @param fp FenetrePrincipale
+	 * @see FenetrePrincipale
+	 */
 	public FenetreAcheterTerrain(FenetrePrincipale fp) {
 		
 		this.fp = fp;
@@ -37,6 +48,9 @@ public class FenetreAcheterTerrain {
 		stage.setOnHiding(new EvtQuitter());
 	}
 	
+	/**
+	 * Initialise la HBox root de la FenetreAcheterTerrain avec une image, un label posant une question et des boutons Oui/Non.
+	 */
 	private void initRoot() {
 		root.setPadding(new Insets(10,10,10,10));
 		root.setSpacing(10);
@@ -91,6 +105,9 @@ public class FenetreAcheterTerrain {
 	    });
 	}
 	
+	/**
+	 * Affiche la fenêtre en réinitialisant la HBox root à chaque appel.
+	 */
 	public void afficherFenetre() {
 		root = new HBox();
 		initRoot();
@@ -100,10 +117,17 @@ public class FenetreAcheterTerrain {
 		stage.show();
 	}
 	
+	/**
+	 * Renvoie la Stage de la fenêtre.
+	 * @return stage Stage
+	 */
 	public Stage getStage() {
 		return stage;
 	}
 	
+	/**
+	 * Évènement qui ferme la fenêtre et change la réponse à vrai.
+	 */
 	private class EvtOui implements EventHandler<ActionEvent> {
 
 		@Override
@@ -114,6 +138,9 @@ public class FenetreAcheterTerrain {
 		}
 	}
 	
+	/**
+	 * Évènement qui ferme la fenêtre (la réponse n'est pas changée et reste à faux).
+	 */
 	private class EvtNon implements EventHandler<ActionEvent> {
 
 		@Override
@@ -123,6 +150,9 @@ public class FenetreAcheterTerrain {
 		}
 	}
 	
+	/**
+	 * Évènement qui reprend la partie quand la fenêtre se ferme.
+	 */
 	private class EvtQuitter implements EventHandler<WindowEvent> {
 
 		@Override

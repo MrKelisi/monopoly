@@ -46,7 +46,7 @@ public class CaseChance extends Case {
 		if(fp.getPartie().PARTIE_AUTO)
 			fp.getPartie().reprendrePartie();
 		else
-			fp.afficherFenetreCarte(true, c.getNom(), c.getDesc());
+			fp.afficherFenetreCarteChance(c.getNom(), c.getDesc());
 	}
 
 }

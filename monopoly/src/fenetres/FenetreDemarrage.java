@@ -15,6 +15,10 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
+/**
+ * Fenêtre à afficher au démarrage d'une nouvelle {@link jeumonopoly.Partie}, permettant de sélectionner le nombre de joueur.
+ * @see FenetrePrincipale
+ */
 public class FenetreDemarrage {
 
 	private FenetrePrincipale fp;
@@ -25,6 +29,11 @@ public class FenetreDemarrage {
 	private Button b_Valider;
 	private int choix = 0;
 	
+	/**
+	 * Unique constructeur de la classe {@link FenetreDemarrage}, prenant en paramètre la {@link FenetrePrincipale} fp.
+	 * @param fp FenetrePrincipale
+	 * @see FenetrePrincipale
+	 */
 	public FenetreDemarrage(FenetrePrincipale fp) {
 		
 		this.fp = fp;
@@ -43,6 +52,9 @@ public class FenetreDemarrage {
 		stage.setOnHiding(new EvtQuitter());
 	}
 	
+	/**
+	 * Initialise la VBox root de la FenetreDemarrage avec une {@link ListView} de nombres de joueurs et un bouton de validation.
+	 */
 	private void initRoot() {
 		root.setPadding(new Insets(10,10,10,10));
 		root.setSpacing(5);
@@ -66,10 +78,18 @@ public class FenetreDemarrage {
 	    });
 	}
 	
+	/**
+	 * Renvoie la Stage de la fenêtre de démarrage.
+	 * @return stage Stage
+	 */
 	public Stage getStage() {
 		return stage;
 	}
 	
+	/**
+	 * Évènement qui récupère dans la {@link ListView} le nombre de joueurs désiré et lance une partie avec ce nombre.
+	 * @see FenetrePrincipale
+	 */
 	private class EvtValider implements EventHandler<ActionEvent> {
 
 		@Override
@@ -82,6 +102,9 @@ public class FenetreDemarrage {
 		}
 	}
 	
+	/**
+	 * Évènement qui ferme la fenêtre de démarrage et arrête le programme si l'on a pas cliqué sur le bouton Valider.
+	 */
 	private class EvtQuitter implements EventHandler<WindowEvent> {
 
 		@Override

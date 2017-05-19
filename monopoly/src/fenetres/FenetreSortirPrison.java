@@ -6,6 +6,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -16,6 +17,10 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
+/**
+ * Fenêtre à afficher lorqu'un joueur est en prison. Il a alors le choix : payer pour en sortir, ou rester et jouer sa libération aux dés.
+ * @see FenetrePrincipale
+ */
 public class FenetreSortirPrison {
 	
 	private FenetrePrincipale fp;
@@ -25,6 +30,11 @@ public class FenetreSortirPrison {
 	private Button b_Oui;
 	private Button b_Non;
 	
+	/**
+	 * Unique constructeur de la classe {@link FenetreSortirPrison}, prenant en paramètre la {@link FenetrePrincipale} fp.
+	 * @param fp FenetrePrincipale
+	 * @see FenetrePrincipale
+	 */
 	public FenetreSortirPrison(FenetrePrincipale fp) {
 		
 		this.fp = fp;
@@ -37,6 +47,9 @@ public class FenetreSortirPrison {
 		stage.setOnHiding(new EvtQuitter());
 	}
 	
+	/**
+	 * Initialise la HBox root de la FenetreSortirPrison avec une image, un label posant une question et des boutons Oui/Non.
+	 */
 	private void initRoot() {
 		root.setPadding(new Insets(10,10,10,10));
 		root.setSpacing(10);
@@ -77,6 +90,9 @@ public class FenetreSortirPrison {
 	    });
 	}
 	
+	/**
+	 * Affiche la fenêtre en réinitialisant la HBox root à chaque appel.
+	 */
 	public void afficherFenetre() {
 		root = new HBox();
 		initRoot();
@@ -86,10 +102,17 @@ public class FenetreSortirPrison {
 		stage.show();
 	}
 	
+	/**
+	 * Renvoie la Stage de la fenêtre.
+	 * @return stage Stage
+	 */
 	public Stage getStage() {
 		return stage;
 	}
 	
+	/**
+	 * Évènement qui ferme la fenêtre et change la réponse à vrai.
+	 */
 	private class EvtOui implements EventHandler<ActionEvent> {
 
 		@Override
@@ -100,6 +123,9 @@ public class FenetreSortirPrison {
 		}
 	}
 	
+	/**
+	 * Évènement qui ferme la fenêtre (la réponse n'est pas changée et reste à faux).
+	 */
 	private class EvtNon implements EventHandler<ActionEvent> {
 
 		@Override
@@ -109,6 +135,9 @@ public class FenetreSortirPrison {
 		}
 	}
 	
+	/**
+	 * Évènement qui reprend la partie quand la fenêtre se ferme.
+	 */
 	private class EvtQuitter implements EventHandler<WindowEvent> {
 
 		@Override

@@ -1,8 +1,8 @@
 package fenetres;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Random;
+import cases.CaseTerrain;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -24,6 +24,9 @@ import jeumonopoly.Partie;
 import jeumonopoly.PlateauMonopoly;
 import jeudeplateau.Case;
 
+/**
+ * Fenêtre javafx principale pour l'affichage du jeu de Monopoly. 
+ */
 public class FenetrePrincipale {
 	
 	private Stage stage;
@@ -45,6 +48,13 @@ public class FenetrePrincipale {
 	private FenetreActionSurTerrain fact_ter = new FenetreActionSurTerrain(this);
 	private Partie partie;
 
+	/**
+	 * Unique constructeur de la classe {@link FenetrePrincipale}, prenant en paramètre la Stage principale passée par le main. 
+	 * Le constructeur n'affiche pas la Stage au démarrage, mais une instance de {@link FenetreDemarrage} pour choisir un nombre de joueur avant l'affichage.
+	 * @param primaryStage Stage
+	 * @see application.Main 
+	 * @see FenetreDemarrage
+	 */
 	public FenetrePrincipale(Stage primaryStage) {
 		//Constructeur de la classe FenetrePrincipale
 		
@@ -61,6 +71,9 @@ public class FenetrePrincipale {
 		fd.getStage().show();
 	}
 	
+	/**
+	 * Initialise la StackPane root de la FenetrePrincipale avec les images, les labels et les boutons adéquates au Monopoly.
+	 */
 	private void initRoot() {
 		root.setStyle("-fx-background-image: url('images/plateau.png'); -fx-background-repeat: no-repeat");
 		root.setAlignment(Pos.TOP_LEFT);
@@ -87,21 +100,45 @@ public class FenetrePrincipale {
 			root.getChildren().add(tourSuivant);
 	}
 	
+	/**
+	 * Renvoie la StackPane root de {@link FenetrePrincipale}.
+	 * @return root StackPane
+	 */
 	public StackPane getRoot() {
 		return root;
 	}
 	
+	/**
+	 * Renvoie la Stage stage de {@link FenetrePrincipale}.
+	 * @return stage Stage
+	 */
 	public Stage getStage() {
 		return stage;
 	}
 	
+	/**
+	 * Renvoie le {@link Circle} pion du joueur actif dans la {@link Partie}.
+	 * @return pion Circle
+	 * @see Partie
+	 */
 	public Circle getPionActif() {
 		return l_Pions.get(partie.getPM().getJoueurActifID());
 	}
 	
+	/**
+	 * Renvoie la {@link Partie} partie de la {@link FenetrePrincipale}.
+	 * @return partie {@link Partie}
+	 */
 	public Partie getPartie() {
 		return partie;
 	}
+	
+	/**
+	 * Méthode permettant de lancer une partie. Elle instanciera une nouvelle {@link Partie} avec le bon nombre de joueurs 
+	 * et se chargera de placer les éléments graphiques tels que : <br>les noms des joueurs, l'argent qu'ils possèdent, 
+	 * la liste de leurs terrains et les pions.
+	 * @param nbJoueurs int
+	 */
 	public void setPartie(int nbJoueurs) {
 		
 		partie = new Partie(nbJoueurs, this);
@@ -142,6 +179,11 @@ public class FenetrePrincipale {
 		partie.demarrerLaPartie();
 	}
 	
+	/**
+	 * Se charge de rafraichir les labels de logs dans la fenêtre. Elle reçoit un String msg en paramètre, remonte les anciens logs 
+	 * et place le nouveau message à la fin des logs.
+	 * @param msg String
+	 */
 	public void logMessages(String msg) {
 		Platform.runLater(new Runnable() {
             @Override public void run() {
@@ -155,6 +197,12 @@ public class FenetrePrincipale {
         });
 	}
 	
+	/**
+	 * Cette méthode est appelé à chaque fois qu'un rafrichissement des labels est nécessaire. Elle va chercher les informations dans
+	 * les champs de la partie pour mettre à jours les labels.
+	 * @param pm PlateauMonopoly
+	 * @see PlateauMonopoly
+	 */
 	public void refreshLabels(PlateauMonopoly pm) {
 		
 		Platform.runLater(new Runnable() {
@@ -171,6 +219,10 @@ public class FenetrePrincipale {
         });
 	}
 	
+	/**
+	 * Affiche la fenêtre {@link FenetreAcheterTerrain}.
+	 * @see FenetreAcheterTerrain
+	 */
 	public void afficherFenetreAchatTerrain() {
 		
 		Platform.runLater(new Runnable() {
@@ -181,6 +233,10 @@ public class FenetrePrincipale {
 		});
 	}
 	
+	/**
+	 * Affiche la fenêtre {@link FenetreSortirPrison}.
+	 * @see FenetreSortirPrison
+	 */
 	public void afficherFenetrePrison() {
 		
 		Platform.runLater(new Runnable() {
@@ -191,26 +247,52 @@ public class FenetrePrincipale {
 		});
 	}
 	
-	public void afficherFenetreCarte(boolean carteChance, String titre, String description) {
+	/**
+	 * Affiche la fenêtre {@link FenetreCarteChance}. <br>
+	 * Les paramètres String titre et String description passés seront utilisés dans la fenêtre pour indiquer qu'elle carte on a tiré.
+	 * @param titre String
+	 * @param description String
+	 * @see FenetreCarteChance 
+	 */
+	public void afficherFenetreCarteChance(String titre, String description) {
 		
 		Platform.runLater(new Runnable() {
             @Override public void run() {
             	
-				if(carteChance) {
-					fch.setTitre(titre);
-					fch.setDescription(description);
-					fch.afficherCarte();
-				}
-				else {
-					fco.setTitre(titre);
-					fco.setDescription(description);
-					fco.afficherCarte();
-				}
+				fch.setTitre(titre);
+				fch.setDescription(description);
+				fch.afficherCarte();
             }
 		});
 	}
 	
-	public void setMarqueurProprietaire(JoueurMonopoly j, Case caze) {
+	/**
+	 * Affiche la fenêtre {@link FenetreCarteCommunaute}. <br>
+	 * Les paramètres String titre et String description passés seront utilisés dans la fenêtre pour indiquer qu'elle carte on a tiré.
+	 * @param titre String
+	 * @param description String
+	 * @see FenetreCarteCommunaute
+	 */
+	public void afficherFenetreCarteCommunauté(String titre, String description) {
+		
+		Platform.runLater(new Runnable() {
+            @Override public void run() {
+            	
+				fco.setTitre(titre);
+				fco.setDescription(description);
+				fco.afficherCarte();
+            }
+		});
+	}
+	
+	/**
+	 * Méthode plaçant un marqueur désignant le propriétaire du terrain quand le joueur achète le terrain.
+	 * @param joueur JoueurMonopoly
+	 * @param caze Case
+	 * @see JoueurMonopoly
+	 * @see Case
+	 */
+	public void setMarqueurProprietaire(JoueurMonopoly joueur, Case caze) {
 		
 		Platform.runLater(new Runnable() {
             @Override public void run() {
@@ -218,7 +300,7 @@ public class FenetrePrincipale {
             	caze.getMarqueur().setFill(getPionActif().getFill());
             	
             	double x = 100, y = 100;
-        		int pos = j.getPosition();
+        		int pos = joueur.getPosition();
         		
         		if(caze.getMarqueur().getPoints().isEmpty())
         			root.getChildren().add(caze.getMarqueur());
@@ -261,6 +343,11 @@ public class FenetrePrincipale {
         });
 	}
 	
+	/**
+	 * Méthode ajoutant un {@link Polygon} maison dans la fenêtre principale en fonction de la {@link Case} passée en paramètre.
+	 * @param caze Case
+	 * @see Case
+	 */
 	public void setMaison(Case caze){
 		
 		Platform.runLater(new Runnable() {
@@ -297,14 +384,18 @@ public class FenetrePrincipale {
 		});
 	}
 	
-	
-	public void deplacerPion(JoueurMonopoly j){
+	/**
+	 * Déplace le pion du joueur actif en fonction de la position sur le plateau de joueur passé en paramètre.
+	 * @param joueur JoueurMonopoly
+	 * @see JoueurMonopoly
+	 */
+	public void deplacerPion(JoueurMonopoly joueur){
 
 		double x, y;
-		int pos = j.getPosition();
+		int pos = joueur.getPosition();
 		TranslateTransition tt = new TranslateTransition(Duration.millis(500), getPionActif());
 		
-		if(j.getEstBanqueroute()) {
+		if(joueur.getEstBanqueroute()) {
 			x = 103;
 			y = 538;
 		}
@@ -313,11 +404,11 @@ public class FenetrePrincipale {
 			y = 604;
 		}
 		else if(pos == 10) {
-			if(j.getEstPrison()) {
+			if(joueur.getEstPrison()) {
 				x = 47;
 				y = 598;
 			}
-			else if(j.getID() == 0 || j.getID() == 1){
+			else if(joueur.getID() == 0 || joueur.getID() == 1){
 				x = 16;
 				y = 644;
 			}
@@ -355,7 +446,7 @@ public class FenetrePrincipale {
 			y = -50;
 		}
 		
-		switch(j.getID()) {
+		switch(joueur.getID()) {
 		case 0: x-=8; y-=8; break;
 		case 1: x+=8; y-=8; break;
 		case 2: x-=8; y+=8; break;
@@ -368,6 +459,11 @@ public class FenetrePrincipale {
 	    tt.play();
 	}
 	
+	/**
+	 * Affiche le vainqueur de la partie. Ajoute également le bouton newPartie à la fenêtre princiaple.
+	 * @param pm PlateauMonopoly
+	 * @see PlateauMonopoly
+	 */
 	public void afficherVainqueur(PlateauMonopoly pm) {
 		
 		Platform.runLater(new Runnable() {
@@ -392,6 +488,9 @@ public class FenetrePrincipale {
 		});
 	}
 	
+	/**
+	 * Réinitialise les éléments graphiques de la fenêtre tels que les labels, les pions et les logs.
+	 */
 	public void resetElementsGraphiques() {
 		l_ParcGratuit.setText("0€");
 		l_Joueurs.clear();
@@ -400,6 +499,9 @@ public class FenetrePrincipale {
 		l_Logs.clear();
 	}
 	
+	/**
+	 * Évènement lorque l'on appuie sur le bouton tourSuivant : la partie reprend.
+	 */
 	private class EvtTourSuivant implements EventHandler<ActionEvent> {
 		
 		@Override
@@ -407,6 +509,11 @@ public class FenetrePrincipale {
 			partie.reprendrePartie();
 		}
 	}
+	/**
+	 * Évènement lorque l'on appuie sur le bouton newPartie : la fenètre principale se ferme, les éléments graphiques sont
+	 * réinitialisés, la StackPane root est redéfinie et on réaffiche la fenêtre de démarrage.
+	 * @see FenetreDemarrage
+	 */
 	private class EvtNewPartie implements EventHandler<ActionEvent> {
 		
 		@Override
@@ -420,7 +527,15 @@ public class FenetrePrincipale {
 			fd.getStage().show();
 		}
 	}
-public class EvtClicRoot implements EventHandler<MouseEvent> {
+	/**
+	 * Évènement lorqu'on clic dans la StackPane root : 
+	 * en fonction des coordonnées du pointeurs, on peux obtenir la position de la case visée. <br>
+	 * Si cette position est une position valide (càd que l'on clic sur une {@link CaseTerrain} qui appartient au joueur dont
+	 * c'est le tour), alors on peut déclencher l'affichage d'une {@link FenetreAcheterTerrain} avec en paramètre la position cliquée.
+	 * @see CaseTerrain
+	 * @see FenetreAcheterTerrain
+	 */
+	private class EvtClicRoot implements EventHandler<MouseEvent> {
 		
 		@Override
 		public void handle(MouseEvent event) {

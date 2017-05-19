@@ -6,17 +6,37 @@ import jeudeplateau.Carte;
 import jeumonopoly.JoueurMonopoly;
 import jeumonopoly.PlateauMonopoly;
 
+/**
+ * Type de {@link Carte} pour les déplacements de joueurs.<br><br>
+ * &nbsp; <b>Liste des champs :</b>
+ * <ul><li><b>position</b> : int - position à laquelle placer le joueur.</li>
+ * <li><b>deplacementRelatif</b> : boolean - true si le déplacement est relatif à la position (ex: avancez de 3 cases) ou absolue (ex: avancez jusqu'à la Gare de Lyon).</li></ul>
+ * @see Carte
+ */
 public class CarteDeplacement extends Carte {
 	
 	private int position;
 	private boolean deplacementRelatif;
 	
+	/**
+	 * Unique constructeur de la clase {@link CarteDeplacement}.
+	 * @param titre String
+	 * @param description String
+	 * @param pos int
+	 * @param deplacementRelatif boolean
+	 */
 	public CarteDeplacement(String titre, String description, int pos, boolean deplacementRelatif) {
 		super(titre, description);
 		this.position = pos;
 		this.deplacementRelatif = deplacementRelatif;
 	}
 
+	/**
+	 * Méthode réalisant l'action de la carte. 
+	 * @param joueur JoueurMonopoly
+	 * @param plateau PlateauMonopoly
+	 * @param fp FenetrePrincipale
+	 */
 	@Override
 	public void actionCarte(JoueurMonopoly joueur, PlateauMonopoly plateau, FenetrePrincipale fp) {
 		
