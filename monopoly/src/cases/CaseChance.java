@@ -8,20 +8,32 @@ import jeudeplateau.Case;
 import jeumonopoly.JoueurMonopoly;
 import jeumonopoly.PlateauMonopoly;
 
+/**
+ * Crée l'action d'une case chance
+*@author WEBERT MORVRANGE
+*/
 public class CaseChance extends Case {
-
 	
-	
+	/**
+	 * Indique le nom de la case
+	 */
 	public CaseChance() {
 		super("Chance");
 	}
 
 	@Override
+	/**
+	 * Non utilisée
+	 */
 	public void actionCase(JoueurMonopoly joueur, PlateauMonopoly plateau, FenetrePrincipale fp) {
 		
 	}
 
 	@Override
+	/**
+	 * Permet de tirer et afficher une carte chance
+	 * @see Carte
+	 */
 	public void fenetreAction(FenetrePrincipale fp) {
 		
 		Console es = new Console(fp);

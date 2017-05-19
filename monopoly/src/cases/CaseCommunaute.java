@@ -7,18 +7,33 @@ import jeudeplateau.Case;
 import jeumonopoly.JoueurMonopoly;
 import jeumonopoly.PlateauMonopoly;
 
+/**
+ * Crée l'action d'une case communauté
+*@author WEBERT MORVRANGE
+*/
+
 public class CaseCommunaute extends Case {
 
+	/**
+	 * Indique le nom de la case
+	 */
 	public CaseCommunaute() {
 		super("Communauté");
 	}
 
 	@Override
+	/**
+	 * Non utilisée
+	 */
 	public void actionCase(JoueurMonopoly joueur, PlateauMonopoly plateau, FenetrePrincipale fp) {
 		
 	}
 
 	@Override
+	/**
+	 * Permet de tirer et afficher une carte communauté
+	 * @see Carte
+	 */
 	public void fenetreAction(FenetrePrincipale fp) {
 		
 		Console es = new Console(fp);

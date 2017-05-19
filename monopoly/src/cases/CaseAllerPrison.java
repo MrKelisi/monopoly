@@ -6,12 +6,24 @@ import jeudeplateau.Case;
 import jeumonopoly.JoueurMonopoly;
 import jeumonopoly.PlateauMonopoly;
 
+/**
+ * Crée l'action pour aller en prison
+*@author WEBERT MORVRANGE
+*@see Case
+*/
 public class CaseAllerPrison extends Case {
 	
+	/**
+	 * Indique le nom de la case
+	 */
 	public CaseAllerPrison() {
 		super("Aller en prison");
 	}
 	
+	/**
+	 * Méthode permettant de gérer l'action quand le joueur tombe sur la case AllerPrison
+	 * @see Case
+	 */
 	public void actionCase(JoueurMonopoly joueur, PlateauMonopoly plateau, FenetrePrincipale fp) {
 		
 		Console es = new Console(fp);
@@ -29,11 +41,17 @@ public class CaseAllerPrison extends Case {
 	}
 
 	@Override
+	/**
+	 * ToString
+	 */
 	public String toString() {
 		return "va en prison!";
 	}
 
 	@Override
+	/**
+	 * Méthode permettant de reprendre la partie
+	 */
 	public void fenetreAction(FenetrePrincipale fp) {
 		fp.getPartie().reprendrePartie();
 	}

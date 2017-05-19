@@ -9,12 +9,28 @@ import java.util.Random;
 import fenetres.FenetrePrincipale;
 import io.Console;
 
+/**
+ * Crée l'action de la case Prison
+*@author WEBERT MORVRANGE
+*/
 public class CasePrison extends Case {
 	
+	/**
+	 * Indique le nom de la case
+	 */
 	public CasePrison() {
 		super("Simple Visite");
 	}
 	
+	/**
+	 * Méthode gérant tous les cas d'un joueur en prison : <br>
+	 * <ul>
+	 * <li>Si un joueur est resté 3 tours en prison, il doit payer 50€</li>
+	 * <li>Si un joueur fait un double au lancé de dés, il peut sortir</li>
+	 * <li>Si un joueur possède une carte Sortie de Prison et qu'il l'utilise, il se libère</li>
+	 * </ul>
+	 * @see Case
+	 */
 	public void actionCase(JoueurMonopoly joueur, PlateauMonopoly plateau, FenetrePrincipale fp) {
 		
 		Console es = new Console(fp);
@@ -69,11 +85,17 @@ public class CasePrison extends Case {
 	}
 	
 	@Override
+	/**
+	 * ToString
+	 */
 	public String toString() {
 		return "est sur la case Prison";
 	}
 
 	@Override
+	/**
+	 * Reprend le cours de la partie
+	 */
 	public void fenetreAction(FenetrePrincipale fp) {
 		
 		if(fp.getPartie().PARTIE_AUTO) {

@@ -7,14 +7,29 @@ import jeudeplateau.Case;
 import jeumonopoly.JoueurMonopoly;
 import jeumonopoly.PlateauMonopoly;
 
+/**
+ * Crée l'action de la case Service Public
+*@author WEBERT MORVRANGE
+*/
+
 public class CaseServicePublic extends Case {
 
+	/**
+	 * Indique le nom de la case et attribut un prix
+	 * @param nom String
+	 */
 	public CaseServicePublic(String nom) {
 		super(nom);
 		this.setPrix(150);
 	}
 
 	@Override
+	/**
+	 * Méthode gérant l'appropriation d'un service public à un joueur <br />
+	 * Gère le changement du loyer en fonction du nombre de service public possédé par un joueur
+	 * @see Joueur
+	 * @see Case
+	 */
 	public void actionCase(JoueurMonopoly joueur, PlateauMonopoly plateau, FenetrePrincipale fp) {
 		
 		Console es = new Console(fp);
@@ -62,6 +77,9 @@ public class CaseServicePublic extends Case {
 	}
 
 	@Override
+	/**
+	 * Affiche une fenêtre pour l'achat de la case et reprend le cours de la partie
+	 */
 	public void fenetreAction(FenetrePrincipale fp) {
 		
 		if(fp.getPartie().PARTIE_AUTO) {

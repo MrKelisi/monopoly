@@ -7,14 +7,29 @@ import jeudeplateau.Case;
 import jeumonopoly.JoueurMonopoly;
 import jeumonopoly.PlateauMonopoly;
 
+/**
+ * Crée l'action d'une case gare
+*@author WEBERT MORVRANGE
+*/
+
 public class CaseGare extends Case {
 
+	/**
+	 * Indique le nom et ajoute le prix d'une gare
+	 * @param nom String
+	 */
 	public CaseGare(String nom) {
 		super(nom);
 		this.setPrix(200);
 	}
 
 	@Override
+	/**
+	 * Méthode gérant l'appropriation d'une gare à un joueur <br />
+	 * Gère le changement du loyer en fonction du nombre de gare possédé par un joueur
+	 * @see Joueur
+	 * @see Case
+	 */
 	public void actionCase(JoueurMonopoly joueur, PlateauMonopoly plateau, FenetrePrincipale fp) {
 		
 		Console es = new Console(fp);
@@ -50,6 +65,12 @@ public class CaseGare extends Case {
 		}
 	}
 	
+	/**
+	 * Rend le joueur propriétaire d'une gare
+	 * @param joueur JoueurMonopoly
+	 * @param fp FenetrePrincipale
+	 * @see jeudeplateau.Joueur
+	 */
 	public void setProprietaire(JoueurMonopoly joueur, FenetrePrincipale fp) {
 		this.setProprietaire(joueur);
 		fp.setMarqueurProprietaire(joueur, this);
@@ -58,6 +79,9 @@ public class CaseGare extends Case {
 	}
 
 	@Override
+	/**
+	 * Affiche une fenêtre d'achat de terrain
+	 */
 	public void fenetreAction(FenetrePrincipale fp) {
 		
 		if(fp.getPartie().PARTIE_AUTO) {

@@ -9,21 +9,44 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Worker;
 
+/**
+ * Lance la partie
+*@author WEBERT MORVRANGE
+*/
+
 public class Partie {
 
+	/**
+	 * @see PlateauMonopoly
+	 */
 	private PlateauMonopoly pm;
+	
+	/**
+	 * @see FenetrePrincipale
+	 */
 	private FenetrePrincipale fp;
+	
 	private boolean pausePartie = false;
 	public final static long VITESSE_PARTIE = 1000;
 	public final static boolean PARTIE_AUTO = false;
 	
 	/* CONSTRUCTEUR PARTIE */
 	
+	/**
+	 * Crée une partie en fonction du nombre de joueurs
+	 * @param nombreDeJoueurs
+	 * @param fp
+	 */
 	public Partie(int nombreDeJoueurs, FenetrePrincipale fp) {
 		this.pm = new PlateauMonopoly(nombreDeJoueurs);
 		this.fp = fp;
 	}
 	
+	/**
+	 * Démarre la partie
+	 * @see JoueurMonopoly
+	 * @see Case
+	 */
 	public void demarrerLaPartie() {
 		
 		final Service<Void> partieService = new Service<Void>() {
@@ -121,14 +144,24 @@ public class Partie {
         partieService.start();
 	}
 	
+	/**
+	 * Renvoie le plateau du Monopoly
+	 * @return pm
+	 */
 	public PlateauMonopoly getPM() {
 		return this.pm;
 	}
 	
+	/**
+	 * Permet de reprendre le cours de la partie
+	 */
 	public void reprendrePartie() {
 		this.pausePartie = false;
 	}
 
+	/**
+	 * Il est là car il le doit c'est tout
+	 */
 	@Override
 	public String toString() {
 		return "Partie [plateauM=" + pm.toString() + "]";
