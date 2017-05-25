@@ -13,7 +13,7 @@ import jeudeplateau.Joueur;
 
 public class JoueurMonopoly extends Joueur {
 
-	private int argent = 100;
+	private int argent = 1000;
 	private boolean estBanqueroute = false;
 	private boolean estPrison = false;
 	private int toursEnPrison = 1;
@@ -156,15 +156,20 @@ public class JoueurMonopoly extends Joueur {
 	 * @see Case
 	 */
 	public ArrayList<String> getListeCouleur(){
-		int brun = 0;
-		int turquoise = 0;
-		int mauve = 0;
-		int orange = 0;
-		int rouge = 0;
-		int jaune = 0;
-		int vert = 0;
-		int bleu = 0;
-		for(Case t:this.getTerrains()){
+		
+		couleurs.clear();
+		
+		int 	brun = 0, 
+				turquoise = 0,
+				mauve = 0,
+				orange = 0,
+				rouge = 0,
+				jaune = 0,
+				vert = 0,
+				bleu = 0;
+		
+		for(Case t:this.getTerrains()) {
+			
 			if(t.getCouleur() == "brun")
 				brun += 1;
 			if(t.getCouleur() == "turquoise")
@@ -183,29 +188,21 @@ public class JoueurMonopoly extends Joueur {
 				bleu += 1;
 		}
 		
-		if(brun == 2 && !couleurs.contains("brun"))
-			couleurs.add("brun");
+		if(brun == 2) 		couleurs.add("brun");
 		
-		if(turquoise == 3 && !couleurs.contains("turquoise"))
-			couleurs.add("turquoise");
+		if(turquoise == 3) 	couleurs.add("turquoise");
 		
-		if(mauve == 3 && !couleurs.contains("mauve"))
-			couleurs.add("mauve");
+		if(mauve == 3) 		couleurs.add("mauve");
 		
-		if(orange == 3 && !couleurs.contains("orange"))
-			couleurs.add("orange");
+		if(orange == 3) 	couleurs.add("orange");
 		
-		if(rouge == 3 && !couleurs.contains("rouge"))
-			couleurs.add("rouge");
+		if(rouge == 3) 		couleurs.add("rouge");
 		
-		if(jaune == 3 && !couleurs.contains("jaune"))
-			couleurs.add("jaune");
+		if(jaune == 3) 		couleurs.add("jaune");
 		
-		if(vert == 3 && !couleurs.contains("vert"))
-			couleurs.add("vert");
+		if(vert == 3) 		couleurs.add("vert");
 		
-		if(bleu == 2 && !couleurs.contains("bleu"))
-			couleurs.add("bleu");
+		if(bleu == 2) 		couleurs.add("bleu");
 		
 		return this.couleurs;
 	}

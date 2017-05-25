@@ -145,9 +145,10 @@ public class FenetreActionSurTerrain {
 
 		@Override
 		public void handle(ActionEvent event) {
-			if(fp.getPartie().getPM().getCase(position).getPeutMettreMaison()) {
-				fp.getPartie().getPM().getCase(position).ajouterMaison();
-				fp.setMaison(fp.getPartie().getPM().getCase(position));
+			CaseTerrain c = (CaseTerrain) fp.getPartie().getPM().getCase(position);
+			if(c.getPeutMettreMaison()) {
+				c.ajouterMaison();
+				fp.setMaison(c);
 				stage.close();
 			}
 			else l_TexteErreur.setText("Impossible de placer une maison ici.");
@@ -164,7 +165,11 @@ public class FenetreActionSurTerrain {
 		public void handle(ActionEvent event) {
 			fp.getPartie().getPM().getJoueurActif().getTerrains().remove(fp.getPartie().getPM().getCase(position));
 			fp.getPartie().getPM().getCase(position).setProprietaire(null);
-			fp.getPartie().getPM().getCase(position).getMarqueur().setFill(Color.web("#DAE9D4"));
+			fp.getPartie().getPM().getCase(position).getMarqueur().setFill(Color.TRANSPARENT);
+			fp.getPartie().getPM().getJoueurActif().getListeCouleur();
+			for(int i=0; i<5; i++) {
+				fp.getPartie().getPM().getCase(position).maisons.get(i).setFill(Color.TRANSPARENT);
+			}
 			fp.getPartie().getPM().getJoueurActif().ajouterArgent(fp.getPartie().getPM().getCase(position).getPrix() + fp.getPartie().getPM().getCase(position).getNbMaison()*fp.getPartie().getPM().getCase(position).getPrixMaison());
 			stage.close();
 			event.consume();

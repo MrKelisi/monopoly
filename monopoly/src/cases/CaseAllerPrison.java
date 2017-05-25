@@ -13,11 +13,13 @@ import jeumonopoly.PlateauMonopoly;
 */
 public class CaseAllerPrison extends Case {
 	
+	private boolean reponseQuestion = false;
+	
 	/**
 	 * Indique le nom de la case
 	 */
 	public CaseAllerPrison() {
-		super("Aller en prison");
+		super("Aller en prison", 0);
 	}
 	
 	/**
@@ -54,6 +56,59 @@ public class CaseAllerPrison extends Case {
 	 */
 	public void fenetreAction(FenetrePrincipale fp) {
 		fp.getPartie().reprendrePartie();
+	}
+
+	@Override
+	public JoueurMonopoly getProprietaire() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getCouleur() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int getLoyer() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getPrixMaison() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getNbMaison() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public boolean getReponseQuestion() {
+		// TODO Auto-generated method stub
+		return reponseQuestion;
+	}
+
+	@Override
+	public boolean getPeutMettreMaison() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void setProprietaire(JoueurMonopoly j) {
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public void setReponseQuestion(boolean b) {
+		// TODO Auto-generated method stub
+		this.reponseQuestion = b;
 	}
 	
 }

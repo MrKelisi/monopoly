@@ -14,13 +14,15 @@ import jeumonopoly.PlateauMonopoly;
 
 public class CaseServicePublic extends Case {
 
+	private JoueurMonopoly proprietaire;
+	private boolean reponseQuestion = false;
+	
 	/**
 	 * Indique le nom de la case et attribut un prix
 	 * @param nom String
 	 */
 	public CaseServicePublic(String nom) {
-		super(nom);
-		this.setPrix(150);
+		super(nom, 150);
 	}
 
 	@Override
@@ -70,10 +72,10 @@ public class CaseServicePublic extends Case {
 	}
 	
 	public void setProprietaire(JoueurMonopoly joueur, FenetrePrincipale fp) {
-		this.setProprietaire(joueur);
-		fp.setMarqueurProprietaire(joueur, this);
+		proprietaire = joueur;
 		joueur.ajouterTerrain(this);
 		joueur.setNbServices(joueur.getNbServices() + 1);
+		fp.setMarqueurProprietaire(joueur, this);
 	}
 
 	@Override
@@ -85,13 +87,67 @@ public class CaseServicePublic extends Case {
 		if(fp.getPartie().PARTIE_AUTO) {
 			Random rand = new Random();
 			if(rand.nextBoolean())
-				setReponseQuestion(true);
+				reponseQuestion = true;
 			fp.getPartie().reprendrePartie();
 		}
 		else if(this.getProprietaire() == null)
 			fp.afficherFenetreAchatTerrain();
 		else
 			fp.getPartie().reprendrePartie();
+	}
+
+	@Override
+	public JoueurMonopoly getProprietaire() {
+		// TODO Auto-generated method stub
+		return proprietaire;
+	}
+
+	@Override
+	public String getCouleur() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int getLoyer() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getPrixMaison() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getNbMaison() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public boolean getReponseQuestion() {
+		// TODO Auto-generated method stub
+		return reponseQuestion;
+	}
+
+	@Override
+	public boolean getPeutMettreMaison() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void setProprietaire(JoueurMonopoly j) {
+		// TODO Auto-generated method stub
+		this.proprietaire = j;
+	}
+
+	@Override
+	public void setReponseQuestion(boolean b) {
+		// TODO Auto-generated method stub
+		this.reponseQuestion = b;
 	}
 
 }

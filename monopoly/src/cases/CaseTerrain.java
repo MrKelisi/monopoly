@@ -2,10 +2,10 @@ package cases;
 
 import java.util.ArrayList;
 import java.util.Random;
-
 import exceptions.notEnoughMoneyException;
 import fenetres.FenetrePrincipale;
 import io.Console;
+import javafx.scene.shape.Polygon;
 import jeudeplateau.Case;
 import jeumonopoly.JoueurMonopoly;
 import jeumonopoly.PlateauMonopoly;
@@ -14,8 +14,17 @@ import jeumonopoly.PlateauMonopoly;
  * Crée l'action de la case terrain
 *@author WEBERT MORVRANGE
 */
+	
 
 public class CaseTerrain extends Case {
+
+	private JoueurMonopoly proprietaire;
+	private String couleur;
+	private ArrayList<Integer> loyer = new ArrayList<Integer>();
+	private int prixMaison;
+	private boolean peutMettreMaison = false;
+	private int nbMaison = 0;
+	private boolean reponseQuestion = false;
 	
 	/**
 	 * Indique le nom, le prix du terrain, la liste de ses loyers, le prix d'une maison, le nombre de maison, et la couleur que possède un terrain
@@ -26,13 +35,12 @@ public class CaseTerrain extends Case {
 	 * @param nbMaison int
 	 * @param couleur String
 	 */
-	public CaseTerrain(String nom, int montant, ArrayList<Integer> loyer, int prixMaison, int nbMaison, String couleur) {
-		super(nom);
-		this.setPrix(montant);
-		this.setCouleur(couleur);
-		this.setLoyer(loyer);
-		this.setPrixMaison(prixMaison);
-		this.setNbMaison(nbMaison);
+	public CaseTerrain(String nom, int valeur, ArrayList<Integer> loyer, int prixMaison, int nbMaison, String couleur) {
+		super(nom, valeur);
+		this.couleur = couleur;
+		this.loyer = loyer;
+		this.prixMaison = prixMaison;
+		this.nbMaison = nbMaison;
 	}
 	
 	/**
@@ -46,6 +54,7 @@ public class CaseTerrain extends Case {
 	 * @see jeudeplateau.Joueur
 	 * @see Case
 	 */
+	@SuppressWarnings("unused")
 	public void actionCase(JoueurMonopoly joueur, PlateauMonopoly plateau, FenetrePrincipale fp) throws notEnoughMoneyException {
 		
 		Console es = new Console(fp);
@@ -99,12 +108,22 @@ public class CaseTerrain extends Case {
 	 * @param fp FenetrePrincipale
 	 */
 	public void setProprietaire(JoueurMonopoly joueur, FenetrePrincipale fp) {
-		this.setProprietaire(joueur);
-		fp.setMarqueurProprietaire(joueur, this);
+		proprietaire = joueur;
 		joueur.ajouterTerrain(this);
+		fp.setMarqueurProprietaire(joueur, this);
 	}
 	
-	@Override
+	/**
+	 * Permet l'ajout d'une maison sur un terrain
+	 */
+	public void ajouterMaison(){
+		
+		nbMaison++;
+		proprietaire.retirerArgent(this.getPrixMaison());
+		
+		System.out.println("Félicitations, vous avez posé une maison !");
+	}
+	
 	/**
 	 * Méthode permettant l'affichage d'une fenêtre pour l'achat d'un terrain, et reprenant le cours de la partie
 	 */
@@ -113,7 +132,7 @@ public class CaseTerrain extends Case {
 		if(fp.getPartie().PARTIE_AUTO) {
 			Random rand = new Random();
 			if(rand.nextBoolean())
-				setReponseQuestion(true);
+				reponseQuestion = true;
 			fp.getPartie().reprendrePartie();
 		}
 		else if(this.getProprietaire() == null)
@@ -121,10 +140,83 @@ public class CaseTerrain extends Case {
 		else
 			fp.getPartie().reprendrePartie();
 	}
+	
+	public boolean getPeutMettreMaison() {
+		if(proprietaire.getListeCouleur().contains(this.getCouleur())){
 
+			ArrayList<Case> couleur = new ArrayList<Case>();
+			for(Case c: proprietaire.getTerrains())
+				if(c.getCouleur() == this.getCouleur() && c != this)
+					couleur.add(c);
+			
+			this.peutMettreMaison = true;
+			for(Case c:couleur) {
+				if(!(this.getNbMaison() == c.getNbMaison() || this.getNbMaison() == c.getNbMaison() - 1))
+					this.peutMettreMaison = false;
+			}
+			
+			if(proprietaire.getArgent() < this.getPrixMaison()) {
+				this.peutMettreMaison = false;
+				System.out.println("Vous n'avez pas assez d'argent pour acheter une maison !");
+			}
+			if(getNbMaison() == 4) {
+				this.peutMettreMaison = false;
+				System.out.println("Le quota de maisons est atteint !");
+			}
+		}
+		else
+			this.peutMettreMaison = false;
+		
+		return this.peutMettreMaison;
+	}
+
+	@Override
+	public String getCouleur() {
+		return couleur;
+	}
+
+	@Override
+	public int getLoyer() {
+		int apayer = loyer.get(getNbMaison());
+		if(proprietaire.getListeCouleur().contains(this.getCouleur()) && getNbMaison() == 0)
+			apayer*=2; // loyer double si le joueur possède tous les terrains d'une couleur, sans maison.
+		
+		return apayer;
+	}
+
+	@Override
+	public int getPrixMaison() {
+		return prixMaison;
+	}
+
+	@Override
+	public int getNbMaison() {
+		return nbMaison;
+	}
+
+	@Override
+	public JoueurMonopoly getProprietaire() {
+		return proprietaire;
+	}
+
+	@Override
+	public boolean getReponseQuestion() {
+		return reponseQuestion;
+	}
+	
 	@Override
 	public String toString() {
 		return "est sur la case " + this.getNom();
+	}
+
+	@Override
+	public void setProprietaire(JoueurMonopoly j) {
+		this.proprietaire = j;
+	}
+
+	@Override
+	public void setReponseQuestion(boolean b) {
+		this.reponseQuestion = b;
 	}
 	
 }

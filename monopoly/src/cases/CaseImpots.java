@@ -17,9 +17,8 @@ public class CaseImpots extends Case {
 	 * @param nom String
 	 * @param prix int
 	 */
-	public CaseImpots(String nom, int prix) {
-		super(nom);
-		this.setPrix(prix);
+	public CaseImpots(String nom, int valeur) {
+		super(nom, valeur);
 	}
 	
 	/**
@@ -46,6 +45,60 @@ public class CaseImpots extends Case {
 	 */
 	public void fenetreAction(FenetrePrincipale fp) {
 		fp.getPartie().reprendrePartie();
+	}
+
+	@Override
+	public JoueurMonopoly getProprietaire() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getCouleur() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int getLoyer() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getPrixMaison() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getNbMaison() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public boolean getReponseQuestion() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean getPeutMettreMaison() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void setProprietaire(JoueurMonopoly j) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setReponseQuestion(boolean b) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

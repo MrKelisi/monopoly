@@ -1,5 +1,6 @@
 package jeumonopoly;
 
+import cases.CaseTerrain;
 import fenetres.FenetrePrincipale;
 import io.Console;
 import jeudeplateau.Case;

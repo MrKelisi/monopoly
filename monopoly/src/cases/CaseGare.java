@@ -1,9 +1,11 @@
 package cases;
 
+import java.util.ArrayList;
 import java.util.Random;
 import fenetres.FenetrePrincipale;
 import io.Console;
 import jeudeplateau.Case;
+import jeudeplateau.Joueur;
 import jeumonopoly.JoueurMonopoly;
 import jeumonopoly.PlateauMonopoly;
 
@@ -14,13 +16,15 @@ import jeumonopoly.PlateauMonopoly;
 
 public class CaseGare extends Case {
 
+	private JoueurMonopoly proprietaire;
+	private boolean reponseQuestion = false;
+	
 	/**
 	 * Indique le nom et ajoute le prix d'une gare
 	 * @param nom String
 	 */
 	public CaseGare(String nom) {
-		super(nom);
-		this.setPrix(200);
+		super(nom, 200);
 	}
 
 	@Override
@@ -45,7 +49,7 @@ public class CaseGare extends Case {
 			}
 		}
 		else if(this.getProprietaire() != joueur) {
-			int loyer = 50 * this.getProprietaire().getNbGares();
+			int loyer = getLoyer();
 			String beneficiaire = "la Banque";
 			
 			if(!this.getProprietaire().getEstPrison()) {
@@ -72,10 +76,10 @@ public class CaseGare extends Case {
 	 * @see jeudeplateau.Joueur
 	 */
 	public void setProprietaire(JoueurMonopoly joueur, FenetrePrincipale fp) {
-		this.setProprietaire(joueur);
-		fp.setMarqueurProprietaire(joueur, this);
+		proprietaire = joueur;
 		joueur.ajouterTerrain(this);
 		joueur.setNbGares(joueur.getNbGares() + 1);
+		fp.setMarqueurProprietaire(joueur, this);
 	}
 
 	@Override
@@ -87,13 +91,67 @@ public class CaseGare extends Case {
 		if(fp.getPartie().PARTIE_AUTO) {
 			Random rand = new Random();
 			if(rand.nextBoolean())
-				setReponseQuestion(true);
+				reponseQuestion = true;
 			fp.getPartie().reprendrePartie();
 		}
 		else if(this.getProprietaire() == null)
 			fp.afficherFenetreAchatTerrain();
 		else
 			fp.getPartie().reprendrePartie();
+	}
+
+	@Override
+	public JoueurMonopoly getProprietaire() {
+		// TODO Auto-generated method stub
+		return proprietaire;
+	}
+
+	@Override
+	public String getCouleur() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int getLoyer() {
+		// TODO Auto-generated method stub
+		return proprietaire != null ? 50 * this.getProprietaire().getNbGares() : 200;
+	}
+
+	@Override
+	public int getPrixMaison() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getNbMaison() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public boolean getReponseQuestion() {
+		// TODO Auto-generated method stub
+		return reponseQuestion;
+	}
+
+	@Override
+	public boolean getPeutMettreMaison() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void setProprietaire(JoueurMonopoly j) {
+		// TODO Auto-generated method stub
+		this.proprietaire = j;
+	}
+
+	@Override
+	public void setReponseQuestion(boolean b) {
+		// TODO Auto-generated method stub
+		this.reponseQuestion = b;
 	}
 
 }

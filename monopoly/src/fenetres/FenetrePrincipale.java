@@ -353,12 +353,16 @@ public class FenetrePrincipale {
 		Platform.runLater(new Runnable() {
             @Override public void run() {
             	
-            	Polygon maison = new Polygon();
-            	maison.getPoints().addAll(new Double[] {0., 11., 0., 3., 5., 0., 10., 3., 10., 11.});
+            	caze.maisons.get(caze.getNbMaison()).setFill(Color.BLACK);
             	
             	int x = -50;
             	int y = -50;
             	int pos = caze.getId();
+            	
+            	if(caze.getMarqueur().getPoints().isEmpty())
+            		root.getChildren().add(caze.maisons.get(caze.getNbMaison()));
+            	
+            	caze.maisons.get(caze.getNbMaison()).getPoints().addAll(new Double[] {0., 11., 0., 3., 5., 0., 10., 3., 10., 11.});
             	
             	if(pos > 0 && pos < 10) {
         			x = 520 - ((pos-1) * 54) + (caze.getNbMaison()-1)*12;
@@ -377,9 +381,9 @@ public class FenetrePrincipale {
         			y = 87 + ((pos-31) * 54) + (caze.getNbMaison()-1)*13;
         		}
             	
-            	maison.setTranslateX(x);
-            	maison.setTranslateY(y);
-            	root.getChildren().add(maison);
+            	caze.maisons.get(caze.getNbMaison()).setTranslateX(x);
+            	caze.maisons.get(caze.getNbMaison()).setTranslateY(y);
+            	
             }
 		});
 	}
