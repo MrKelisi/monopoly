@@ -149,5 +149,10 @@ public class CaseServicePublic extends Case {
 		// TODO Auto-generated method stub
 		this.reponseQuestion = b;
 	}
+	
+	public static void main(String[] args) {
+		
+		System.out.println("coucou2");
+	}
 
 }

@@ -1,12 +1,14 @@
 package cases;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 import exceptions.notEnoughMoneyException;
 import fenetres.FenetrePrincipale;
 import io.Console;
 import javafx.scene.shape.Polygon;
 import jeudeplateau.Case;
+import jeudeplateau.Joueur;
 import jeumonopoly.JoueurMonopoly;
 import jeumonopoly.PlateauMonopoly;
 
@@ -54,7 +56,7 @@ public class CaseTerrain extends Case {
 	 * @see jeudeplateau.Joueur
 	 * @see Case
 	 */
-	@SuppressWarnings("unused")
+	
 	public void actionCase(JoueurMonopoly joueur, PlateauMonopoly plateau, FenetrePrincipale fp) throws notEnoughMoneyException {
 		
 		Console es = new Console(fp);
@@ -203,11 +205,6 @@ public class CaseTerrain extends Case {
 	public boolean getReponseQuestion() {
 		return reponseQuestion;
 	}
-	
-	@Override
-	public String toString() {
-		return "est sur la case " + this.getNom();
-	}
 
 	@Override
 	public void setProprietaire(JoueurMonopoly j) {
@@ -217,6 +214,30 @@ public class CaseTerrain extends Case {
 	@Override
 	public void setReponseQuestion(boolean b) {
 		this.reponseQuestion = b;
+	}
+	
+	@Override
+	public String toString() {
+		return "CaseTerrain ["+ super.toString() +", proprietaire=" + proprietaire + ", couleur=" + couleur + ", loyer=" + loyer
+				+ ", prixMaison=" + prixMaison + ", peutMettreMaison=" + peutMettreMaison + ", nbMaison=" + nbMaison + "]";
+	}
+
+	public static void main(String[] args) {
+		
+		System.out.println("TEST DE LA CLASSE : CaseTerrain");
+		
+		CaseTerrain c = new CaseTerrain("Avenue de la République", 120, new ArrayList<Integer>(Arrays.asList(8, 40, 100, 300, 450, 600)), 50, 0, "turquoise");
+		System.out.println(c.toString() + "\n");
+		
+		JoueurMonopoly j = new JoueurMonopoly("Yann", 0, 1000);
+		c.setProprietaire(j);
+		System.out.println("Propriétaire : "+ c.getProprietaire() + "\n");
+
+		c.ajouterMaison();
+		System.out.println("Nombre de maisons : "+ c.getNbMaison());
+		c.ajouterMaison();
+		System.out.println("Nombre de maisons : "+ c.getNbMaison());
+		
 	}
 	
 }

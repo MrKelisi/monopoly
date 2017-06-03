@@ -25,8 +25,9 @@ public class JoueurMonopoly extends Joueur {
 	
 	/* CONSTRUCTEUR */
 	
-	public JoueurMonopoly(String nom, int id) {
+	public JoueurMonopoly(String nom, int id, int argent) {
 		super(nom, id);
+		this.argent = argent;
 	}
 
 	
@@ -273,5 +274,16 @@ public class JoueurMonopoly extends Joueur {
 			});
 		}
 	}
+
+
+	@Override
+	public String toString() {
+		return "JoueurMonopoly [" + super.toString() + ", argent=" + argent + ", estBanqueroute=" + estBanqueroute + ", estPrison=" + estPrison
+				+ ", toursEnPrison=" + toursEnPrison + ", possedeCarteSortiePrison=" + possedeCarteSortiePrison
+				+ ", nombreGaresPossedees=" + nombreGaresPossedees + ", nombreServicesPossedes="
+				+ nombreServicesPossedes + ", terrains=" + terrains + ", couleurs=" + couleurs + "]";
+	}
+	
+	
 	
 }

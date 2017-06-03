@@ -195,4 +195,9 @@ public abstract class Case {
 	public abstract void actionCase(JoueurMonopoly joueur, PlateauMonopoly plateau, FenetrePrincipale fp) throws notEnoughMoneyException;
 	
 	
+	@Override
+	public String toString() {
+		return "Case [nom=" + nom + ", id=" + id + ", valeur=" + valeur + "]";
+	}
+	
 }

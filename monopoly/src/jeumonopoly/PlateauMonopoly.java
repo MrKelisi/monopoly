@@ -59,7 +59,7 @@ public class PlateauMonopoly extends jeudeplateau.Plateau {
 		
 		/* INITIALISATION DES JOUEURS */
 		for(int i = 0; i < this.getNbJoueurs(); i++) {
-			this.joueurs.add(new JoueurMonopoly("Joueur"+(i+1), i));
+			this.joueurs.add(new JoueurMonopoly("Joueur"+(i+1), i, 1000));
 		}
 		
 		/* INITIALISATION DES CASES*/

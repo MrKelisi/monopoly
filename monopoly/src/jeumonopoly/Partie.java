@@ -1,6 +1,5 @@
 package jeumonopoly;
 
-import cases.CaseTerrain;
 import fenetres.FenetrePrincipale;
 import io.Console;
 import jeudeplateau.Case;
@@ -29,7 +28,7 @@ public class Partie {
 	
 	private boolean pausePartie = false;
 	public final static long VITESSE_PARTIE = 1000;
-	public final static boolean PARTIE_AUTO = false;
+	public final static boolean PARTIE_AUTO = true;
 	
 	/* CONSTRUCTEUR PARTIE */
 	

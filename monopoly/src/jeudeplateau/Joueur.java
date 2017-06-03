@@ -69,5 +69,10 @@ public abstract class Joueur {
 	public void setPosition(int pos) {
 		this.position = pos;
 	}
+
+	@Override
+	public String toString() {
+		return "Joueur [nom=" + nom + ", id=" + id + ", position=" + position + "]";
+	}
 	
 }
