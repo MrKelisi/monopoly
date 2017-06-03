@@ -11,6 +11,8 @@ import jeumonopoly.PlateauMonopoly;
 
 public abstract class Carte {
 
+	
+
 	private String titre;
 	private String description;
 	
@@ -52,4 +54,8 @@ public abstract class Carte {
 	 */
 	public abstract void actionCarte(JoueurMonopoly joueur, PlateauMonopoly plateau, FenetrePrincipale fp);
 	
+	@Override
+	public String toString() {
+		return "Carte [titre=" + titre + ", description=" + description + "]";
+	}
 }

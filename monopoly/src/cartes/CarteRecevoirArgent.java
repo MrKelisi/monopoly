@@ -52,4 +52,10 @@ public class CarteRecevoirArgent extends Carte {
 			es.println(" > "+joueur.getNom()+" reçoit "+montant+"€ de la Banque");
 		}
 	}
+
+	@Override
+	public String toString() {
+		return "CarteRecevoirArgent [" + super.toString() + " montant= " + montant + "]";
+	}
+	
 }

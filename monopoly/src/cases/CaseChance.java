@@ -1,6 +1,8 @@
 package cases;
 
 import jeudeplateau.Carte;
+import cartes.CartePayerArgent;
+import cartes.CarteSortirPrison;
 import fenetres.FenetrePrincipale;
 import io.Console;
 import jeudeplateau.Case;
@@ -46,6 +48,25 @@ public class CaseChance extends Case {
 			fp.getPartie().reprendrePartie();
 		else
 			fp.afficherFenetreCarteChance(c.getNom(), c.getDesc());
+	}
+	
+	public static void main(String[] args) {
+		System.out.println("TEST DE LA CLASSE : CaseChance");
+		JoueurMonopoly j = new JoueurMonopoly("Yann", 0, 1000);
+		PlateauMonopoly p = new PlateauMonopoly(40);
+		CartePayerArgent payer = new CartePayerArgent("Amende", "Amende pour excès de vitesse : 15€.", 15);
+		System.out.println(payer.toString());
+		j.retirerArgent(payer.getMontant());
+		p.getCase(20).setPrix(p.getCase(20).getPrix() + payer.getMontant());
+		System.out.println(j.toString()); //Le joueur Yann perd 15€
+		System.out.println(p.getCase(20).toString());
+		
+		CarteSortirPrison prison = new CarteSortirPrison("Sortie", "Vous êtes libéré de prison. \n(Cette carte doit être conservée)");
+		System.out.println(prison.toString());
+		j.setCarteSortiePrison(true);
+		System.out.println(j.toString()); //Le joueur Yann possède la carte de sortie de prison
+		
+		
 	}
 
 	@Override
@@ -102,4 +123,9 @@ public class CaseChance extends Case {
 		
 	}
 
+	@Override
+	public String toString() {
+		return "Case Chance !";
+	}
+	
 }

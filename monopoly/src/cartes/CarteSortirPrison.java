@@ -12,6 +12,8 @@ import jeumonopoly.PlateauMonopoly;
  */
 public class CarteSortirPrison extends Carte {
 	
+	
+
 	/**
 	 * Unique constructeur de la clase {@link CarteSortirPrison}.
 	 * @param titre String
@@ -34,5 +36,9 @@ public class CarteSortirPrison extends Carte {
 		es.println(" > "+joueur.getNom()+" recoit la carte 'Sortir de prison' !");
 		
 		joueur.setCarteSortiePrison(true);
+	}
+	@Override
+	public String toString() {
+		return "CarteSortirPrison [" + super.toString() +"]";
 	}
 }

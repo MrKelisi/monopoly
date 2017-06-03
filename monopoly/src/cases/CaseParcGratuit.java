@@ -38,7 +38,7 @@ public class CaseParcGratuit extends Case {
 	 * ToString
 	 */
 	public String toString() {
-		return "est sur la case parc gratuit";
+		return "est sur la case parc gratuit , argent disponible :" + this.getPrix() + " €";
 	}
 
 	@Override

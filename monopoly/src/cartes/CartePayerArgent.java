@@ -49,7 +49,16 @@ public class CartePayerArgent extends Carte {
 		}
 		else {
 			joueur.retirerArgent(montant);
-			es.println(" > "+joueur.getNom()+" paye "+montant+"€ à la Banque");
+			plateau.getCase(20).setPrix(plateau.getCase(20).getPrix() + montant);
+			es.println(" > "+joueur.getNom()+" dépose "+montant+"€ au parc gratuit");
 		}
+	}
+	public int getMontant(){
+		return this.montant;
+	}
+
+	@Override
+	public String toString() {
+		return "CartePayerArgent ["+ super.toString() +", montant= " + montant + "]";
 	}
 }

@@ -11,6 +11,8 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -36,6 +38,8 @@ public class FenetrePrincipale {
 	private ArrayList <Label> l_ListeTerrains = new ArrayList <Label>();
 	private ArrayList <Circle> l_Pions = new ArrayList <Circle>();
 	private ArrayList<Label> l_Logs = new ArrayList<Label>();
+	private ArrayList<Image> imageDes = new ArrayList<Image>();
+	private ArrayList<ImageView> Des = new ArrayList<ImageView>();
 	private Button tourSuivant = new Button("Finir son tour");
 	private Button newPartie = new Button("Nouvelle partie");
 	public Random rand = new Random();
@@ -75,6 +79,12 @@ public class FenetrePrincipale {
 	 * Initialise la StackPane root de la FenetrePrincipale avec les images, les labels et les boutons adéquates au Monopoly.
 	 */
 	private void initRoot() {
+		imageDes.add(new Image("images/de1.jpg"));
+		imageDes.add(new Image("images/de2.jpg"));
+		imageDes.add(new Image("images/de3.jpg"));
+		imageDes.add(new Image("images/de4.jpg"));
+		imageDes.add(new Image("images/de5.jpg"));
+		imageDes.add(new Image("images/de6.jpg"));
 		root.setStyle("-fx-background-image: url('images/plateau.png'); -fx-background-repeat: no-repeat");
 		root.setAlignment(Pos.TOP_LEFT);
 		
@@ -386,6 +396,22 @@ public class FenetrePrincipale {
             	
             }
 		});
+	}
+	
+	public void afficherDes(PlateauMonopoly p){
+		Platform.runLater(new Runnable() {
+            @Override public void run() {
+        Des.clear();
+		Des.add(new ImageView(imageDes.get(p.des.getDe1()-1)));
+		Des.add(new ImageView(imageDes.get(p.des.getDe2()-1)));
+		Des.get(0).setTranslateX(200);
+		Des.get(0).setTranslateY(300);
+		Des.get(1).setTranslateX(300);
+		Des.get(1).setTranslateY(300);
+		
+		root.getChildren().add(Des.get(0));
+		root.getChildren().add(Des.get(1));
+        }});
 	}
 	
 	/**

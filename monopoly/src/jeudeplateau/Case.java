@@ -200,4 +200,9 @@ public abstract class Case {
 		return "Case [nom=" + nom + ", id=" + id + ", valeur=" + valeur + "]";
 	}
 	
+	public static void main(String[] args) {
+		
+		
+	}
+	
 }

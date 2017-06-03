@@ -77,6 +77,7 @@ public class Partie {
                 				Thread.sleep(VITESSE_PARTIE);
                 				
                 				lancé = pm.des.lancerDes();
+                				fp.afficherDes(pm);
                 				
                 				if(!joueur.getEstPrison()) {
                 					es.println("" + joueur.getNom() + " lance les dés... [" + pm.des.getDe1() + "][" + pm.des.getDe2() + "]... et obtient un " + lancé + " !");

@@ -15,6 +15,7 @@ import jeumonopoly.PlateauMonopoly;
  */
 public class CarteDeplacement extends Carte {
 	
+	
 	private int position;
 	private boolean deplacementRelatif;
 	
@@ -67,4 +68,9 @@ public class CarteDeplacement extends Carte {
 		else
 			es.println(" > "+joueur.getNom()+" atterit sur "+plateau.getCaseActive().getNom());
 	}
+	@Override
+	public String toString() {
+		return "CarteDeplacement [" + super.toString() + "]";
+	}
+
 }
