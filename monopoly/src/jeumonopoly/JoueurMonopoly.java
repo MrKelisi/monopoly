@@ -281,7 +281,7 @@ public class JoueurMonopoly extends Joueur {
 		return "JoueurMonopoly [" + super.toString() + ", argent=" + argent + ", estBanqueroute=" + estBanqueroute + ", estPrison=" + estPrison
 				+ ", toursEnPrison=" + toursEnPrison + ", possedeCarteSortiePrison=" + possedeCarteSortiePrison
 				+ ", nombreGaresPossedees=" + nombreGaresPossedees + ", nombreServicesPossedes="
-				+ nombreServicesPossedes + ", terrains=" + terrains + ", couleurs=" + couleurs + "]";
+				+ nombreServicesPossedes + ", \nterrains=" + getListeStringTerrains() + ", \ncouleurs=" + getListeCouleur() + "]";
 	}
 	
 	

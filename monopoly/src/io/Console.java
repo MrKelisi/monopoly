@@ -143,7 +143,7 @@ public class Console {
   */
   public void println(String s){
     System.out.println(s);
-    fp.logMessages(s);
+    //fp.logMessages(s);
   }
 
   /**

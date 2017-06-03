@@ -57,43 +57,22 @@ public class CaseTerrain extends Case {
 	 * @see Case
 	 */
 	
-	public void actionCase(JoueurMonopoly joueur, PlateauMonopoly plateau, FenetrePrincipale fp) throws notEnoughMoneyException {
+	public void actionCase(JoueurMonopoly joueur, PlateauMonopoly plateau, FenetrePrincipale fp) {
 		
 		Console es = new Console(fp);
 		
 		if(this.getProprietaire() == null) {
-			if(getReponseQuestion()) {
-				if((joueur.getArgent() - this.getPrix()) <= 0)
-					throw new notEnoughMoneyException(" n'a pas assez d'argent pour acheter !");
-				else{
-					setProprietaire(joueur, fp);
-					joueur.retirerArgent(this.getPrix());
-					es.println(" > " + joueur.getNom() + " achète " + this.getNom() + " pour " + this.getPrix() + "€");
-				}
-			}
-			else {
+			if(getReponseQuestion())
+				if(acheterTerrain(joueur, es))
+					fp.setMarqueurProprietaire(joueur, this);
+			else
 				es.println(" > " + joueur.getNom() + " décide de ne pas acheter ce terrain.");
-			}
 		}
-		else if(this.getProprietaire() != joueur) {
-
-			getPeutMettreMaison();
-			String beneficiaire = "la Banque";
-			
-			if(!this.getProprietaire().getEstPrison()) {
-				joueur.retirerArgent(getLoyer());
-				if(!this.getProprietaire().getEstBanqueroute()) {
-					this.getProprietaire().ajouterArgent(getLoyer());
-					beneficiaire = this.getProprietaire().getNom();
-				}
-				es.println(" > " + joueur.getNom() + " paye un loyer de " + getLoyer() + "€ à " + beneficiaire);
-			}
-			else {
-				es.println(" > Le propriétaire est en prison. " + joueur.getNom() + " ne paye pas de loyer.");
-			}
-		}
+		
+		else if(this.getProprietaire() != joueur)
+			payerLoyer(joueur, es);
+		
 		else {
-
 			es.println(" > " + joueur.getNom() + " est sur son propre terrain");
 			
 			if(this.getPeutMettreMaison() && fp.getPartie().PARTIE_AUTO){
@@ -109,10 +88,34 @@ public class CaseTerrain extends Case {
 	 * @param joueur String
 	 * @param fp FenetrePrincipale
 	 */
-	public void setProprietaire(JoueurMonopoly joueur, FenetrePrincipale fp) {
-		proprietaire = joueur;
-		joueur.ajouterTerrain(this);
-		fp.setMarqueurProprietaire(joueur, this);
+	
+	public boolean acheterTerrain(JoueurMonopoly joueur, Console es) {
+		if((joueur.getArgent() - this.getPrix()) <= 0) {
+			es.println("Vous n'avez pas assez d'argent!");
+			return false;
+		}
+		else {
+			setProprietaire(joueur);
+			joueur.retirerArgent(this.getPrix());
+			es.println(" > " + joueur.getNom() + " achète " + this.getNom() + " pour " + this.getPrix() + "€");
+			return true;
+		}
+	}
+	
+	public void payerLoyer(JoueurMonopoly joueur, Console es) {
+		String beneficiaire = "la Banque";
+		
+		if(!this.getProprietaire().getEstPrison()) {
+			joueur.retirerArgent(getLoyer());
+			if(!this.getProprietaire().getEstBanqueroute()) {
+				this.getProprietaire().ajouterArgent(getLoyer());
+				beneficiaire = this.getProprietaire().getNom();
+			}
+			es.println(" > " + joueur.getNom() + " paye un loyer de " + getLoyer() + "€ à " + beneficiaire);
+		}
+		else {
+			es.println(" > Le propriétaire est en prison. " + joueur.getNom() + " ne paye pas de loyer.");
+		}
 	}
 	
 	/**
@@ -209,6 +212,7 @@ public class CaseTerrain extends Case {
 	@Override
 	public void setProprietaire(JoueurMonopoly j) {
 		this.proprietaire = j;
+		j.ajouterTerrain(this);
 	}
 
 	@Override
@@ -224,19 +228,29 @@ public class CaseTerrain extends Case {
 
 	public static void main(String[] args) {
 		
+		Console es = new Console(null);
+		
 		System.out.println("TEST DE LA CLASSE : CaseTerrain");
 		
 		CaseTerrain c = new CaseTerrain("Avenue de la République", 120, new ArrayList<Integer>(Arrays.asList(8, 40, 100, 300, 450, 600)), 50, 0, "turquoise");
 		System.out.println(c.toString() + "\n");
 		
-		JoueurMonopoly j = new JoueurMonopoly("Yann", 0, 1000);
-		c.setProprietaire(j);
-		System.out.println("Propriétaire : "+ c.getProprietaire() + "\n");
-
+		JoueurMonopoly j1 = new JoueurMonopoly("Yann", 0, 1000);
+		JoueurMonopoly j2 = new JoueurMonopoly("Benoit", 1, 1000);
+		
+		c.acheterTerrain(j1, es);
+		
+		System.out.println("Propriétaire : "+ c.getProprietaire().getNom() + "\n");
+		
 		c.ajouterMaison();
 		System.out.println("Nombre de maisons : "+ c.getNbMaison());
 		c.ajouterMaison();
-		System.out.println("Nombre de maisons : "+ c.getNbMaison());
+		System.out.println("Nombre de maisons : "+ c.getNbMaison() + "\n");
+		
+		c.payerLoyer(j2, es);
+		
+		System.out.println(j1.toString()+"\n");
+		System.out.println(j2.toString());
 		
 	}
 	
