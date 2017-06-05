@@ -32,8 +32,9 @@ public class CarteSortirPrison extends Carte {
 	@Override
 	public void actionCarte(JoueurMonopoly joueur, PlateauMonopoly plateau, FenetrePrincipale fp) {
 		
-		Console es = new Console(fp);
+		Console es = new Console();
 		es.println(" > "+joueur.getNom()+" recoit la carte 'Sortir de prison' !");
+		fp.afficherMessage(joueur.getNom()+" recoit la carte 'Sortir de prison' !");
 		
 		joueur.setCarteSortiePrison(true);
 	}

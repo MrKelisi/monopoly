@@ -1,7 +1,6 @@
 package io;
 
 import java.io.*;
-import fenetres.FenetrePrincipale;
 
 /**
 *Classe permettant d'utiliser le clavier comme entree.
@@ -39,11 +38,9 @@ public class Console {
 	new InputStreamReader(System.in));
 
   private boolean ok;
-  private FenetrePrincipale fp;
 
-  public Console(FenetrePrincipale fp) {
+  public Console() {
     fluxEntree = new BufferedReader(new InputStreamReader(System.in));
-    this.fp = fp;
   }
 
   /**
@@ -143,7 +140,6 @@ public class Console {
   */
   public void println(String s){
     System.out.println(s);
-    //fp.logMessages(s);
   }
 
   /**

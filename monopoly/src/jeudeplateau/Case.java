@@ -1,7 +1,6 @@
 package jeudeplateau;
 
 import java.util.ArrayList;
-
 import cases.CaseAllerPrison;
 import cases.CaseChance;
 import cases.CaseCommunaute;
@@ -14,7 +13,6 @@ import cases.CaseServicePublic;
 import cases.CaseTerrain;
 import exceptions.notEnoughMoneyException;
 import fenetres.FenetrePrincipale;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import jeumonopoly.JoueurMonopoly;
 import jeumonopoly.PlateauMonopoly;
@@ -30,7 +28,7 @@ public abstract class Case {
 	private int id = 0;
 	private int valeur = 0;
 	
-	/* CHUT ON A RIEN VU */
+	/* ON A RIEN VU */
 	private Polygon marqueur = new Polygon();
 	public ArrayList<Polygon> maisons = new ArrayList<Polygon>();
 	
@@ -42,13 +40,12 @@ public abstract class Case {
 		this.nom = nom;
 		this.valeur = valeur;
 		
-		/* OUI ON SAIT, PARDON */
+		/* OUI ON SAIT QUE C'EST PAS BIEN, PARDON */
 		for(int i=0; i<5; i++) {
 			Polygon maison = new Polygon();
 			maisons.add(maison);
 		}
 	}
-	
 	
 	/**
 	 * Renvoie le nom de la case
@@ -192,7 +189,7 @@ public abstract class Case {
 	 * @see CaseAllerPrison
 	 * @see CaseTerrain
 	 */
-	public abstract void actionCase(JoueurMonopoly joueur, PlateauMonopoly plateau, FenetrePrincipale fp) throws notEnoughMoneyException;
+	public abstract void actionCase(JoueurMonopoly joueur, PlateauMonopoly plateau, FenetrePrincipale fp);
 	
 	
 	@Override

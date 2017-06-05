@@ -34,6 +34,7 @@ public class FenetrePrincipale {
 	private Stage stage;
 	private StackPane root;
 	private Label l_ParcGratuit = new Label("0€");
+	private Label l_Message = new Label("");
 	private ArrayList <Label> l_Joueurs = new ArrayList <Label>();
 	private ArrayList <Label> l_ListeTerrains = new ArrayList <Label>();
 	private ArrayList <Circle> l_Pions = new ArrayList <Circle>();
@@ -79,28 +80,21 @@ public class FenetrePrincipale {
 	 * Initialise la StackPane root de la FenetrePrincipale avec les images, les labels et les boutons adéquates au Monopoly.
 	 */
 	private void initRoot() {
-		imageDes.add(new Image("images/de1.jpg"));
-		imageDes.add(new Image("images/de2.jpg"));
-		imageDes.add(new Image("images/de3.jpg"));
-		imageDes.add(new Image("images/de4.jpg"));
-		imageDes.add(new Image("images/de5.jpg"));
-		imageDes.add(new Image("images/de6.jpg"));
 		root.setStyle("-fx-background-image: url('images/plateau.png'); -fx-background-repeat: no-repeat");
 		root.setAlignment(Pos.TOP_LEFT);
+		
+		for(int i=1; i<7; i++)
+			imageDes.add(new Image("images/de"+i+".jpg"));
 		
 		l_ParcGratuit.setTranslateX(3);
 		l_ParcGratuit.setTranslateY(68);
 		root.getChildren().add(l_ParcGratuit);
-
-		for(int i=0; i<9; i++) {
-			l_Logs.add(new Label(""));
-			l_Logs.get(i).setFont(Font.font("Consolas", 12));
-			l_Logs.get(i).setTranslateX(100);
-			l_Logs.get(i).setTranslateY(500 - i*16);
-			l_Logs.get(i).setMaxWidth(460);
-			l_Logs.get(i).setMaxHeight(16);
-			root.getChildren().add(l_Logs.get(i));
-		}
+		
+		l_Message.setFont(Font.font("Consolas", 14));
+		l_Message.setTranslateX(95);
+		l_Message.setTranslateY(480);
+		l_Message.setMaxWidth(470);
+		root.getChildren().add(l_Message);
 
 		tourSuivant.setTranslateX(473);
 		tourSuivant.setTranslateY(533);
@@ -190,19 +184,16 @@ public class FenetrePrincipale {
 	}
 	
 	/**
-	 * Se charge de rafraichir les labels de logs dans la fenêtre. Elle reçoit un String msg en paramètre, remonte les anciens logs 
-	 * et place le nouveau message à la fin des logs.
+	 * Affiche le message passé en paramètre dans la fenêtre.
 	 * @param msg String
-	 */
-	public void logMessages(String msg) {
+	 */	
+	public void afficherMessage(String msg) {
+		
 		Platform.runLater(new Runnable() {
             @Override public void run() {
-            	l_Logs.get(l_Logs.size()-1).setText("TOUR "+getPartie().getPM().getNbTours()+" : "+getPartie().getPM().getJoueurActif().getNom());
-            	l_Logs.get(l_Logs.size()-1).setTextFill(Couleurs[getPartie().getPM().getJoueurActifID()]);
-            	for(int i=l_Logs.size()-2; i>0; i--) {
-            		l_Logs.get(i).setText(l_Logs.get(i-1).getText());
-            	}
-            	l_Logs.get(0).setText(msg);
+            	
+            	l_Message.setTextFill(Couleurs[getPartie().getPM().getJoueurActifID()]);
+            	l_Message.setText(msg);
             }
         });
 	}
@@ -221,8 +212,11 @@ public class FenetrePrincipale {
         		l_ParcGratuit.setText(""+pm.getCase(20).getPrix()+"€");
         		
         		for(int i=0; i<pm.getNbJoueurs(); i++) {
-            		l_Joueurs.get(i).setText(""+pm.getJoueur(i).getArgent()+"€ "+(pm.getJoueur(i).getCarteSortiePrison()?"[Sortie]":""));
-            		l_ListeTerrains.get(i).setText(pm.getJoueur(i).getListeStringTerrains());
+            		l_Joueurs.get(i).setText(""+pm.getJoueur(i).getArgent()+"€ "+(pm.getJoueur(i).getCarteSortiePrison()?"[S]":""));
+            		
+            		String listeTerrains = pm.getJoueur(i).getListeStringTerrains();
+            		listeTerrains = listeTerrains.replaceAll(",", "\n");
+            		l_ListeTerrains.get(i).setText(listeTerrains);
         		}
         		
             }
@@ -358,21 +352,23 @@ public class FenetrePrincipale {
 	 * @param caze Case
 	 * @see Case
 	 */
-	public void setMaison(Case caze){
+	public void setMaison(CaseTerrain caze){
 		
 		Platform.runLater(new Runnable() {
             @Override public void run() {
             	
-            	caze.maisons.get(caze.getNbMaison()).setFill(Color.BLACK);
+            	Polygon maison = caze.maisons.get(caze.getNbMaison());
+            	
+            	maison.setFill(Color.BLACK);
             	
             	int x = -50;
             	int y = -50;
             	int pos = caze.getId();
             	
             	if(caze.getMarqueur().getPoints().isEmpty())
-            		root.getChildren().add(caze.maisons.get(caze.getNbMaison()));
+            		root.getChildren().add(maison);
             	
-            	caze.maisons.get(caze.getNbMaison()).getPoints().addAll(new Double[] {0., 11., 0., 3., 5., 0., 10., 3., 10., 11.});
+            	maison.getPoints().addAll(new Double[] {0., 11., 0., 3., 5., 0., 10., 3., 10., 11.});
             	
             	if(pos > 0 && pos < 10) {
         			x = 520 - ((pos-1) * 54) + (caze.getNbMaison()-1)*12;
@@ -391,27 +387,40 @@ public class FenetrePrincipale {
         			y = 87 + ((pos-31) * 54) + (caze.getNbMaison()-1)*13;
         		}
             	
-            	caze.maisons.get(caze.getNbMaison()).setTranslateX(x);
-            	caze.maisons.get(caze.getNbMaison()).setTranslateY(y);
+            	maison.setTranslateX(x);
+            	maison.setTranslateY(y);
             	
             }
 		});
 	}
 	
-	public void afficherDes(PlateauMonopoly p){
+	/**
+	 * Afficher les images des dés dans la FenetrePrincipale.
+	 * @param PlateauMonopoly
+	 * @see PlateauMonopoly
+	 */
+	public void afficherDes(PlateauMonopoly pm) {
 		Platform.runLater(new Runnable() {
             @Override public void run() {
-        Des.clear();
-		Des.add(new ImageView(imageDes.get(p.des.getDe1()-1)));
-		Des.add(new ImageView(imageDes.get(p.des.getDe2()-1)));
-		Des.get(0).setTranslateX(200);
-		Des.get(0).setTranslateY(300);
-		Des.get(1).setTranslateX(300);
-		Des.get(1).setTranslateY(300);
-		
-		root.getChildren().add(Des.get(0));
-		root.getChildren().add(Des.get(1));
-        }});
+            	
+            	Des.clear();
+				Des.add(new ImageView(imageDes.get(pm.des.getDe1()-1)));
+				Des.add(new ImageView(imageDes.get(pm.des.getDe2()-1)));
+				Des.get(0).setTranslateX(247);
+				Des.get(0).setTranslateY(360);
+				Des.get(1).setTranslateX(337);
+				Des.get(1).setTranslateY(360);
+				
+				root.getChildren().add(Des.get(0));
+				root.getChildren().add(Des.get(1));
+            }
+       });
+	}
+	
+	public void effacerDes() {
+		Des.get(0).setVisible(false);
+		Des.get(1).setVisible(false);
+		Des.clear();
 	}
 	
 	/**
@@ -600,7 +609,7 @@ public class FenetrePrincipale {
 				CasesInterdites.add(i);
 			}
 			CasesInterdites.add(-1);
-			for(Case t:getPartie().getPM().getJoueurActif().getTerrains()) {
+			for(Case t:getPartie().getPM().getJoueurActif().getListeTerrains()) {
 				CasesInterdites.remove((Object)(t.getId()));
 			}
 			

@@ -136,7 +136,7 @@ public class JoueurMonopoly extends Joueur {
 	public String getListeStringTerrains() {
 		String s = "";
 		for(Case t:this.terrains) {
-			s+=(t.getNom()+"\n");
+			s+=(t.getNom()+",");
 		}
 		return s;
 	}
@@ -145,7 +145,7 @@ public class JoueurMonopoly extends Joueur {
 	 * Renvoie une liste de terrain que possède un joueur
 	 * @return terrains
 	 */
-	public ArrayList<Case> getTerrains(){
+	public ArrayList<Case> getListeTerrains(){
 		return this.terrains;
 	}
 		
@@ -169,7 +169,7 @@ public class JoueurMonopoly extends Joueur {
 				vert = 0,
 				bleu = 0;
 		
-		for(Case t:this.getTerrains()) {
+		for(Case t:this.getListeTerrains()) {
 			
 			if(t.getCouleur() == "brun")
 				brun += 1;
@@ -263,13 +263,13 @@ public class JoueurMonopoly extends Joueur {
 	 */
 	public void clearMarqueurs() {
 
-		for(Case t:getTerrains()){
+		for(Case t:getListeTerrains()){
 			t.setProprietaire(null);
 			
 			Platform.runLater(new Runnable() {
 	            @Override public void run() {
 			
-	            	t.getMarqueur().setFill(Color.web("#DAE9D4"));
+	            	t.getMarqueur().setFill(Color.TRANSPARENT);
 	            }
 			});
 		}
@@ -281,7 +281,7 @@ public class JoueurMonopoly extends Joueur {
 		return "JoueurMonopoly [" + super.toString() + ", argent=" + argent + ", estBanqueroute=" + estBanqueroute + ", estPrison=" + estPrison
 				+ ", toursEnPrison=" + toursEnPrison + ", possedeCarteSortiePrison=" + possedeCarteSortiePrison
 				+ ", nombreGaresPossedees=" + nombreGaresPossedees + ", nombreServicesPossedes="
-				+ nombreServicesPossedes + ", \nterrains=" + getListeStringTerrains() + ", \ncouleurs=" + getListeCouleur() + "]";
+				+ nombreServicesPossedes + ", \nterrains=[" + getListeStringTerrains() + "], \ncouleurs=" + getListeCouleur() + "]";
 	}
 	
 	

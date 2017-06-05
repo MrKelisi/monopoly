@@ -23,12 +23,7 @@ public class CaseChance extends Case {
 	}
 
 	@Override
-	/**
-	 * Non utilisée
-	 */
-	public void actionCase(JoueurMonopoly joueur, PlateauMonopoly plateau, FenetrePrincipale fp) {
-		
-	}
+	public void actionCase(JoueurMonopoly joueur, PlateauMonopoly plateau, FenetrePrincipale fp) {}
 
 	@Override
 	/**
@@ -37,20 +32,74 @@ public class CaseChance extends Case {
 	 */
 	public void fenetreAction(FenetrePrincipale fp) {
 		
-		Console es = new Console(fp);
-		es.println(" > Le joueur tire une carte chance...");
+		Console es = new Console();
 		
-		Carte c = fp.getPartie().getPM().tirerCarteChance();
-		es.println(" [ "+c.getDesc() + " ]");
-		c.actionCarte(fp.getPartie().getPM().getJoueurActif(), fp.getPartie().getPM(), fp);
+		Carte carte = fp.getPartie().getPM().tirerCarteChance();
+		es.println(" > " + fp.getPartie().getPM().getJoueurActif().getNom() + " tire la carte "+carte.getNom());
+		fp.afficherMessage(fp.getPartie().getPM().getJoueurActif().getNom() + " tire la carte "+carte.getNom());
+		
+		carte.actionCarte(fp.getPartie().getPM().getJoueurActif(), fp.getPartie().getPM(), fp);
 		
 		if(fp.getPartie().PARTIE_AUTO)
 			fp.getPartie().reprendrePartie();
 		else
-			fp.afficherFenetreCarteChance(c.getNom(), c.getDesc());
+			fp.afficherFenetreCarteChance(carte.getNom(), carte.getDesc());
+	}
+
+	
+	/* ===========================
+	   Méthodes abstraites de Case 
+	   =========================== */
+	
+	@Override
+	public JoueurMonopoly getProprietaire() {
+		return null;
+	}
+
+	@Override
+	public String getCouleur() {
+		return null;
+	}
+
+	@Override
+	public int getLoyer() {
+		return 0;
+	}
+
+	@Override
+	public int getPrixMaison() {
+		return 0;
+	}
+
+	@Override
+	public int getNbMaison() {
+		return 0;
+	}
+
+	@Override
+	public boolean getReponseQuestion() {
+		return false;
+	}
+
+	@Override
+	public boolean getPeutMettreMaison() {
+		return false;
+	}
+
+	@Override
+	public void setProprietaire(JoueurMonopoly j) {}
+
+	@Override
+	public void setReponseQuestion(boolean b) {}
+
+	@Override
+	public String toString() {
+		return "CaseChance [" + super.toString() + "]";
 	}
 	
+	
 	public static void main(String[] args) {
+		
 		System.out.println("TEST DE LA CLASSE : CaseChance");
 		JoueurMonopoly j = new JoueurMonopoly("Yann", 0, 1000);
 		PlateauMonopoly p = new PlateauMonopoly(40);
@@ -66,66 +115,5 @@ public class CaseChance extends Case {
 		j.setCarteSortiePrison(true);
 		System.out.println(j.toString()); //Le joueur Yann possède la carte de sortie de prison
 		
-		
 	}
-
-	@Override
-	public JoueurMonopoly getProprietaire() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String getCouleur() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public int getLoyer() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int getPrixMaison() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int getNbMaison() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public boolean getReponseQuestion() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean getPeutMettreMaison() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public void setProprietaire(JoueurMonopoly j) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void setReponseQuestion(boolean b) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public String toString() {
-		return "Case Chance !";
-	}
-	
 }

@@ -147,7 +147,7 @@ public class FenetreActionSurTerrain {
 		public void handle(ActionEvent event) {
 			CaseTerrain c = (CaseTerrain) fp.getPartie().getPM().getCase(position);
 			if(c.getPeutMettreMaison()) {
-				c.ajouterMaison();
+				c.ajouterMaison(fp);
 				fp.setMaison(c);
 				stage.close();
 			}
@@ -163,7 +163,7 @@ public class FenetreActionSurTerrain {
 
 		@Override
 		public void handle(ActionEvent event) {
-			fp.getPartie().getPM().getJoueurActif().getTerrains().remove(fp.getPartie().getPM().getCase(position));
+			fp.getPartie().getPM().getJoueurActif().getListeTerrains().remove(fp.getPartie().getPM().getCase(position));
 			fp.getPartie().getPM().getCase(position).setProprietaire(null);
 			fp.getPartie().getPM().getCase(position).getMarqueur().setFill(Color.TRANSPARENT);
 			fp.getPartie().getPM().getJoueurActif().getListeCouleur();

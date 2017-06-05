@@ -22,12 +22,7 @@ public class CaseCommunaute extends Case {
 	}
 
 	@Override
-	/**
-	 * Non utilisée
-	 */
-	public void actionCase(JoueurMonopoly joueur, PlateauMonopoly plateau, FenetrePrincipale fp) {
-		
-	}
+	public void actionCase(JoueurMonopoly joueur, PlateauMonopoly plateau, FenetrePrincipale fp) {}
 
 	@Override
 	/**
@@ -36,71 +31,69 @@ public class CaseCommunaute extends Case {
 	 */
 	public void fenetreAction(FenetrePrincipale fp) {
 		
-		Console es = new Console(fp);
-		es.println(" > Le joueur tire une carte communauté...");
+Console es = new Console();
 		
-		Carte c = fp.getPartie().getPM().tirerCarteCommunauté();
-		es.println(" [ "+c.getDesc() + " ]");
-		c.actionCarte(fp.getPartie().getPM().getJoueurActif(), fp.getPartie().getPM(), fp);
+		Carte carte = fp.getPartie().getPM().tirerCarteCommunauté();
+		es.println(" > " + fp.getPartie().getPM().getJoueurActif().getNom() + " tire la carte "+carte.getNom());
+		fp.afficherMessage(fp.getPartie().getPM().getJoueurActif().getNom() + " tire la carte "+carte.getNom());
+		
+		carte.actionCarte(fp.getPartie().getPM().getJoueurActif(), fp.getPartie().getPM(), fp);
 		
 		if(fp.getPartie().PARTIE_AUTO)
 			fp.getPartie().reprendrePartie();
 		else
-			fp.afficherFenetreCarteCommunauté(c.getNom(), c.getDesc());
+			fp.afficherFenetreCarteCommunauté(carte.getNom(), carte.getDesc());
 	}
 
+	
+	/* ===========================
+	   Méthodes abstraites de Case 
+	   =========================== */
+	
 	@Override
 	public JoueurMonopoly getProprietaire() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public String getCouleur() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public int getLoyer() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int getPrixMaison() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int getNbMaison() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public boolean getReponseQuestion() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean getPeutMettreMaison() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public void setProprietaire(JoueurMonopoly j) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void setProprietaire(JoueurMonopoly j) {}
 
 	@Override
-	public void setReponseQuestion(boolean b) {
-		// TODO Auto-generated method stub
-		
+	public void setReponseQuestion(boolean b) {}
+	
+	@Override
+	public String toString() {
+		return "CaseCommunaute [" + super.toString() + "]";
 	}
 	
 }

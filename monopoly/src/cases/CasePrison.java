@@ -3,9 +3,7 @@ package cases;
 import jeudeplateau.Case;
 import jeumonopoly.JoueurMonopoly;
 import jeumonopoly.PlateauMonopoly;
-
 import java.util.Random;
-
 import fenetres.FenetrePrincipale;
 import io.Console;
 
@@ -35,13 +33,15 @@ public class CasePrison extends Case {
 	 */
 	public void actionCase(JoueurMonopoly joueur, PlateauMonopoly plateau, FenetrePrincipale fp) {
 		
-		Console es = new Console(fp);
+		Console es = new Console();
 		
 		int lancé = plateau.des.getDes();
 		int d1 = plateau.des.getDe1();
 		int d2 = plateau.des.getDe2();
 		
 		if(joueur.getEstPrison() == true){
+
+			fp.afficherDes(plateau);
 			
 			es.println("Voulez vous payer 50€ pour sortir de prison ? ");
 			
@@ -81,17 +81,10 @@ public class CasePrison extends Case {
 			}
 		}
 		else{
-			es.println(" > Le joueur observe les criminels");
+			es.println(" > Le joueur observe les criminels...");
+			fp.afficherMessage("Le joueur observe les criminels...");
 		}
 		
-	}
-	
-	@Override
-	/**
-	 * ToString
-	 */
-	public String toString() {
-		return "est sur la case Prison";
 	}
 
 	@Override
@@ -111,58 +104,52 @@ public class CasePrison extends Case {
 		else
 			fp.getPartie().reprendrePartie();
 	}
-
+	
+	
+	/* ===========================
+	   Méthodes abstraites de Case 
+	   =========================== */
+	
 	@Override
 	public JoueurMonopoly getProprietaire() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public String getCouleur() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public int getLoyer() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int getPrixMaison() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int getNbMaison() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public boolean getReponseQuestion() {
-		// TODO Auto-generated method stub
 		return reponseQuestion;
 	}
 
 	@Override
 	public boolean getPeutMettreMaison() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public void setProprietaire(JoueurMonopoly j) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void setProprietaire(JoueurMonopoly j) {}
 
 	@Override
 	public void setReponseQuestion(boolean b) {
-		// TODO Auto-generated method stub
 		this.reponseQuestion = b;
 	}
 	

@@ -28,7 +28,7 @@ public class Partie {
 	
 	private boolean pausePartie = false;
 	public final static long VITESSE_PARTIE = 1000;
-	public final static boolean PARTIE_AUTO = true;
+	public final static boolean PARTIE_AUTO = false;
 	
 	/* CONSTRUCTEUR PARTIE */
 	
@@ -57,12 +57,13 @@ public class Partie {
 
                     @Override
                     protected Void call() throws Exception {
-                    	Console es = new Console(fp);
+                    	Console es = new Console();
                     	es.println("La partie démarre!");
                 		
                 		JoueurMonopoly joueur;
                 		int lancé;
                 		Case caze;
+                		
                 		
                 		while(!pm.finPartie() && pm.getNbTours() <= 100) {
                 			
@@ -72,14 +73,16 @@ public class Partie {
                 				es.println("=== DEBUT DU TOUR " + pm.getNbTours() + " ===");
                 				
                 			es.println("C'est au tour de " + joueur.getNom() + " (possède " + joueur.getArgent() + "€)");
+                			fp.afficherMessage("C'est au tour de " + joueur.getNom() + " (possède " + joueur.getArgent() + "€)");
                 			
                 			if(!joueur.getEstBanqueroute()) {
                 				Thread.sleep(VITESSE_PARTIE);
                 				
                 				lancé = pm.des.lancerDes();
-                				fp.afficherDes(pm);
                 				
                 				if(!joueur.getEstPrison()) {
+                					
+                    				fp.afficherDes(pm);
                 					es.println("" + joueur.getNom() + " lance les dés... [" + pm.des.getDe1() + "][" + pm.des.getDe2() + "]... et obtient un " + lancé + " !");
                 					pm.deplacerJoueur(joueur, lancé);
                 					fp.deplacerPion(joueur);
@@ -116,6 +119,7 @@ public class Partie {
                 			while(pausePartie && !PARTIE_AUTO){ Thread.sleep(200); }
                 			
                 			es.println("");
+                			fp.effacerDes();
                 			pm.setJoueurSuivant();
                 			
                 		}

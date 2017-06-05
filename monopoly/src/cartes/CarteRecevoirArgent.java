@@ -36,7 +36,7 @@ public class CarteRecevoirArgent extends Carte {
 	@Override
 	public void actionCarte(JoueurMonopoly joueur, PlateauMonopoly plateau, FenetrePrincipale fp) {
 		
-		Console es = new Console(fp);
+		Console es = new Console();
 		
 		if(getNom().equals("Anniversaire")) {
 			for(int i=0; i<plateau.getNbJoueurs(); i++) {
@@ -46,6 +46,7 @@ public class CarteRecevoirArgent extends Carte {
 				}
 			}
 			es.println(" > "+joueur.getNom()+" reçoit 10€ de chaque joueur.");
+			fp.afficherMessage(joueur.getNom()+" reçoit 10€ de chaque joueur.");
 		}
 		else {
 			joueur.ajouterArgent(montant);

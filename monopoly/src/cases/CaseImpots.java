@@ -29,9 +29,10 @@ public class CaseImpots extends Case {
 	 */
 	public void actionCase(JoueurMonopoly joueur, PlateauMonopoly plateau, FenetrePrincipale fp) {
 		
-		Console es = new Console(fp);
+		Console es = new Console();
 		
-		es.println(" > " + joueur.getNom() + " dépose " + this.getPrix() + "€ au parc gratuit.");
+		es.println(" > " + joueur.getNom() + " dépose " + this.getPrix() + "€ au Parc Gratuit.");
+		fp.afficherMessage(joueur.getNom() + " dépose " + this.getPrix() + "€ au Parc Gratuit.");
 		
 		joueur.retirerArgent(this.getPrix());
 		
@@ -49,56 +50,43 @@ public class CaseImpots extends Case {
 
 	@Override
 	public JoueurMonopoly getProprietaire() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public String getCouleur() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public int getLoyer() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int getPrixMaison() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int getNbMaison() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public boolean getReponseQuestion() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean getPeutMettreMaison() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public void setProprietaire(JoueurMonopoly j) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void setProprietaire(JoueurMonopoly j) {}
 
 	@Override
-	public void setReponseQuestion(boolean b) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void setReponseQuestion(boolean b) {}
 	
 }
