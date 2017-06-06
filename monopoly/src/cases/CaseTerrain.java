@@ -28,7 +28,7 @@ public class CaseTerrain extends Case {
 	/**
 	 * Indique le nom, le prix du terrain, la liste de ses loyers, le prix d'une maison, le nombre de maison, et la couleur que possède un terrain
 	 * @param nom String
-	 * @param montant int
+	 * @param valeur int
 	 * @param loyer ArrayList
 	 * @param prixMaison int
 	 * @param nbMaison int
@@ -49,7 +49,6 @@ public class CaseTerrain extends Case {
 	 * <li>Si un joueur tombe sur un terrain appartenant à un autre joueur, il paye un loyer au joueur qui le possède</li>
 	 * <li>si un joueur tombe sur un de ses terrains il ne se passe rien, mais peut acheter des maisons</li>
 	 * </ul>
-	 * @throws notEnoughMoneyException 
 	 * @see jeudeplateau.Joueur
 	 * @see Case
 	 */
@@ -121,14 +120,21 @@ public class CaseTerrain extends Case {
 	
 	/**
 	 * Permet l'ajout d'une maison sur un terrain
+	 * @param fp FenetrePrincipale
 	 */
 	public void ajouterMaison(FenetrePrincipale fp){
 		
 		nbMaison++;
 		proprietaire.retirerArgent(this.getPrixMaison());
 		
-		System.out.println(" > " + proprietaire.getNom() + " a posé une maison sur "+getNom()+" !");
-		if(fp!=null) fp.afficherMessage(" > " + proprietaire.getNom() + " a posé une maison sur "+getNom()+" !");
+		if(this.nbMaison <=4 ){
+			System.out.println(" > " + proprietaire.getNom() + " a posé une maison sur "+getNom()+" !");
+			if(fp!=null) fp.afficherMessage(" > " + proprietaire.getNom() + " a posé une maison sur "+getNom()+" !");
+		}
+		else{
+			System.out.println(" > " + proprietaire.getNom() + " a posé un hôtel sur "+getNom()+" et ne peut plus poser de bâtiments!");
+			if(fp!=null) fp.afficherMessage(" > " + proprietaire.getNom() + " a posé un hôtel sur "+getNom()+" et ne peut plus poser de bâtiments!");
+		}
 	}
 	
 	/**
@@ -172,9 +178,9 @@ public class CaseTerrain extends Case {
 				this.peutMettreMaison = false;
 				System.out.println("Vous n'avez pas assez d'argent pour acheter une maison !");
 			}
-			if(getNbMaison() == 4) {
+			if(getNbMaison() == 5) {
 				this.peutMettreMaison = false;
-				System.out.println("Le quota de maisons est atteint !");
+				System.out.println("Le quota de bâtiments est atteint !");
 			}
 		}
 		else
@@ -205,6 +211,9 @@ public class CaseTerrain extends Case {
 	@Override
 	public int getNbMaison() {
 		return nbMaison;
+	}
+	public void setNbMaison(int i) {
+		this.nbMaison = i;
 	}
 
 	@Override

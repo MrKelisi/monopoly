@@ -31,8 +31,8 @@ public class Partie {
 	
 	/**
 	 * Crée une partie en fonction du nombre de joueurs
-	 * @param nombreDeJoueurs
-	 * @param fp
+	 * @param nombreDeJoueurs int
+	 * @param fp FenetrePrincipale
 	 */
 	public Partie(int nombreDeJoueurs, FenetrePrincipale fp) {
 		this.pm = new PlateauMonopoly(nombreDeJoueurs);
@@ -60,7 +60,6 @@ public class Partie {
                 		JoueurMonopoly joueur;
                 		int lancé;
                 		Case caze;
-                		
                 		
                 		while(!pm.finPartie() && pm.getNbTours() <= 100) {
                 			

@@ -17,6 +17,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import jeudeplateau.Case;
 
 /**
  * Fenêtre à afficher lorqu'on clic sur une {@link CaseTerrain}.<br><br>
@@ -170,8 +171,20 @@ public class FenetreActionSurTerrain {
 			fp.getPartie().getPM().getCase(position).setProprietaire(null);
 			fp.getPartie().getPM().getCase(position).getMarqueur().setFill(Color.TRANSPARENT);
 			fp.getPartie().getPM().getJoueurActif().getListeCouleur();
+			Case c = fp.getPartie().getPM().getCase(position); 
 			
-			for(int i=0; i<5; i++) {
+			if(c.getId() == 5 || c.getId() == 15 || c.getId() == 25 || c.getId() == 35){
+				fp.getPartie().getPM().getJoueurActif().setNbGares(fp.getPartie().getPM().getJoueurActif().getNbGares()-1);
+			}
+			else if(c.getId() == 12 || c.getId() == 28){
+					fp.getPartie().getPM().getJoueurActif().setNbServices(fp.getPartie().getPM().getJoueurActif().getNbServices()-1);
+			}
+			else {
+				CaseTerrain t = (CaseTerrain) fp.getPartie().getPM().getCase(position); 
+				t.setNbMaison(0);
+			}
+			
+			for(int i=0; i<6; i++) {
 				fp.getPartie().getPM().getCase(position).maisons.get(i).setFill(Color.TRANSPARENT);
 			}
 			fp.getPartie().getPM().getJoueurActif().ajouterArgent(prixRevente);

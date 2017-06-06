@@ -15,7 +15,7 @@ public class CaseImpots extends Case {
 	/**
 	 * Indique le nom ainsi que le prix à payer d'une case Impôt
 	 * @param nom String
-	 * @param prix int
+	 * @param valeur int
 	 */
 	public CaseImpots(String nom, int valeur) {
 		super(nom, valeur);

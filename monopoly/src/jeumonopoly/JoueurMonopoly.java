@@ -60,7 +60,7 @@ public class JoueurMonopoly extends Joueur {
 	
 	/**
 	 * Met à jour si le joueur est en prison ou non
-	 * @param prison
+	 * @param prison boolean
 	 */
 	public void setEstPrison(boolean prison){
 		this.estPrison = prison;
@@ -76,7 +76,7 @@ public class JoueurMonopoly extends Joueur {
 	
 	/**
 	 * Met à jour si le joueur possède une carte de sortie de prison
-	 * @param b
+	 * @param b boolean
 	 */
 	public void setCarteSortiePrison(boolean b) {
 		possedeCarteSortiePrison = b;
@@ -96,7 +96,7 @@ public class JoueurMonopoly extends Joueur {
 	
 	/**
 	 * Met à jour le nombre de gares qu'un joueur possède
-	 * @param nb
+	 * @param nb int
 	 */
 	public void setNbGares(int nb) {
 		this.nombreGaresPossedees = nb;
@@ -112,7 +112,7 @@ public class JoueurMonopoly extends Joueur {
 	
 	/**
 	 * Met à jour le nombre de services qu'un joueur possède
-	 * @param nb
+	 * @param nb int
 	 */
 	public void setNbServices(int nb) {
 		this.nombreServicesPossedes = nb;
@@ -122,7 +122,7 @@ public class JoueurMonopoly extends Joueur {
 	
 	/**
 	 * Ajoute "terrain" à la liste des terrains
-	 * @param terrain
+	 * @param terrain Case
 	 */
 	public void ajouterTerrain(Case terrain) {
 		this.terrains.add(terrain);
@@ -220,7 +220,7 @@ public class JoueurMonopoly extends Joueur {
 	
 	/**
 	 * Met à jour l'argent d'un joueur en lui ajoutant un montant
-	 * @param montant
+	 * @param montant int
 	 */
 	public void ajouterArgent(int montant) {
 		this.argent+=montant;
@@ -228,7 +228,7 @@ public class JoueurMonopoly extends Joueur {
 	
 	/**
 	 * Met à jour l'argent d'un joueur en lui retirant un montant
-	 * @param montant
+	 * @param montant int
 	 */
 	public void retirerArgent(int montant) {
 		this.argent = this.argent - montant;
@@ -248,7 +248,7 @@ public class JoueurMonopoly extends Joueur {
 	
 	/**
 	 * Met à jour si le joueur est banqueroute ou pas
-	 * @param banqueroute
+	 * @param banqueroute boolean
 	 */
 	public void setEstBanqueroute(boolean banqueroute) {
 		this.estBanqueroute = banqueroute;

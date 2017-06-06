@@ -34,13 +34,14 @@ public abstract class Case {
 	/**
 	 * Définit le nom de la case
 	 * @param nom String
+	 * @param valeur int
 	 */
 	public Case(String nom, int valeur) {
 		this.nom = nom;
 		this.valeur = valeur;
 		
 		/* OUI ON SAIT QUE C'EST PAS BIEN, PARDON */
-		for(int i=0; i<5; i++) {
+		for(int i=0; i<6; i++) {
 			Polygon maison = new Polygon();
 			maisons.add(maison);
 		}
@@ -80,7 +81,7 @@ public abstract class Case {
 	
 	/**
 	 * Définit le prix de la case
-	 * @param prix int
+	 * @param valeur int
 	 */
 	public void setPrix(int valeur) {
 		this.valeur = valeur;
@@ -176,7 +177,6 @@ public abstract class Case {
 	 * @param joueur JoueurMonopoly
 	 * @param plateau PlateauMonopoly
 	 * @param fp FenetrePrincipale
-	 * @throws notEnoughMoneyException 
 	 * @see CaseDepart
 	 * @see CaseCommunaute
 	 * @see CaseImpots

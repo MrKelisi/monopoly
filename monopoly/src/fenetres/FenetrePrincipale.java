@@ -378,23 +378,30 @@ public class FenetrePrincipale {
             	if(caze.getMarqueur().getPoints().isEmpty())
             		root.getChildren().add(maison);
             	
-            	maison.getPoints().addAll(new Double[] {0., 11., 0., 3., 5., 0., 10., 3., 10., 11.});
+            	boolean hotel = (caze.getNbMaison() == 5);
+            	if(!hotel)
+            		maison.getPoints().addAll(new Double[] {0., 11., 0., 3., 5., 0., 10., 3., 10., 11.});
+            	else if((pos > 0 && pos < 10) || (pos > 20 && pos < 30))
+            		maison.getPoints().addAll(new Double[] {0., 0., 0., 11., 46., 11., 46., 0.});
+            	else
+            		maison.getPoints().addAll(new Double[] {0., 0., 0., 50., 10., 50., 10., 0.});
+            		
             	
             	if(pos > 0 && pos < 10) {
-        			x = 520 - ((pos-1) * 54) + (caze.getNbMaison()-1)*12;
+        			x = 520 - ((pos-1) * 54) + (hotel?0:(caze.getNbMaison()-1)*12);
         			y = 577;
         		}
         		else if(pos > 10 && pos < 20) {
         			x = 69;
-        			y = 519 - ((pos-11) * 54) + (caze.getNbMaison()-1)*13;
+        			y = 519 - ((pos-11) * 54) + (hotel?0:(caze.getNbMaison()-1)*13);
         		}
         		else if(pos > 20 && pos < 30) {
-        			x = 87 + ((pos-21) * 54)  + (caze.getNbMaison()-1)*12;
+        			x = 87 + ((pos-21) * 54)  + (hotel?0:(caze.getNbMaison()-1)*12);
         			y = 69;
         		}
         		else if(pos > 30 && pos < 40) {
         			x = 576;
-        			y = 87 + ((pos-31) * 54) + (caze.getNbMaison()-1)*13;
+        			y = 87 + ((pos-31) * 54) + (hotel?0:(caze.getNbMaison()-1)*13);
         		}
             	
             	maison.setTranslateX(x);
@@ -406,7 +413,7 @@ public class FenetrePrincipale {
 	
 	/**
 	 * Afficher les images des dés dans la FenetrePrincipale.
-	 * @param PlateauMonopoly
+	 * @param pm PlateauMonopoly
 	 * @see PlateauMonopoly
 	 */
 	public void afficherDes(PlateauMonopoly pm) {

@@ -36,7 +36,7 @@ public class PlateauMonopoly extends jeudeplateau.Plateau {
 	
 	/**
 	 * Crée un plateau avec un nombre de joueur
-	 * @param nombreDeJoueurs
+	 * @param nombreDeJoueurs int
 	 * @see jeudeplateau.Plateau
 	 * @see CaseDepart
 	 * @see CaseCommunaute
@@ -162,8 +162,8 @@ public class PlateauMonopoly extends jeudeplateau.Plateau {
 	
 	/**
 	 * Permet de déplacer un joueur d'un certain nombre de cases
-	 * @param joueur
-	 * @param nombreDeCases
+	 * @param joueur JoueurMonopoly
+	 * @param nombreDeCases int
 	 * @see Joueur
 	 * @see JoueurMonopoly
 	 * @see jeudeplateau.Plateau
@@ -194,7 +194,7 @@ public class PlateauMonopoly extends jeudeplateau.Plateau {
 	
 	/**
 	 * Permet de changer de joueur en fonction de l'indice i
-	 * @param i
+	 * @param i int
 	 * @return joueur
 	 */
 	public JoueurMonopoly getJoueur(int i) {
