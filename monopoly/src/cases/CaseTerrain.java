@@ -3,7 +3,6 @@ package cases;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
-import exceptions.notEnoughMoneyException;
 import fenetres.FenetrePrincipale;
 import io.Console;
 import jeudeplateau.Case;
@@ -55,6 +54,7 @@ public class CaseTerrain extends Case {
 	 * @see Case
 	 */
 	
+	@SuppressWarnings({ "unused", "static-access" })
 	public void actionCase(JoueurMonopoly joueur, PlateauMonopoly plateau, FenetrePrincipale fp) {
 		
 		Console es = new Console();
@@ -134,6 +134,7 @@ public class CaseTerrain extends Case {
 	/**
 	 * Méthode permettant l'affichage d'une fenêtre pour l'achat d'un terrain, et reprenant le cours de la partie
 	 */
+	@SuppressWarnings("static-access")
 	public void fenetreAction(FenetrePrincipale fp) {
 		
 		if(fp.getPartie().PARTIE_AUTO) {
@@ -264,7 +265,6 @@ public class CaseTerrain extends Case {
 		es.println("\n" + c.toString() + "\n");
 		es.println(j1.toString() + "\n");
 		es.println(j2.toString());
-		
 	}
 	
 }

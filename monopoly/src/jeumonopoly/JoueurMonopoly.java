@@ -254,7 +254,6 @@ public class JoueurMonopoly extends Joueur {
 		this.estBanqueroute = banqueroute;
 		clearMarqueurs();
 		this.terrains.clear();
-		
 	}
 	
 	/**
@@ -275,7 +274,6 @@ public class JoueurMonopoly extends Joueur {
 		}
 	}
 
-
 	@Override
 	public String toString() {
 		return "JoueurMonopoly [" + super.toString() + ", argent=" + argent + ", estBanqueroute=" + estBanqueroute + ", estPrison=" + estPrison
@@ -283,7 +281,4 @@ public class JoueurMonopoly extends Joueur {
 				+ ", nombreGaresPossedees=" + nombreGaresPossedees + ", nombreServicesPossedes="
 				+ nombreServicesPossedes + ", \nterrains=[" + getListeStringTerrains() + "], \ncouleurs=" + getListeCouleur() + "]";
 	}
-	
-	
-	
 }

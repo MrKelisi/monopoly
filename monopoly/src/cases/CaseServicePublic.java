@@ -104,6 +104,7 @@ public class CaseServicePublic extends Case {
 		}
 	}
 
+	@SuppressWarnings("static-access")
 	@Override
 	/**
 	 * Affiche une fenêtre pour l'achat de la case et reprend le cours de la partie

@@ -88,6 +88,7 @@ public class CasePrison extends Case {
 		
 	}
 
+	@SuppressWarnings("static-access")
 	@Override
 	/**
 	 * Reprend le cours de la partie

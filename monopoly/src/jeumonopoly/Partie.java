@@ -5,9 +5,6 @@ import io.Console;
 import jeudeplateau.Case;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.concurrent.Worker;
 
 /**
  * Lance la partie
@@ -134,18 +131,6 @@ public class Partie {
                 };
             }
         };
-        
-        /*
-        partieService.stateProperty().addListener(new ChangeListener<Worker.State>() {
-
-            @Override
-            public void changed(ObservableValue<? extends Worker.State> observableValue, Worker.State oldValue, Worker.State newValue) {
-                switch (newValue) {
-                    default: break;
-                }
-            }
-        });
-        */
         partieService.start();
 	}
 	

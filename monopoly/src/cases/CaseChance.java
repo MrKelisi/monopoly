@@ -25,6 +25,7 @@ public class CaseChance extends Case {
 	@Override
 	public void actionCase(JoueurMonopoly joueur, PlateauMonopoly plateau, FenetrePrincipale fp) {}
 
+	@SuppressWarnings("static-access")
 	@Override
 	/**
 	 * Permet de tirer et afficher une carte chance
@@ -113,6 +114,5 @@ public class CaseChance extends Case {
 		System.out.println(prison.toString());
 		prison.actionCarte(j, p, null);
 		System.out.println(j.toString()); //Le joueur Yann possède la carte de sortie de prison
-		
 	}
 }

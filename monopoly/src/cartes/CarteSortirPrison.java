@@ -11,8 +11,6 @@ import jeumonopoly.PlateauMonopoly;
  * @see Carte
  */
 public class CarteSortirPrison extends Carte {
-	
-	
 
 	/**
 	 * Unique constructeur de la clase {@link CarteSortirPrison}.

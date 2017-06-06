@@ -11,8 +11,6 @@ import jeumonopoly.PlateauMonopoly;
 
 public abstract class Carte {
 
-	
-
 	private String titre;
 	private String description;
 	

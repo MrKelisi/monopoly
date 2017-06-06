@@ -79,6 +79,7 @@ public class FenetrePrincipale {
 	/**
 	 * Initialise la StackPane root de la FenetrePrincipale avec les images, les labels et les boutons adéquates au Monopoly.
 	 */
+	@SuppressWarnings("static-access")
 	private void initRoot() {
 		root.setStyle("-fx-background-image: url('images/plateau.png'); -fx-background-repeat: no-repeat");
 		root.setAlignment(Pos.TOP_LEFT);

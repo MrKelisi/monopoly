@@ -11,7 +11,6 @@ import cases.CaseParcGratuit;
 import cases.CasePrison;
 import cases.CaseServicePublic;
 import cases.CaseTerrain;
-import exceptions.notEnoughMoneyException;
 import fenetres.FenetrePrincipale;
 import javafx.scene.shape.Polygon;
 import jeumonopoly.JoueurMonopoly;
@@ -195,11 +194,6 @@ public abstract class Case {
 	@Override
 	public String toString() {
 		return "Case [nom=" + nom + ", id=" + id + ", valeur=" + valeur + "]";
-	}
-	
-	public static void main(String[] args) {
-		
-		
 	}
 	
 }

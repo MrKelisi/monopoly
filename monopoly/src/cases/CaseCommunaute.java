@@ -24,6 +24,7 @@ public class CaseCommunaute extends Case {
 	@Override
 	public void actionCase(JoueurMonopoly joueur, PlateauMonopoly plateau, FenetrePrincipale fp) {}
 
+	@SuppressWarnings("static-access")
 	@Override
 	/**
 	 * Permet de tirer et afficher une carte communauté

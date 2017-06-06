@@ -1,11 +1,9 @@
 package cases;
 
-import java.util.ArrayList;
 import java.util.Random;
 import fenetres.FenetrePrincipale;
 import io.Console;
 import jeudeplateau.Case;
-import jeudeplateau.Joueur;
 import jeumonopoly.JoueurMonopoly;
 import jeumonopoly.PlateauMonopoly;
 
@@ -96,6 +94,7 @@ public class CaseGare extends Case {
 	}
 	
 
+	@SuppressWarnings("static-access")
 	@Override
 	/**
 	 * Affiche une fenêtre d'achat de terrain

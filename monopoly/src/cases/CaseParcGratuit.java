@@ -51,7 +51,6 @@ public class CaseParcGratuit extends Case {
 		
 		System.out.println("Case Parc Gratuit après le passage du joueur : " + c.toString());
 		System.out.println("Joueur après le parc gratuit : " + j.toString());
-		
 	}
 
 	@Override
@@ -108,7 +107,5 @@ public class CaseParcGratuit extends Case {
 	public String toString() {
 		return "CaseParcGratuit [" + super.toString() + "]";
 	}
-	
-	
 	
 }
