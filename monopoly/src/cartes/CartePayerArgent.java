@@ -46,13 +46,15 @@ public class CartePayerArgent extends Carte {
 				}
 			}
 			es.println(" > "+joueur.getNom()+" verse 50€ à chaque joueur.");
-			fp.afficherMessage(joueur.getNom()+" verse 50€ à chaque joueur.");
+			if(fp!=null)
+				fp.afficherMessage(joueur.getNom()+" verse 50€ à chaque joueur.");
 		}
 		else {
 			joueur.retirerArgent(montant);
 			plateau.getCase(20).setPrix(plateau.getCase(20).getPrix() + montant);
 			es.println(" > "+joueur.getNom()+" dépose "+montant+"€ au parc gratuit");
-			fp.afficherMessage(joueur.getNom()+" dépose "+montant+"€ au parc gratuit");
+			if(fp !=null)
+				fp.afficherMessage(joueur.getNom()+" dépose "+montant+"€ au parc gratuit");
 		}
 	}
 	public int getMontant(){

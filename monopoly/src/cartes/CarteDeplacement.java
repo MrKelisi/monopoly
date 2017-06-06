@@ -49,7 +49,8 @@ public class CarteDeplacement extends Carte {
 			if(getNom().equals("Prison")) {
 				if(joueur.getCarteSortiePrison()) {
 					es.println(" > " + joueur.getNom() + " utilise sa carte et évite la prison !");
-					fp.afficherMessage(joueur.getNom() + " utilise sa carte et évite la prison !");
+					if(fp != null)
+						fp.afficherMessage(joueur.getNom() + " utilise sa carte et évite la prison !");
 					joueur.setCarteSortiePrison(false);
 					plateau.remettreCarteSortiePrisonDansPaquet();
 				}
@@ -66,11 +67,13 @@ public class CarteDeplacement extends Carte {
 		
 		if(getNom().equals("Prison")) {
 			es.println(" > "+joueur.getNom()+" se retrouve en prison.");
-			fp.afficherMessage(joueur.getNom()+" se retrouve en prison.");
+			if(fp != null)
+				fp.afficherMessage(joueur.getNom()+" se retrouve en prison.");
 		}
 		else {
 			es.println(" > "+joueur.getNom()+" atterit sur "+plateau.getCaseActive().getNom());
-			fp.afficherMessage(joueur.getNom()+" atterit sur "+plateau.getCaseActive().getNom());
+			if(fp != null)
+				fp.afficherMessage(joueur.getNom()+" atterit sur "+plateau.getCaseActive().getNom());
 		}
 	}
 	@Override

@@ -35,13 +35,14 @@ public class CasePrison extends Case {
 		
 		Console es = new Console();
 		
-		int lancé = plateau.des.getDes();
+		
+		int lancé = plateau.des.lancerDes();
 		int d1 = plateau.des.getDe1();
 		int d2 = plateau.des.getDe2();
 		
 		if(joueur.getEstPrison() == true){
-
-			fp.afficherDes(plateau);
+			
+			if(fp != null) fp.afficherDes(plateau);
 			
 			es.println("Voulez vous payer 50€ pour sortir de prison ? ");
 			
@@ -82,7 +83,7 @@ public class CasePrison extends Case {
 		}
 		else{
 			es.println(" > Le joueur observe les criminels...");
-			fp.afficherMessage("Le joueur observe les criminels...");
+			if(fp != null) fp.afficherMessage("Le joueur observe les criminels...");
 		}
 		
 	}
@@ -105,6 +106,32 @@ public class CasePrison extends Case {
 			fp.getPartie().reprendrePartie();
 	}
 	
+	
+	public static void main(String[] args){
+		
+		System.out.println("TEST DE LA CLASSE : CasePrison \n");
+		JoueurMonopoly j = new JoueurMonopoly("Yann", 0, 1000);
+		PlateauMonopoly p = new PlateauMonopoly(4);
+		
+		CasePrison c = (CasePrison) p.getCase(10);
+		
+		j.setEstPrison(true);
+		System.out.println("Joueur en prison mais ne veut pas sortir : " + j.toString()+"\n");
+		System.out.println(c.toString()+"\n");
+		c.actionCase(j, p, null);
+		
+		j.setEstPrison(true);
+		System.out.println("\nJoueur en prison veut sortir : " + j.toString()+"\n");
+		c.setReponseQuestion(true);
+		System.out.println(c.toString()+"\n");
+		c.actionCase(j, p, null);
+		
+		System.out.println("\nJoueur en simple visite : " + j.toString()+"\n");
+		System.out.println(c.toString()+"\n");
+		c.actionCase(j, p, null);
+		
+		System.out.println("\nJoueur après la prison : " + j.toString());
+	}
 	
 	/* ===========================
 	   Méthodes abstraites de Case 
@@ -151,6 +178,11 @@ public class CasePrison extends Case {
 	@Override
 	public void setReponseQuestion(boolean b) {
 		this.reponseQuestion = b;
+	}
+
+	@Override
+	public String toString() {
+		return "CasePrison [ " + super.toString() + ", reponseQuestion=" + reponseQuestion + "]";
 	}
 	
 }

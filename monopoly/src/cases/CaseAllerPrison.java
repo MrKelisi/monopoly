@@ -32,7 +32,7 @@ public class CaseAllerPrison extends Case {
 		
 		if(joueur.getCarteSortiePrison()) {
 			es.println(" > " + joueur.getNom() + " utilise sa carte et évite la prison !");
-			fp.afficherMessage(joueur.getNom() + " utilise sa carte et évite la prison !");
+			if(fp!=null) fp.afficherMessage(joueur.getNom() + " utilise sa carte et évite la prison !");
 			joueur.setCarteSortiePrison(false);
 			plateau.remettreCarteSortiePrisonDansPaquet();
 		}
@@ -40,7 +40,7 @@ public class CaseAllerPrison extends Case {
 			joueur.setEstPrison(true);
 			joueur.setPosition(10);
 			es.println(" > " + joueur.getNom() + " est envoyé en prison!");
-			fp.afficherMessage(joueur.getNom() + " est envoyé en prison!");
+			if(fp!=null) fp.afficherMessage(joueur.getNom() + " est envoyé en prison!");
 		}
 	}
 
@@ -52,7 +52,19 @@ public class CaseAllerPrison extends Case {
 		fp.getPartie().reprendrePartie();
 	}
 
-	
+	public static void main(String[] args){
+		
+		System.out.println("TEST DE LA CLASSE : CaseAllerPrison \n");
+		JoueurMonopoly j = new JoueurMonopoly("Yann", 0, 1000);
+		PlateauMonopoly p = new PlateauMonopoly(4);
+		
+		CaseAllerPrison c = (CaseAllerPrison) p.getCase(30);
+		j.setPosition(30);
+		System.out.println("\nLe joueur est sur la case "+ c.toString()+"\n");
+		c.actionCase(j, p, null);
+		System.out.println("\nMaintenant, le joueur est sur la case "+ p.getCase(j.getPosition()).toString()+" et est donc en prison\n");
+		System.out.println(j.toString());
+	}
 	/* ===========================
 	   Méthodes abstraites de Case 
 	   =========================== */

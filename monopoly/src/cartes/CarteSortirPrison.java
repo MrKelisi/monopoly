@@ -34,7 +34,8 @@ public class CarteSortirPrison extends Carte {
 		
 		Console es = new Console();
 		es.println(" > "+joueur.getNom()+" recoit la carte 'Sortir de prison' !");
-		fp.afficherMessage(joueur.getNom()+" recoit la carte 'Sortir de prison' !");
+		if(fp != null)
+			fp.afficherMessage(joueur.getNom()+" recoit la carte 'Sortir de prison' !");
 		
 		joueur.setCarteSortiePrison(true);
 	}

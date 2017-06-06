@@ -29,9 +29,29 @@ public class CaseParcGratuit extends Case {
 		Console es = new Console();
 		
 		es.println(" > " + joueur.getNom() + " ramasse " + this.getPrix() + "€ du Parc Gratuit !");
-		fp.afficherMessage(joueur.getNom() + " ramasse " + this.getPrix() + "€ du Parc Gratuit !");
+		if(fp!=null) 
+			fp.afficherMessage(joueur.getNom() + " ramasse " + this.getPrix() + "€ du Parc Gratuit !");
 		joueur.ajouterArgent(this.getPrix());
 		this.setPrix(0);
+	}
+	
+	public static void main(String[] args){
+		
+		System.out.println("TEST DE LA CLASSE : CaseParcGratuit");
+		JoueurMonopoly j = new JoueurMonopoly("Yann", 0, 1000);
+		PlateauMonopoly p = new PlateauMonopoly(4);
+		
+		CaseParcGratuit c = (CaseParcGratuit) p.getCase(20);
+		
+		c.setPrix(300);
+		System.out.println("Initialisation de la case Parc Gratuit à 300€ : "+ c.toString());
+		System.out.println("Joueur avant le parc gratuit : "+ j.toString());
+		j.setPosition(20);
+		c.actionCase(j, p, null);
+		
+		System.out.println("Case Parc Gratuit après le passage du joueur : " + c.toString());
+		System.out.println("Joueur après le parc gratuit : " + j.toString());
+		
 	}
 
 	@Override
@@ -83,10 +103,12 @@ public class CaseParcGratuit extends Case {
 
 	@Override
 	public void setReponseQuestion(boolean b) {}
-	
+
 	@Override
 	public String toString() {
-		return "est sur la case parc gratuit , argent disponible :" + this.getPrix() + " €";
+		return "CaseParcGratuit [" + super.toString() + "]";
 	}
+	
+	
 	
 }

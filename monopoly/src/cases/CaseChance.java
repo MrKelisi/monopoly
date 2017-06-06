@@ -102,17 +102,16 @@ public class CaseChance extends Case {
 		
 		System.out.println("TEST DE LA CLASSE : CaseChance");
 		JoueurMonopoly j = new JoueurMonopoly("Yann", 0, 1000);
-		PlateauMonopoly p = new PlateauMonopoly(40);
+		PlateauMonopoly p = new PlateauMonopoly(4);
 		CartePayerArgent payer = new CartePayerArgent("Amende", "Amende pour excès de vitesse : 15€.", 15);
 		System.out.println(payer.toString());
-		j.retirerArgent(payer.getMontant());
-		p.getCase(20).setPrix(p.getCase(20).getPrix() + payer.getMontant());
+		payer.actionCarte(j, p, null);
 		System.out.println(j.toString()); //Le joueur Yann perd 15€
 		System.out.println(p.getCase(20).toString());
 		
 		CarteSortirPrison prison = new CarteSortirPrison("Sortie", "Vous êtes libéré de prison. \n(Cette carte doit être conservée)");
 		System.out.println(prison.toString());
-		j.setCarteSortiePrison(true);
+		prison.actionCarte(j, p, null);
 		System.out.println(j.toString()); //Le joueur Yann possède la carte de sortie de prison
 		
 	}

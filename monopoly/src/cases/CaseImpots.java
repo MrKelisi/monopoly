@@ -32,12 +32,27 @@ public class CaseImpots extends Case {
 		Console es = new Console();
 		
 		es.println(" > " + joueur.getNom() + " dépose " + this.getPrix() + "€ au Parc Gratuit.");
-		fp.afficherMessage(joueur.getNom() + " dépose " + this.getPrix() + "€ au Parc Gratuit.");
+		if(fp != null)
+			fp.afficherMessage(joueur.getNom() + " dépose " + this.getPrix() + "€ au Parc Gratuit.");
 		
 		joueur.retirerArgent(this.getPrix());
 		
 		int nouveauMontantParcGratuit = plateau.getCase(20).getPrix() + this.getPrix();
 		plateau.getCase(20).setPrix(nouveauMontantParcGratuit);
+	}
+	
+	public static void main(String[] args){
+		
+		System.out.println("TEST DE LA CLASSE : CaseImpots");
+		JoueurMonopoly j = new JoueurMonopoly("Yann", 0, 1000);
+		PlateauMonopoly p = new PlateauMonopoly(4);
+		
+		CaseImpots c = (CaseImpots) p.getCase(4);
+		j.setPosition(4);
+		c.actionCase(j, p, null);
+		System.out.println(c.toString());
+		System.out.println(p.getCase(20).toString());
+		System.out.println(j.toString());
 	}
 
 	@Override

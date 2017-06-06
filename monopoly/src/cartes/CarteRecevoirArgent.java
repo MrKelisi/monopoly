@@ -46,7 +46,8 @@ public class CarteRecevoirArgent extends Carte {
 				}
 			}
 			es.println(" > "+joueur.getNom()+" reçoit 10€ de chaque joueur.");
-			fp.afficherMessage(joueur.getNom()+" reçoit 10€ de chaque joueur.");
+			if(fp != null)
+				fp.afficherMessage(joueur.getNom()+" reçoit 10€ de chaque joueur.");
 		}
 		else {
 			joueur.ajouterArgent(montant);
