@@ -85,6 +85,15 @@ public class FenetrePrincipale {
 		
 		for(int i=1; i<7; i++)
 			imageDes.add(new Image("images/de"+i+".jpg"));
+
+		Des.add(new ImageView());
+		Des.add(new ImageView());
+		Des.get(0).setTranslateX(247);
+		Des.get(0).setTranslateY(360);
+		Des.get(1).setTranslateX(337);
+		Des.get(1).setTranslateY(360);
+		root.getChildren().add(Des.get(0));
+		root.getChildren().add(Des.get(1));
 		
 		l_ParcGratuit.setTranslateX(3);
 		l_ParcGratuit.setTranslateY(68);
@@ -403,24 +412,17 @@ public class FenetrePrincipale {
 		Platform.runLater(new Runnable() {
             @Override public void run() {
             	
-            	Des.clear();
-				Des.add(new ImageView(imageDes.get(pm.des.getDe1()-1)));
-				Des.add(new ImageView(imageDes.get(pm.des.getDe2()-1)));
-				Des.get(0).setTranslateX(247);
-				Des.get(0).setTranslateY(360);
-				Des.get(1).setTranslateX(337);
-				Des.get(1).setTranslateY(360);
+            	effacerDes();
+				Des.get(0).setImage(imageDes.get(pm.des.getDe1()-1));
+				Des.get(1).setImage(imageDes.get(pm.des.getDe2()-1));
 				
-				root.getChildren().add(Des.get(0));
-				root.getChildren().add(Des.get(1));
             }
        });
 	}
 	
 	public void effacerDes() {
-		Des.get(0).setVisible(false);
-		Des.get(1).setVisible(false);
-		Des.clear();
+		Des.get(0).setImage(null);
+		Des.get(1).setImage(null);
 	}
 	
 	/**

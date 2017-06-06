@@ -163,14 +163,18 @@ public class FenetreActionSurTerrain {
 
 		@Override
 		public void handle(ActionEvent event) {
+			
+			int prixRevente = fp.getPartie().getPM().getCase(position).getPrix() + fp.getPartie().getPM().getCase(position).getNbMaison()*fp.getPartie().getPM().getCase(position).getPrixMaison();
+			fp.afficherMessage(fp.getPartie().getPM().getCase(position).getProprietaire().getNom() + " revend " + fp.getPartie().getPM().getCase(position).getNom() + " pour " + prixRevente + "€");
 			fp.getPartie().getPM().getJoueurActif().getListeTerrains().remove(fp.getPartie().getPM().getCase(position));
 			fp.getPartie().getPM().getCase(position).setProprietaire(null);
 			fp.getPartie().getPM().getCase(position).getMarqueur().setFill(Color.TRANSPARENT);
 			fp.getPartie().getPM().getJoueurActif().getListeCouleur();
+			
 			for(int i=0; i<5; i++) {
 				fp.getPartie().getPM().getCase(position).maisons.get(i).setFill(Color.TRANSPARENT);
 			}
-			fp.getPartie().getPM().getJoueurActif().ajouterArgent(fp.getPartie().getPM().getCase(position).getPrix() + fp.getPartie().getPM().getCase(position).getNbMaison()*fp.getPartie().getPM().getCase(position).getPrixMaison());
+			fp.getPartie().getPM().getJoueurActif().ajouterArgent(prixRevente);
 			stage.close();
 			event.consume();
 		}
