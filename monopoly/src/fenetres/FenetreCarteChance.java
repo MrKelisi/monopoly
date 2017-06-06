@@ -1,5 +1,6 @@
 package fenetres;
 
+import cases.CaseChance;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -15,6 +16,10 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
+/**
+ * Fenêtre à afficher lorqu'on atterit sur une {@link CaseChance}.
+ * @see FenetrePrincipale
+ */
 public class FenetreCarteChance {
 
 	private FenetrePrincipale fp;
@@ -25,9 +30,14 @@ public class FenetreCarteChance {
 	private Label l_Titre = new Label("CHANCE");
 	private Label l_Description = new Label("?");
 	
-	public FenetreCarteChance(FenetrePrincipale f) {
+	/**
+	 * Unique constructeur de la classe {@link FenetreCarteChance}, prenant en paramètre la {@link FenetrePrincipale} fp.
+	 * @param fp FenetrePrincipale
+	 * @see FenetrePrincipale
+	 */
+	public FenetreCarteChance(FenetrePrincipale fp) {
 		
-		this.fp = f;
+		this.fp = fp;
 		
 		this.stage = new Stage();
 		this.stage.setTitle("Carte Chance");
@@ -43,6 +53,9 @@ public class FenetreCarteChance {
 		stage.setOnHiding(new EvtQuitter());
 	}
 	
+	/**
+	 * Initialise la HBox root de la FenetreCarteChance avec une image, une description de la carte et un bouton OK.
+	 */
 	private void initRoot() {
 		
 		root.setFillHeight(true);
@@ -71,16 +84,32 @@ public class FenetreCarteChance {
 		root.getChildren().add(carte);
 	}
 	
+	/**
+	 * Renvoie la Stage de la fenêtre.
+	 * @return stage Stage
+	 */
 	public Stage getStage() {
 		return stage;
 	}
+	
+	/**
+	 * Définit le titre de la carte.
+	 * @param titre String
+	 */
 	public void setTitre(String titre) {
 		l_Titre = new Label("CHANCE");
 	}
+	/**
+	 * Définit la description de la carte.
+	 * @param description String
+	 */
 	public void setDescription(String description) {
 		l_Description = new Label(description);
 	}
 	
+	/**
+	 * Affiche la fenêtre en réinitialisant la HBox root à chaque appel.
+	 */
 	public void afficherCarte() {
 		root = new HBox();
 		initRoot();
@@ -90,6 +119,9 @@ public class FenetreCarteChance {
 		stage.show();
 	}
 	
+	/**
+	 * Évènement qui ferme la fenêtre.
+	 */
 	private class EvtValider implements EventHandler<ActionEvent> {
 
 		@Override
@@ -98,6 +130,10 @@ public class FenetreCarteChance {
 			event.consume();
 		}
 	}
+	
+	/**
+	 * Évènement qui reprend la partie quand la fenêtre se ferme.
+	 */
 	private class EvtQuitter implements EventHandler<WindowEvent> {
 
 		@Override

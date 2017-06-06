@@ -6,9 +6,14 @@ import javafx.scene.paint.Color;
 import jeudeplateau.Case;
 import jeudeplateau.Joueur;
 
+/**
+ * Définit un joueur et toutes ses données dans le jeu du Monopoly
+*@author WEBERT MORVRANGE
+*/
+
 public class JoueurMonopoly extends Joueur {
 
-	private int argent = 1200;
+	private int argent = 1000;
 	private boolean estBanqueroute = false;
 	private boolean estPrison = false;
 	private int toursEnPrison = 1;
@@ -20,30 +25,59 @@ public class JoueurMonopoly extends Joueur {
 	
 	/* CONSTRUCTEUR */
 	
-	public JoueurMonopoly(String nom, int id) {
+	public JoueurMonopoly(String nom, int id, int argent) {
 		super(nom, id);
+		this.argent = argent;
 	}
 
 	
 	/* PARTIE PRISON  */
 	
+	/**
+	 * Renvoie le nombre de tours en prison
+	 * @return toursEnPrison
+	 */
 	public int getToursEnPrison() {
 		return toursEnPrison;
 	}
+	
+	/**
+	 * Met à jour le nombre de tour en prison
+	 * @param toursEnPrison
+	 * Le nouveau nombre de tour en prison
+	 */
 	public void setToursEnPrison(int toursEnPrison) {
 		this.toursEnPrison = toursEnPrison;
 	}
 	
+	/**
+	 * Renvoie si le joueur est en prison ou non
+	 * @return estPrison
+	 */
 	public boolean getEstPrison(){
 		return this.estPrison;
 	}
+	
+	/**
+	 * Met à jour si le joueur est en prison ou non
+	 * @param prison
+	 */
 	public void setEstPrison(boolean prison){
 		this.estPrison = prison;
 	}
 	
+	/**
+	 * Renvoie si le joueur possède la carte Sortie de Prison ou non
+	 * @return possedeCarteSortiePrison
+	 */
 	public boolean getCarteSortiePrison() {
 		return possedeCarteSortiePrison;
 	}
+	
+	/**
+	 * Met à jour si le joueur possède une carte de sortie de prison
+	 * @param b
+	 */
 	public void setCarteSortiePrison(boolean b) {
 		possedeCarteSortiePrison = b;
 	}
@@ -51,48 +85,92 @@ public class JoueurMonopoly extends Joueur {
 	/*  PARTIE TERRAINS  */
 	
 		// GARES ET SERVICES
+	
+	/**
+	 * Renvoie le nombre de gares qu'un joueur possède
+	 * @return nombreGaresPossedees
+	 */
 	public int getNbGares() {
 		return this.nombreGaresPossedees;
 	}
+	
+	/**
+	 * Met à jour le nombre de gares qu'un joueur possède
+	 * @param nb
+	 */
 	public void setNbGares(int nb) {
 		this.nombreGaresPossedees = nb;
 	}
 	
+	/**
+	 * Renvoie le nombre de services qu'un joueur possède
+	 * @return nombreServicesPossedes
+	 */
 	public int getNbServices() {
 		return this.nombreServicesPossedes;
 	}
+	
+	/**
+	 * Met à jour le nombre de services qu'un joueur possède
+	 * @param nb
+	 */
 	public void setNbServices(int nb) {
 		this.nombreServicesPossedes = nb;
 	}
 	
 		// TERRAINS
+	
+	/**
+	 * Ajoute "terrain" à la liste des terrains
+	 * @param terrain
+	 */
 	public void ajouterTerrain(Case terrain) {
 		this.terrains.add(terrain);
 	}
 	
+	/**
+	 * Renvoie la liste "écrite" des terrains qu'un joueur possède
+	 * @return s
+	 * @see Case
+	 */
 	public String getListeStringTerrains() {
 		String s = "";
 		for(Case t:this.terrains) {
-			s+=(t.getNom()+"\n");
+			s+=(t.getNom()+",");
 		}
 		return s;
 	}
 	
-	public ArrayList<Case> getTerrains(){
+	/**
+	 * Renvoie une liste de terrain que possède un joueur
+	 * @return terrains
+	 */
+	public ArrayList<Case> getListeTerrains(){
 		return this.terrains;
 	}
 		
 	// COULEURS				(A AMELIORER JE PENSE)
+	
+	/**
+	 * Renvoie une liste correspondant aux couleurs que possède un joueur
+	 * @return couleurs
+	 * @see Case
+	 */
 	public ArrayList<String> getListeCouleur(){
-		int brun = 0;
-		int turquoise = 0;
-		int mauve = 0;
-		int orange = 0;
-		int rouge = 0;
-		int jaune = 0;
-		int vert = 0;
-		int bleu = 0;
-		for(Case t:this.getTerrains()){
+		
+		couleurs.clear();
+		
+		int 	brun = 0, 
+				turquoise = 0,
+				mauve = 0,
+				orange = 0,
+				rouge = 0,
+				jaune = 0,
+				vert = 0,
+				bleu = 0;
+		
+		for(Case t:this.getListeTerrains()) {
+			
 			if(t.getCouleur() == "brun")
 				brun += 1;
 			if(t.getCouleur() == "turquoise")
@@ -111,43 +189,47 @@ public class JoueurMonopoly extends Joueur {
 				bleu += 1;
 		}
 		
-		if(brun == 2 && !couleurs.contains("brun"))
-			couleurs.add("brun");
+		if(brun == 2) 		couleurs.add("brun");
 		
-		if(turquoise == 3 && !couleurs.contains("turquoise"))
-			couleurs.add("turquoise");
+		if(turquoise == 3) 	couleurs.add("turquoise");
 		
-		if(mauve == 3 && !couleurs.contains("mauve"))
-			couleurs.add("mauve");
+		if(mauve == 3) 		couleurs.add("mauve");
 		
-		if(orange == 3 && !couleurs.contains("orange"))
-			couleurs.add("orange");
+		if(orange == 3) 	couleurs.add("orange");
 		
-		if(rouge == 3 && !couleurs.contains("rouge"))
-			couleurs.add("rouge");
+		if(rouge == 3) 		couleurs.add("rouge");
 		
-		if(jaune == 3 && !couleurs.contains("jaune"))
-			couleurs.add("jaune");
+		if(jaune == 3) 		couleurs.add("jaune");
 		
-		if(vert == 3 && !couleurs.contains("vert"))
-			couleurs.add("vert");
+		if(vert == 3) 		couleurs.add("vert");
 		
-		if(bleu == 2 && !couleurs.contains("bleu"))
-			couleurs.add("bleu");
+		if(bleu == 2) 		couleurs.add("bleu");
 		
 		return this.couleurs;
 	}
 	
 	/* PARTIE ARGENT */
 	
+	/**
+	 * Renvoie l'argent d'un joueur
+	 * @return argent
+	 */
 	public int getArgent() {
 		return this.argent;
 	}
 	
+	/**
+	 * Met à jour l'argent d'un joueur en lui ajoutant un montant
+	 * @param montant
+	 */
 	public void ajouterArgent(int montant) {
 		this.argent+=montant;
 	}
 	
+	/**
+	 * Met à jour l'argent d'un joueur en lui retirant un montant
+	 * @param montant
+	 */
 	public void retirerArgent(int montant) {
 		this.argent = this.argent - montant;
 		if(this.argent <= 0) {
@@ -156,28 +238,47 @@ public class JoueurMonopoly extends Joueur {
 		}
 	}
 	
+	/**
+	 * Renvoie si un joueur est en banqueroute ou non
+	 * @return estBanqueroute
+	 */
 	public boolean getEstBanqueroute() {
 		return this.estBanqueroute;
 	}
 	
+	/**
+	 * Met à jour si le joueur est banqueroute ou pas
+	 * @param banqueroute
+	 */
 	public void setEstBanqueroute(boolean banqueroute) {
 		this.estBanqueroute = banqueroute;
 		clearMarqueurs();
 		this.terrains.clear();
-		
 	}
+	
+	/**
+	 * Supprime le marqueur de possession d'un terrain
+	 * @see Case
+	 */
 	public void clearMarqueurs() {
 
-		for(Case t:getTerrains()){
+		for(Case t:getListeTerrains()){
 			t.setProprietaire(null);
 			
 			Platform.runLater(new Runnable() {
 	            @Override public void run() {
 			
-	            	t.getMarqueur().setFill(Color.web("#DAE9D4"));
+	            	t.getMarqueur().setFill(Color.TRANSPARENT);
 	            }
 			});
 		}
 	}
-	
+
+	@Override
+	public String toString() {
+		return "JoueurMonopoly [" + super.toString() + ", argent=" + argent + ", estBanqueroute=" + estBanqueroute + ", estPrison=" + estPrison
+				+ ", toursEnPrison=" + toursEnPrison + ", possedeCarteSortiePrison=" + possedeCarteSortiePrison
+				+ ", nombreGaresPossedees=" + nombreGaresPossedees + ", nombreServicesPossedes="
+				+ nombreServicesPossedes + ", \nterrains=[" + getListeStringTerrains() + "], \ncouleurs=" + getListeCouleur() + "]";
+	}
 }

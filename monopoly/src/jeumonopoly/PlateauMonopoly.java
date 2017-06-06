@@ -18,19 +18,48 @@ import jeudeplateau.Carte;
 import jeudeplateau.Case;
 import jeudeplateau.Joueur;
 
+/**
+ * Initialise le plateau du monopoly avec toutes ses cases
+*@author WEBERT MORVRANGE
+*/
 public class PlateauMonopoly extends jeudeplateau.Plateau {
 
+	/**
+	 * @see JoueurMonopoly
+	 */
 	private ArrayList<JoueurMonopoly> joueurs = new ArrayList<JoueurMonopoly>();
+	/**
+	 * @see Carte
+	 */
 	private ArrayList<Carte> chance = new ArrayList<Carte>();
 	private ArrayList<Carte> communauté = new ArrayList<Carte>();
 	
+	/**
+	 * Crée un plateau avec un nombre de joueur
+	 * @param nombreDeJoueurs
+	 * @see jeudeplateau.Plateau
+	 * @see CaseDepart
+	 * @see CaseCommunaute
+	 * @see CaseImpots
+	 * @see CaseGare
+	 * @see CaseChance
+	 * @see CasePrison
+	 * @see CaseServicePublic
+	 * @see CaseParcGratuit
+	 * @see CaseAllerPrison
+	 * @see CaseTerrain
+	 * @see CarteDeplacement
+	 * @see CartePayerArgent
+	 * @see CarteRecevoirArgent
+	 * @see CarteSortirPrison
+	 */
 	public PlateauMonopoly(int nombreDeJoueurs) {
 		super(nombreDeJoueurs, 40);
 		
 		
 		/* INITIALISATION DES JOUEURS */
 		for(int i = 0; i < this.getNbJoueurs(); i++) {
-			this.joueurs.add(new JoueurMonopoly("Joueur"+(i+1), i));
+			this.joueurs.add(new JoueurMonopoly("Joueur"+(i+1), i, 1000));
 		}
 		
 		/* INITIALISATION DES CASES*/
@@ -86,13 +115,13 @@ public class PlateauMonopoly extends jeudeplateau.Plateau {
 		
 		
 		/* INITIALISATION DES CARTES CHANCES */
-		chance.add(new CartePayerArgent("Amende", "Amende pour excès de vitesse : 15€.", 15));
+		/*chance.add(new CartePayerArgent("Amende", "Amende pour excès de vitesse : 15€.", 15));
 		chance.add(new CartePayerArgent("Président du conseil d'administration", "Vous avez été élu président du conseil d'administration. \nVersez 50€ à chaque joueur.", 50));
 		chance.add(new CartePayerArgent("Lanuel", "Vous avez manqué de respect à M. Lanuel. \nVersez 50€ de dédommagement.", 50));
 		
 		chance.add(new CarteRecevoirArgent("Versement", "La banque vous verse un dividende de 50€.", 50));
 		chance.add(new CarteRecevoirArgent("Gain", "Vos terrains vous rapportent. Touchez 150€.", 150));
-		chance.add(new CarteRecevoirArgent("Mots croisés", "Vous avez gagné le prix de mots-croisés ! \nRecevez 100€.", 100));
+		chance.add(new CarteRecevoirArgent("Mots croisés", "Vous avez gagné le prix de mots-croisés ! \nRecevez 100€.", 100));*/
 		
 		chance.add(new CarteDeplacement("Case Départ", "Avancez jusqu'à la case départ. \n(Recevez 200€)", 0, false));
 		chance.add(new CarteDeplacement("Rue de la Paix", "Rendez-vous Rue de la Paix.", 39, false));
@@ -102,9 +131,9 @@ public class PlateauMonopoly extends jeudeplateau.Plateau {
 		chance.add(new CarteDeplacement("Reculez", "Reculez de 3 cases.", -3, true));
 		chance.add(new CarteDeplacement("Nv Depart", "Le joueur déménage et prend un \nnouveau départ au Technopole.", 0, false));
 
-		chance.add(new CarteDeplacement("Prison", "Allez en prison. \nAvancez tout droit en prison. \nNe passez pas par la case départ, ne recevez pas 200€.", 10, false));
+		/*chance.add(new CarteDeplacement("Prison", "Allez en prison. \nAvancez tout droit en prison. \nNe passez pas par la case départ, ne recevez pas 200€.", 10, false));
 		chance.add(new CarteSortirPrison("Sortie", "Vous êtes libéré de prison. \n(Cette carte doit être conservée)"));
-		
+		*/
 		Collections.shuffle(chance); //Mélange des cartes
 		
 		
@@ -131,6 +160,14 @@ public class PlateauMonopoly extends jeudeplateau.Plateau {
 	
 	/* PARTIE JOUEUR */
 	
+	/**
+	 * Permet de déplacer un joueur d'un certain nombre de cases
+	 * @param joueur
+	 * @param nombreDeCases
+	 * @see Joueur
+	 * @see JoueurMonopoly
+	 * @see jeudeplateau.Plateau
+	 */
 	public void deplacerJoueur(JoueurMonopoly joueur, int nombreDeCases) {
 		int pos;
 		
@@ -147,14 +184,27 @@ public class PlateauMonopoly extends jeudeplateau.Plateau {
 		}
 	}
 
+	/**
+	 * Renvoie au joueur qui doit jouer son tour
+	 * @return joueur
+	 */
 	public JoueurMonopoly getJoueurActif() {
 		return this.joueurs.get(getJoueurActifID());
 	}
 	
+	/**
+	 * Permet de changer de joueur en fonction de l'indice i
+	 * @param i
+	 * @return joueur
+	 */
 	public JoueurMonopoly getJoueur(int i) {
 		return this.joueurs.get(i);
 	}
 	
+	/**
+	 * Renvoie le joueur vainqueur
+	 * @return joueur
+	 */
 	@Override
 	public Joueur estVainqueur() {
 		int res = 0;
@@ -167,12 +217,20 @@ public class PlateauMonopoly extends jeudeplateau.Plateau {
 	
 	/* PARTIE CASE */
 	
+	/**
+	 * Renvoie la case où est le joueur actif
+	 * @return Case
+	 */
 	public Case getCaseActive() {
 		return getCase(getJoueurActif().getPosition());
 	}
 	
 	/* PARTIE JEU */
 	
+	/**
+	 * Met fin à la partie
+	 * return boolean
+	 */
 	@Override
 	public boolean finPartie() {
 		int nbJoueursEnJeu = 0;
@@ -184,6 +242,11 @@ public class PlateauMonopoly extends jeudeplateau.Plateau {
 
 	/*PARTIE CARTE */
 	
+	/**
+	 * Renvoie la liste des cartes chances 
+	 * @return c
+	 * @see Carte
+	 */
 	public Carte tirerCarteChance() {
 		Carte c = chance.remove(0);
 		if(!c.getNom().equals("Sortie"))
@@ -191,6 +254,11 @@ public class PlateauMonopoly extends jeudeplateau.Plateau {
 		return c;
 	}
 	
+	/**
+	 * Renvoie la liste des cartes communautés 
+	 * @return c
+	 * @see Carte
+	 */
 	public Carte tirerCarteCommunauté() {
 		Carte c = communauté.remove(0);
 		if(!c.getNom().equals("Sortie"))
@@ -198,6 +266,10 @@ public class PlateauMonopoly extends jeudeplateau.Plateau {
 		return c;
 	}
 	
+	/**
+	 * Permet l'ajout de la carte Sortie Prison lorsqu'un joueur qui la possède l'utilise
+	 * @see Carte
+	 */
 	public void remettreCarteSortiePrisonDansPaquet() {
 		
 		boolean carteDansPaquetChance = false;
@@ -214,7 +286,11 @@ public class PlateauMonopoly extends jeudeplateau.Plateau {
 
 	
 	/* TOSTRING */
+	
 	@Override
+	/**
+	 * fonction obligatoire
+	 */
 	public String toString() {
 		return "PlateauMonopoly [toString()=" + super.getCase(1) + "]";
 	}

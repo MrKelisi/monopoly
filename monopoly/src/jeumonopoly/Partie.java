@@ -5,25 +5,45 @@ import io.Console;
 import jeudeplateau.Case;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.concurrent.Worker;
+
+/**
+ * Lance la partie
+*@author WEBERT MORVRANGE
+*/
 
 public class Partie {
 
+	/**
+	 * @see PlateauMonopoly
+	 */
 	private PlateauMonopoly pm;
+	
+	/**
+	 * @see FenetrePrincipale
+	 */
 	private FenetrePrincipale fp;
+	
 	private boolean pausePartie = false;
 	public final static long VITESSE_PARTIE = 1000;
 	public final static boolean PARTIE_AUTO = false;
 	
 	/* CONSTRUCTEUR PARTIE */
 	
+	/**
+	 * Crée une partie en fonction du nombre de joueurs
+	 * @param nombreDeJoueurs
+	 * @param fp
+	 */
 	public Partie(int nombreDeJoueurs, FenetrePrincipale fp) {
 		this.pm = new PlateauMonopoly(nombreDeJoueurs);
 		this.fp = fp;
 	}
 	
+	/**
+	 * Démarre la partie
+	 * @see JoueurMonopoly
+	 * @see Case
+	 */
 	public void demarrerLaPartie() {
 		
 		final Service<Void> partieService = new Service<Void>() {
@@ -34,12 +54,13 @@ public class Partie {
 
                     @Override
                     protected Void call() throws Exception {
-                    	Console es = new Console(fp);
+                    	Console es = new Console();
                     	es.println("La partie démarre!");
                 		
                 		JoueurMonopoly joueur;
                 		int lancé;
                 		Case caze;
+                		
                 		
                 		while(!pm.finPartie() && pm.getNbTours() <= 100) {
                 			
@@ -49,6 +70,7 @@ public class Partie {
                 				es.println("=== DEBUT DU TOUR " + pm.getNbTours() + " ===");
                 				
                 			es.println("C'est au tour de " + joueur.getNom() + " (possède " + joueur.getArgent() + "€)");
+                			fp.afficherMessage("C'est au tour de " + joueur.getNom() + " (possède " + joueur.getArgent() + "€)");
                 			
                 			if(!joueur.getEstBanqueroute()) {
                 				Thread.sleep(VITESSE_PARTIE);
@@ -56,6 +78,8 @@ public class Partie {
                 				lancé = pm.des.lancerDes();
                 				
                 				if(!joueur.getEstPrison()) {
+                					
+                    				fp.afficherDes(pm);
                 					es.println("" + joueur.getNom() + " lance les dés... [" + pm.des.getDe1() + "][" + pm.des.getDe2() + "]... et obtient un " + lancé + " !");
                 					pm.deplacerJoueur(joueur, lancé);
                 					fp.deplacerPion(joueur);
@@ -92,6 +116,7 @@ public class Partie {
                 			while(pausePartie && !PARTIE_AUTO){ Thread.sleep(200); }
                 			
                 			es.println("");
+                			fp.effacerDes();
                 			pm.setJoueurSuivant();
                 			
                 		}
@@ -106,29 +131,33 @@ public class Partie {
                 };
             }
         };
-        
-        /*
-        partieService.stateProperty().addListener(new ChangeListener<Worker.State>() {
-
-            @Override
-            public void changed(ObservableValue<? extends Worker.State> observableValue, Worker.State oldValue, Worker.State newValue) {
-                switch (newValue) {
-                    default: break;
-                }
-            }
-        });
-        */
         partieService.start();
 	}
 	
+	/**
+	 * Renvoie le plateau du Monopoly
+	 * @return pm
+	 */
 	public PlateauMonopoly getPM() {
 		return this.pm;
 	}
 	
+	/**
+	 * Permet de reprendre le cours de la partie
+	 */
 	public void reprendrePartie() {
 		this.pausePartie = false;
 	}
+	public void pausePartie(){
+		this.pausePartie = true;
+	}
+	public boolean getPausePartie(){
+		return this.pausePartie;
+	}
 
+	/**
+	 * Il est là car il le doit c'est tout
+	 */
 	@Override
 	public String toString() {
 		return "Partie [plateauM=" + pm.toString() + "]";

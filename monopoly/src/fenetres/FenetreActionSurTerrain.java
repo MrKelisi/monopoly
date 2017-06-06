@@ -1,5 +1,6 @@
 package fenetres;
 
+import cases.CaseTerrain;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -17,6 +18,14 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
+/**
+ * Fenêtre à afficher lorqu'on clic sur une {@link CaseTerrain}.<br><br>
+	 * ** <b>Liste d'actions réalisable : </b>
+	 * <ul><li>Poser une maison</li>
+	 * <li>Revendre une maison</li>
+	 * <li>Revendre le terrain</li></ul>
+ * @see FenetrePrincipale
+ */
 public class FenetreActionSurTerrain {
 	
 	private FenetrePrincipale fp;
@@ -28,6 +37,11 @@ public class FenetreActionSurTerrain {
 	private Button b_Poser;
 	private Button b_Revendre;
 	
+	/**
+	 * Unique constructeur de la classe {@link FenetreActionSurTerrain}, prenant en paramètre la {@link FenetrePrincipale} fp.
+	 * @param fp FenetrePrincipale
+	 * @see FenetrePrincipale
+	 */
 	public FenetreActionSurTerrain(FenetrePrincipale fp) {
 		
 		this.fp = fp;
@@ -40,6 +54,9 @@ public class FenetreActionSurTerrain {
 		stage.setOnHiding(new EvtQuitter());
 	}
 	
+	/**
+	 * Initialise la HBox root de la FenetreActionSurTerrain avec une image, un label et des boutons. 
+	 */
 	private void initRoot() {
 		root.setPadding(new Insets(10,10,10,10));
 		root.setSpacing(10);
@@ -99,6 +116,10 @@ public class FenetreActionSurTerrain {
 	    });
 	}
 	
+	/**
+	 * Affiche la fenêtre en réinitialisant la HBox root à chaque appel.
+	 * @param pos int
+	 */
 	public void afficherFenetre(int pos) {
 		position = pos;
 		root = new HBox();
@@ -109,17 +130,25 @@ public class FenetreActionSurTerrain {
 		stage.show();
 	}
 	
+	/**
+	 * Renvoie la Stage de la fenêtre.
+	 * @return stage Stage
+	 */
 	public Stage getStage() {
 		return stage;
 	}
 	
+	/**
+	 * Évènement qui pose une maison dans la fenêtre principale et l'ajoute dans la Case.
+	 */
 	private class EvtPoser implements EventHandler<ActionEvent> {
 
 		@Override
 		public void handle(ActionEvent event) {
-			if(fp.getPartie().getPM().getCase(position).getPeutMettreMaison()) {
-				fp.getPartie().getPM().getCase(position).ajouterMaison();
-				fp.setMaison(fp.getPartie().getPM().getCase(position));
+			CaseTerrain c = (CaseTerrain) fp.getPartie().getPM().getCase(position);
+			if(c.getPeutMettreMaison()) {
+				c.ajouterMaison(fp);
+				fp.setMaison(c);
 				stage.close();
 			}
 			else l_TexteErreur.setText("Impossible de placer une maison ici.");
@@ -127,15 +156,33 @@ public class FenetreActionSurTerrain {
 		}
 	}
 	
+	/**
+	 * Évènement qui revend le terrain du joueur.
+	 */
 	private class EvtRevendre implements EventHandler<ActionEvent> {
 
 		@Override
 		public void handle(ActionEvent event) {
-			l_TexteErreur.setText("Pas disponible (pour l'instant ?)");
+			
+			int prixRevente = fp.getPartie().getPM().getCase(position).getPrix() + fp.getPartie().getPM().getCase(position).getNbMaison()*fp.getPartie().getPM().getCase(position).getPrixMaison();
+			fp.afficherMessage(fp.getPartie().getPM().getCase(position).getProprietaire().getNom() + " revend " + fp.getPartie().getPM().getCase(position).getNom() + " pour " + prixRevente + "€");
+			fp.getPartie().getPM().getJoueurActif().getListeTerrains().remove(fp.getPartie().getPM().getCase(position));
+			fp.getPartie().getPM().getCase(position).setProprietaire(null);
+			fp.getPartie().getPM().getCase(position).getMarqueur().setFill(Color.TRANSPARENT);
+			fp.getPartie().getPM().getJoueurActif().getListeCouleur();
+			
+			for(int i=0; i<5; i++) {
+				fp.getPartie().getPM().getCase(position).maisons.get(i).setFill(Color.TRANSPARENT);
+			}
+			fp.getPartie().getPM().getJoueurActif().ajouterArgent(prixRevente);
+			stage.close();
 			event.consume();
 		}
 	}
 	
+	/**
+	 * Évènement qui ferme la fenêtre et rafraichit les labels.
+	 */
 	private class EvtQuitter implements EventHandler<WindowEvent> {
 
 		@Override

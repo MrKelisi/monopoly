@@ -1,12 +1,11 @@
 package io;
 
 import java.io.*;
-import fenetres.FenetrePrincipale;
 
 /**
 *Classe permettant d'utiliser le clavier comme entree.
-<DT>Organisation possible des repertoires :
-<PRE>HOME
+*<DT>Organisation possible des repertoires :
+*<PRE>HOME
   |
   outils
     |
@@ -15,11 +14,11 @@ import fenetres.FenetrePrincipale;
     +--doc--outils--fichiers de documentation  dont <B>Console.html</B>
     |
     +--src--outils--fichiers sources dont <B>Console.java</B>
-</PRE>
+*</PRE>
 *Mettre .../outils/classes dans le CLASSPATH.
 *<DT>sous Unix ou Linux
-<PRE><B>setenv CLASSPATH .:${HOME}/outils/classes</B>
-</PRE>
+*<PRE><B>setenv CLASSPATH .:${HOME}/outils/classes</B>
+*</PRE>
 *<DT>Utilisation habituelle pour saisie au clavier:
 *<PRE>
     Console es = new Console();
@@ -39,11 +38,9 @@ public class Console {
 	new InputStreamReader(System.in));
 
   private boolean ok;
-  private FenetrePrincipale fp;
 
-  public Console(FenetrePrincipale fp) {
+  public Console() {
     fluxEntree = new BufferedReader(new InputStreamReader(System.in));
-    this.fp = fp;
   }
 
   /**
@@ -143,7 +140,6 @@ public class Console {
   */
   public void println(String s){
     System.out.println(s);
-    fp.logMessages(s);
   }
 
   /**
