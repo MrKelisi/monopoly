@@ -115,13 +115,13 @@ public class PlateauMonopoly extends jeudeplateau.Plateau {
 		
 		
 		/* INITIALISATION DES CARTES CHANCES */
-		chance.add(new CartePayerArgent("Amende", "Amende pour excès de vitesse : 15€.", 15));
+		/*chance.add(new CartePayerArgent("Amende", "Amende pour excès de vitesse : 15€.", 15));
 		chance.add(new CartePayerArgent("Président du conseil d'administration", "Vous avez été élu président du conseil d'administration. \nVersez 50€ à chaque joueur.", 50));
 		chance.add(new CartePayerArgent("Lanuel", "Vous avez manqué de respect à M. Lanuel. \nVersez 50€ de dédommagement.", 50));
 		
 		chance.add(new CarteRecevoirArgent("Versement", "La banque vous verse un dividende de 50€.", 50));
 		chance.add(new CarteRecevoirArgent("Gain", "Vos terrains vous rapportent. Touchez 150€.", 150));
-		chance.add(new CarteRecevoirArgent("Mots croisés", "Vous avez gagné le prix de mots-croisés ! \nRecevez 100€.", 100));
+		chance.add(new CarteRecevoirArgent("Mots croisés", "Vous avez gagné le prix de mots-croisés ! \nRecevez 100€.", 100));*/
 		
 		chance.add(new CarteDeplacement("Case Départ", "Avancez jusqu'à la case départ. \n(Recevez 200€)", 0, false));
 		chance.add(new CarteDeplacement("Rue de la Paix", "Rendez-vous Rue de la Paix.", 39, false));
@@ -131,9 +131,9 @@ public class PlateauMonopoly extends jeudeplateau.Plateau {
 		chance.add(new CarteDeplacement("Reculez", "Reculez de 3 cases.", -3, true));
 		chance.add(new CarteDeplacement("Nv Depart", "Le joueur déménage et prend un \nnouveau départ au Technopole.", 0, false));
 
-		chance.add(new CarteDeplacement("Prison", "Allez en prison. \nAvancez tout droit en prison. \nNe passez pas par la case départ, ne recevez pas 200€.", 10, false));
+		/*chance.add(new CarteDeplacement("Prison", "Allez en prison. \nAvancez tout droit en prison. \nNe passez pas par la case départ, ne recevez pas 200€.", 10, false));
 		chance.add(new CarteSortirPrison("Sortie", "Vous êtes libéré de prison. \n(Cette carte doit être conservée)"));
-		
+		*/
 		Collections.shuffle(chance); //Mélange des cartes
 		
 		

@@ -55,6 +55,7 @@ public class CasePrison extends Case {
 				plateau.deplacerJoueur(joueur, lancé);
 				es.println("" + joueur.getNom() + " lance les dés... [" + d1 + "][" + d2 + "]... et obtient un " + lancé + " !");
 				es.println("" + joueur.getNom() + " avance de " + lancé + " cases et atterit sur " + plateau.getCaseActive().getNom());
+				if(fp!= null) actionSortiePrison(plateau, joueur, fp);
 			}
 			else{
 				if(joueur.getToursEnPrison() > 2) {
@@ -65,6 +66,7 @@ public class CasePrison extends Case {
 					plateau.deplacerJoueur(joueur, lancé);
 					es.println("" + joueur.getNom() + " lance les dés... [" + d1 + "][" + d2 + "]... et obtient un " + lancé + " !");
 					es.println("" + joueur.getNom() + " avance de " + lancé + " cases et atterit sur " + plateau.getCaseActive().getNom());
+					if(fp!=null) actionSortiePrison(plateau, joueur, fp);
 				}
 				else{
 					es.println("NON : " + joueur.getNom() + " (tour " + joueur.getToursEnPrison() + ") décide de ne pas payer et lance ses dés...");
@@ -73,6 +75,8 @@ public class CasePrison extends Case {
 						joueur.setEstPrison(false);
 						joueur.setToursEnPrison(1);
 						plateau.deplacerJoueur(joueur, lancé);
+						es.println("" + joueur.getNom() + " avance de " + lancé + " cases et atterit sur " + plateau.getCaseActive().getNom());
+						if(fp!=null) actionSortiePrison(plateau, joueur, fp);
 					}
 					else{
 						es.println("  [" + d1 + "][" + d2 + "] Perdu!");
@@ -107,6 +111,28 @@ public class CasePrison extends Case {
 			fp.getPartie().reprendrePartie();
 	}
 	
+	@SuppressWarnings("static-access")
+	public void actionSortiePrison(PlateauMonopoly plateau, JoueurMonopoly joueur, FenetrePrincipale fp){
+		
+		try {
+			Thread.sleep(800);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		plateau.getCase(joueur.getPosition()).fenetreAction(fp);
+		fp.deplacerPion(joueur);
+		fp.getPartie().pausePartie();
+		while(fp.getPartie().getPausePartie() && !fp.getPartie().PARTIE_AUTO){ try {
+			Thread.sleep(200);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} }
+		
+		plateau.getCase(joueur.getPosition()).actionCase(joueur, plateau, fp);
+	}
 	
 	public static void main(String[] args){
 		
@@ -116,6 +142,7 @@ public class CasePrison extends Case {
 		
 		CasePrison c = (CasePrison) p.getCase(10);
 		
+		j.setPosition(10);
 		j.setEstPrison(true);
 		System.out.println("Joueur en prison mais ne veut pas sortir : " + j.toString()+"\n");
 		System.out.println(c.toString()+"\n");

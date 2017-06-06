@@ -38,6 +38,7 @@ public class CarteDeplacement extends Carte {
 	 * @param plateau PlateauMonopoly
 	 * @param fp FenetrePrincipale
 	 */
+	@SuppressWarnings("static-access")
 	@Override
 	public void actionCarte(JoueurMonopoly joueur, PlateauMonopoly plateau, FenetrePrincipale fp) {
 		
@@ -74,7 +75,25 @@ public class CarteDeplacement extends Carte {
 			es.println(" > "+joueur.getNom()+" atterit sur "+plateau.getCaseActive().getNom());
 			if(fp != null)
 				fp.afficherMessage(joueur.getNom()+" atterit sur "+plateau.getCaseActive().getNom());
+			
+			try {
+				Thread.sleep(800);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			plateau.getCase(joueur.getPosition()).fenetreAction(fp);
+			fp.deplacerPion(joueur);
+			fp.getPartie().pausePartie();
+			while(fp.getPartie().getPausePartie() && !fp.getPartie().PARTIE_AUTO){ try {
+				Thread.sleep(200);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} }
+			plateau.getCase(joueur.getPosition()).actionCase(joueur, plateau, fp);
 		}
+		
 	}
 	@Override
 	public String toString() {

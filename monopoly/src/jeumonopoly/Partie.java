@@ -148,6 +148,12 @@ public class Partie {
 	public void reprendrePartie() {
 		this.pausePartie = false;
 	}
+	public void pausePartie(){
+		this.pausePartie = true;
+	}
+	public boolean getPausePartie(){
+		return this.pausePartie;
+	}
 
 	/**
 	 * Il est là car il le doit c'est tout

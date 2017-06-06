@@ -39,12 +39,21 @@ public class CaseChance extends Case {
 		es.println(" > " + fp.getPartie().getPM().getJoueurActif().getNom() + " tire la carte "+carte.getNom());
 		fp.afficherMessage(fp.getPartie().getPM().getJoueurActif().getNom() + " tire la carte "+carte.getNom());
 		
-		carte.actionCarte(fp.getPartie().getPM().getJoueurActif(), fp.getPartie().getPM(), fp);
-		
 		if(fp.getPartie().PARTIE_AUTO)
 			fp.getPartie().reprendrePartie();
 		else
 			fp.afficherFenetreCarteChance(carte.getNom(), carte.getDesc());
+		
+		fp.getPartie().pausePartie();
+		while(fp.getPartie().getPausePartie() && !fp.getPartie().PARTIE_AUTO){ 
+			try {
+			Thread.sleep(200);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} }
+		
+		carte.actionCarte(fp.getPartie().getPM().getJoueurActif(), fp.getPartie().getPM(), fp);
 	}
 
 	
