@@ -1,5 +1,7 @@
 package jeumonopoly;
 
+import java.util.ArrayList;
+
 import fenetres.FenetrePrincipale;
 import io.Console;
 import jeudeplateau.Case;
@@ -34,9 +36,13 @@ public class Partie {
 	 * @param nombreDeJoueurs int
 	 * @param fp FenetrePrincipale
 	 */
-	public Partie(int nombreDeJoueurs, FenetrePrincipale fp) {
+	public Partie(int nombreDeJoueurs, ArrayList<String> nomsDesJoueurs, FenetrePrincipale fp) {
 		this.pm = new PlateauMonopoly(nombreDeJoueurs);
 		this.fp = fp;
+		
+		for(int i=0; i<nombreDeJoueurs; i++) {
+			pm.getJoueur(i).setNom(nomsDesJoueurs.get(i));
+		}
 	}
 	
 	/**

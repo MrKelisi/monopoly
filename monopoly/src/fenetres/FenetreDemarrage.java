@@ -1,6 +1,6 @@
 package fenetres;
 
-import javafx.collections.FXCollections;
+import java.util.ArrayList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -8,8 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -25,7 +24,7 @@ public class FenetreDemarrage {
 	private Stage stage;
 	private VBox root;
 	private Label l_NbJoueurs;
-	private ListView<String> l_Nombre;
+	private ArrayList<TextField> listeJoueurs = new ArrayList<TextField>();
 	private Button b_Valider;
 	private int choix = 0;
 	
@@ -46,7 +45,7 @@ public class FenetreDemarrage {
 		root = new VBox();
 		initRoot();
 		
-		Scene scene = new Scene(root,300,160);
+		Scene scene = new Scene(root,300,190);
 		stage.setScene(scene);
 		
 		stage.setOnHiding(new EvtQuitter());
@@ -59,23 +58,19 @@ public class FenetreDemarrage {
 		root.setPadding(new Insets(10,10,10,10));
 		root.setSpacing(5);
 		
-		l_NbJoueurs = new Label("Nombre de joueurs :");
+		l_NbJoueurs = new Label("Noms des joueurs (2 minimum) :");
 		root.getChildren().add(l_NbJoueurs);
 		
-		l_Nombre = new ListView<String>();
-		l_Nombre.setItems(FXCollections.observableArrayList("2", "3", "4"));
-		l_Nombre.getSelectionModel().select(0);
-		root.getChildren().add(l_Nombre);
+		for(int i=0; i<4; i++) {
+			listeJoueurs.add(new TextField(i<2?"Joueur"+(i+1):""));
+			listeJoueurs.get(i).setPromptText("Nom du joueur "+(i+1));
+			root.getChildren().add(listeJoueurs.get(i));
+		}
 		
 		b_Valider = new Button("Valider");
 		b_Valider.setOnAction(new EvtValider());
+		b_Valider.setDefaultButton(true);
 		root.getChildren().add(b_Valider);
-		
-		l_Nombre.addEventHandler(KeyEvent.KEY_PRESSED, ev -> {
-	        if (ev.getCode() == KeyCode.ENTER) {
-	        	b_Valider.fire();
-	        }
-	    });
 	}
 	
 	/**
@@ -94,10 +89,17 @@ public class FenetreDemarrage {
 
 		@Override
 		public void handle(ActionEvent event) {
-			choix = Integer.parseInt(l_Nombre.getFocusModel().getFocusedItem());
-			fp.setPartie(choix);
-			fp.getStage().show();
-			stage.close();
+			ArrayList<String> champs = new ArrayList<String>();
+			for(int i=0; i<4; i++) {
+				if(listeJoueurs.get(i).getText() != null && !listeJoueurs.get(i).getText().isEmpty())
+					champs.add(listeJoueurs.get(i).getText());
+			}
+			if(champs.size()>=2) {
+				choix = 1;
+				fp.setPartie(champs.size(), champs);
+				fp.getStage().show();
+				stage.close();
+			}
 			event.consume();
 		}
 	}

@@ -153,9 +153,9 @@ public class FenetrePrincipale {
 	 * la liste de leurs terrains et les pions.
 	 * @param nbJoueurs int
 	 */
-	public void setPartie(int nbJoueurs) {
+	public void setPartie(int nbJoueurs, ArrayList<String> nomsDesJoueurs) {
 		
-		partie = new Partie(nbJoueurs, this);
+		partie = new Partie(nbJoueurs, nomsDesJoueurs, this);
 		
 		for(int i=0; i<nbJoueurs; i++) {
 			Label l_nomJoueur = new Label(partie.getPM().getJoueur(i).getNom());
