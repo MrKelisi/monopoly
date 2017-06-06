@@ -67,7 +67,7 @@ public class CaseGare extends Case {
 			setProprietaire(joueur);
 			joueur.ajouterTerrain(this);
 			joueur.retirerArgent(this.getPrix());
-			joueur.setNbServices(joueur.getNbGares() + 1);
+			joueur.setNbGares(joueur.getNbGares() + 1);
 			
 			System.out.println(" > " + joueur.getNom() + " achète " + this.getNom() + " pour " + this.getPrix() + "€");
 			if(fp!=null) fp.afficherMessage(joueur.getNom() + " achète " + this.getNom() + " pour " + this.getPrix() + "€");
@@ -167,6 +167,37 @@ public class CaseGare extends Case {
 	@Override
 	public String toString() {
 		return "CaseGare [" + super.toString() + ", proprietaire=" + (proprietaire==null?"null":proprietaire.getNom()) + "]";
+	}
+	
+	public static void main(String[] args) {
+		
+		Console es = new Console();
+		es.println("TEST DE LA CLASSE : CaseGare");
+
+		JoueurMonopoly j1 = new JoueurMonopoly("Yann", 0, 1000);
+		JoueurMonopoly j2 = new JoueurMonopoly("Benoit", 1, 1000);
+		PlateauMonopoly pm = new PlateauMonopoly(2);
+		es.println(j1.toString());
+		es.println(j2.toString()+"\n");
+		
+		CaseGare c = (CaseGare) pm.getCase(5);
+		c.acheterTerrain(j1, null);
+
+		es.println("== Nombres de gares de " + j1.getNom() + " : " + j1.getNbGares());
+		
+		c.payerLoyer(j2, null);
+		es.println("");
+		
+		c = (CaseGare) pm.getCase(15);
+		c.acheterTerrain(j1, null);
+		c = (CaseGare) pm.getCase(25);
+		c.acheterTerrain(j1, null);
+		es.println("== Nombres de gares de " + j1.getNom() + " : " + j1.getNbGares());
+
+		c.payerLoyer(j2, null);
+		
+		es.println("\n" + j1.toString());
+		es.println(j2.toString());
 	}
 
 }

@@ -48,7 +48,7 @@ public class CaseServicePublic extends Case {
 		}
 		
 		else if(this.getProprietaire() != joueur)
-			payerLoyer(joueur, fp);
+			payerLoyer(joueur, plateau, fp);
 			
 		else {
 			es.println(" > " + joueur.getNom() + " possède la compagnie.");
@@ -74,21 +74,21 @@ public class CaseServicePublic extends Case {
 		}
 	}
 	
-	public void payerLoyer(JoueurMonopoly joueur, FenetrePrincipale fp) {
+	public void payerLoyer(JoueurMonopoly joueur, PlateauMonopoly pm, FenetrePrincipale fp) {
 		String beneficiaire = "la Banque";
 		
 		if(!this.getProprietaire().getEstPrison()) {
 			
-			int loyer = fp.getPartie().getPM().des.lancerDes();
+			int loyer = pm.des.lancerDes();
 			if(fp!=null) {
 				fp.effacerDes();
-				fp.afficherDes(fp.getPartie().getPM());
+				fp.afficherDes(pm);
 			}
 			
 			if(this.getProprietaire().getNbServices() == 2) loyer*=10;
 			else loyer*=4;
 			
-			System.out.println(" > " + joueur.getNom() + " lance les dés... [" + fp.getPartie().getPM().des.getDe1() + "][" + fp.getPartie().getPM().des.getDe2() + "]... et obtient un " + fp.getPartie().getPM().des.getDes());
+			System.out.println(" > " + joueur.getNom() + " lance les dés... [" + pm.des.getDe1() + "][" + pm.des.getDe2() + "]... et obtient un " + pm.des.getDes());
 			joueur.retirerArgent(loyer);
 			
 			if(!this.getProprietaire().getEstBanqueroute()) {
@@ -180,7 +180,29 @@ public class CaseServicePublic extends Case {
 	
 	public static void main(String[] args) {
 		
-		System.out.println("TEST DE LA CLASSE : CaseServicePublic");
+		Console es = new Console();
+		es.println("TEST DE LA CLASSE : CaseServicePublic");
+		
+		JoueurMonopoly j1 = new JoueurMonopoly("Yann", 0, 1000);
+		JoueurMonopoly j2 = new JoueurMonopoly("Benoit", 1, 1000);
+		PlateauMonopoly pm = new PlateauMonopoly(2);
+		es.println(j1.toString()+"\n");
+		
+		CaseServicePublic c = (CaseServicePublic) pm.getCase(12);
+		c.acheterTerrain(j1, null);
+
+		es.println("== Nombres de SP de " + j1.getNom() + " : " + j1.getNbServices());
+		
+		c.payerLoyer(j2, pm, null);
+		es.println("");
+		
+		c = (CaseServicePublic) pm.getCase(28);
+		c.acheterTerrain(j1, null);
+		es.println("== Nombres de SP de " + j1.getNom() + " : " + j1.getNbServices());
+
+		c.payerLoyer(j2, pm, null);
+
+		es.println("\n" + j1.toString());
 	}
 
 }

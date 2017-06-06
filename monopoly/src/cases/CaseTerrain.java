@@ -127,8 +127,8 @@ public class CaseTerrain extends Case {
 		nbMaison++;
 		proprietaire.retirerArgent(this.getPrixMaison());
 		
-		System.out.println("Vous avez posé une maison sur "+getNom()+" !");
-		if(fp!=null) fp.afficherMessage("Vous avez posé une maison sur "+getNom()+" !");
+		System.out.println(" > " + proprietaire.getNom() + " a posé une maison sur "+getNom()+" !");
+		if(fp!=null) fp.afficherMessage(" > " + proprietaire.getNom() + " a posé une maison sur "+getNom()+" !");
 	}
 	
 	/**
@@ -236,26 +236,33 @@ public class CaseTerrain extends Case {
 		
 		Console es = new Console();
 		
-		es.println("TEST DE LA CLASSE : CaseTerrain");
+		es.println("TEST DE LA CLASSE : CaseTerrain\n");
 		
 		CaseTerrain c = new CaseTerrain("Avenue de la République", 120, new ArrayList<Integer>(Arrays.asList(8, 40, 100, 300, 450, 600)), 50, 0, "turquoise");
-		es.println(c.toString() + "\n");
-		
 		JoueurMonopoly j1 = new JoueurMonopoly("Yann", 0, 1000);
 		JoueurMonopoly j2 = new JoueurMonopoly("Benoit", 1, 1000);
 		
+		es.println(c.toString() + "\n");
+		es.println(j1.toString() + "\n");
+		es.println(j2.toString() + "\n");
+		
 		c.acheterTerrain(j1, null);
 		
-		es.println("Propriétaire : "+ c.getProprietaire().getNom() + "\n");
-		
-		c.ajouterMaison(null);
-		es.println("Nombre de maisons : "+ c.getNbMaison());
-		c.ajouterMaison(null);
-		es.println("Nombre de maisons : "+ c.getNbMaison() + "\n");
+		es.println("== Propriétaire de " + c.getNom() + " : "+ c.getProprietaire().getNom());
+		es.println("== Nombre de maisons : "+ c.getNbMaison() + "");
 		
 		c.payerLoyer(j2, null);
 		
-		es.println(j1.toString()+"\n");
+		es.println("");
+		c.ajouterMaison(null);
+		c.ajouterMaison(null);
+		c.ajouterMaison(null);
+		es.println("== Nombre de maisons : "+ c.getNbMaison() + "");
+		
+		c.payerLoyer(j2, null);
+		
+		es.println("\n" + c.toString() + "\n");
+		es.println(j1.toString() + "\n");
 		es.println(j2.toString());
 		
 	}
