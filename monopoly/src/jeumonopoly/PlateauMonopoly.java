@@ -32,10 +32,10 @@ public class PlateauMonopoly extends jeudeplateau.Plateau {
 	 * @see Carte
 	 */
 	private ArrayList<Carte> chance = new ArrayList<Carte>();
-	private ArrayList<Carte> communauté = new ArrayList<Carte>();
+	private ArrayList<Carte> communautÃ© = new ArrayList<Carte>();
 	
 	/**
-	 * Crée un plateau avec un nombre de joueur
+	 * CrÃ©e un plateau avec un nombre de joueur
 	 * @param nombreDeJoueurs
 	 * @see jeudeplateau.Plateau
 	 * @see CaseDepart
@@ -59,7 +59,7 @@ public class PlateauMonopoly extends jeudeplateau.Plateau {
 		
 		/* INITIALISATION DES JOUEURS */
 		for(int i = 0; i < this.getNbJoueurs(); i++) {
-			this.joueurs.add(new JoueurMonopoly("Joueur"+(i+1), i, 1000));
+			this.joueurs.add(new JoueurMonopoly("Victorien "+(i+1), i, 1000));
 		}
 		
 		/* INITIALISATION DES CASES*/
@@ -69,7 +69,7 @@ public class PlateauMonopoly extends jeudeplateau.Plateau {
 		setCase(5, new CaseGare("Gare Montparnasse"));
 		setCase(7, new CaseChance());
 		setCase(10, new CasePrison());
-		setCase(12, new CaseServicePublic("Compagnie d'électricité"));
+		setCase(12, new CaseServicePublic("Compagnie d'Ã©lectricitÃ©"));
 		setCase(15, new CaseGare("Gare de Lyon"));
 		setCase(17, new CaseCommunaute());
 		setCase(20, new CaseParcGratuit());
@@ -88,7 +88,7 @@ public class PlateauMonopoly extends jeudeplateau.Plateau {
 		
 		setCase(6, new CaseTerrain("Rue de Vaugirard", 100, new ArrayList<Integer>(Arrays.asList(6, 30, 90, 270, 400, 550)), 50, 0, "turquoise"));
 		setCase(8, new CaseTerrain("Rue de Courcelles", 100, new ArrayList<Integer>(Arrays.asList(6, 30, 90, 270, 400, 550)), 50, 0, "turquoise"));
-		setCase(9, new CaseTerrain("Avenue de la République", 120, new ArrayList<Integer>(Arrays.asList(8, 40, 100, 300, 450, 600)), 50, 0, "turquoise"));
+		setCase(9, new CaseTerrain("Avenue de la RÃ©publique", 120, new ArrayList<Integer>(Arrays.asList(8, 40, 100, 300, 450, 600)), 50, 0, "turquoise"));
 		
 		setCase(11, new CaseTerrain("Boulevard la Villette", 140, new ArrayList<Integer>(Arrays.asList(10, 50, 150, 450, 625, 750)), 100, 0, "mauve"));
 		setCase(13, new CaseTerrain("Avenue de Neuilly", 140, new ArrayList<Integer>(Arrays.asList(10, 50, 150, 450, 625, 750)), 100, 0, "mauve"));
@@ -102,7 +102,7 @@ public class PlateauMonopoly extends jeudeplateau.Plateau {
 		setCase(23, new CaseTerrain("Boulevard Malesherbes", 220, new ArrayList<Integer>(Arrays.asList(18, 90, 250, 700, 875, 1050)), 150, 0, "rouge"));
 		setCase(24, new CaseTerrain("Avenue Henri-Martin", 240, new ArrayList<Integer>(Arrays.asList(20, 100, 300, 750, 925, 1100)), 150, 0, "rouge"));
 		
-		setCase(26, new CaseTerrain("Faubourg Saint-Honoré", 260, new ArrayList<Integer>(Arrays.asList(22, 110, 330, 800, 975, 1150)), 150, 0, "jaune"));
+		setCase(26, new CaseTerrain("Faubourg Saint-HonorÃ©", 260, new ArrayList<Integer>(Arrays.asList(22, 110, 330, 800, 975, 1150)), 150, 0, "jaune"));
 		setCase(27, new CaseTerrain("Place de la Bourse", 260, new ArrayList<Integer>(Arrays.asList(22, 110, 330, 800, 975, 1150)), 150, 0, "jaune"));
 		setCase(29, new CaseTerrain("Rue La Fayette", 280, new ArrayList<Integer>(Arrays.asList(24, 120, 360, 850, 1025, 1200)), 150, 0, "jaune"));
 		
@@ -110,58 +110,58 @@ public class PlateauMonopoly extends jeudeplateau.Plateau {
 		setCase(32, new CaseTerrain("Avenue Foch", 300, new ArrayList<Integer>(Arrays.asList(26, 130, 390, 900, 1100, 1275)), 200, 0, "vert"));
 		setCase(34, new CaseTerrain("Boulevard des Capucines", 320, new ArrayList<Integer>(Arrays.asList(28, 150, 450, 1000, 1200, 1400)), 200, 0, "vert"));
 		
-		setCase(37, new CaseTerrain("Avenue des Champs-Élysées", 350, new ArrayList<Integer>(Arrays.asList(35, 175, 500, 1100, 1300, 1500)), 200, 0, "bleu"));
+		setCase(37, new CaseTerrain("Avenue des Champs-Ã‰lysÃ©es", 350, new ArrayList<Integer>(Arrays.asList(35, 175, 500, 1100, 1300, 1500)), 200, 0, "bleu"));
 		setCase(39, new CaseTerrain("Rue de la Paix", 400, new ArrayList<Integer>(Arrays.asList(50, 200, 600, 1400, 1700, 2000)), 200, 0, "bleu"));
 		
 		
 		/* INITIALISATION DES CARTES CHANCES */
-		/*chance.add(new CartePayerArgent("Amende", "Amende pour excès de vitesse : 15€.", 15));
-		chance.add(new CartePayerArgent("Président du conseil d'administration", "Vous avez été élu président du conseil d'administration. \nVersez 50€ à chaque joueur.", 50));
-		chance.add(new CartePayerArgent("Lanuel", "Vous avez manqué de respect à M. Lanuel. \nVersez 50€ de dédommagement.", 50));
+		/*chance.add(new CartePayerArgent("Amende", "Amende pour excÃ¨s de vitesse : 15â‚¬.", 15));
+		chance.add(new CartePayerArgent("PrÃ©sident du conseil d'administration", "Vous avez Ã©tÃ© Ã©lu prÃ©sident du conseil d'administration. \nVersez 50â‚¬ Ã  chaque joueur.", 50));
+		chance.add(new CartePayerArgent("Lanuel", "Vous avez manquÃ© de respect Ã  M. Lanuel. \nVersez 50â‚¬ de dÃ©dommagement.", 50));
 		
-		chance.add(new CarteRecevoirArgent("Versement", "La banque vous verse un dividende de 50€.", 50));
-		chance.add(new CarteRecevoirArgent("Gain", "Vos terrains vous rapportent. Touchez 150€.", 150));
-		chance.add(new CarteRecevoirArgent("Mots croisés", "Vous avez gagné le prix de mots-croisés ! \nRecevez 100€.", 100));*/
+		chance.add(new CarteRecevoirArgent("Versement", "La banque vous verse un dividende de 50â‚¬.", 50));
+		chance.add(new CarteRecevoirArgent("Gain", "Vos terrains vous rapportent. Touchez 150â‚¬.", 150));
+		chance.add(new CarteRecevoirArgent("Mots croisÃ©s", "Vous avez gagnÃ© le prix de mots-croisÃ©s ! \nRecevez 100â‚¬.", 100));*/
 		
-		chance.add(new CarteDeplacement("Case Départ", "Avancez jusqu'à la case départ. \n(Recevez 200€)", 0, false));
+		chance.add(new CarteDeplacement("Case DÃ©part", "Avancez jusqu'Ã  la case dÃ©part. \n(Recevez 200â‚¬)", 0, false));
 		chance.add(new CarteDeplacement("Rue de la Paix", "Rendez-vous Rue de la Paix.", 39, false));
-		chance.add(new CarteDeplacement("Henri-Martin", "Rendez-vous à l'Avenue Henri-Martin. \nSi vous passez par la case départ, recevez 200€.", 24, false));
-		chance.add(new CarteDeplacement("Boulevard de la Villette", "Avancez au Boulevard de la Vilette. \nSi vous passez par la case départ, recevez 200€.", 11, false));
-		chance.add(new CarteDeplacement("Gare de Lyon", "Avancez à la gare de Lyon. \nSi vous passez par la case départ, recevez 200€.", 15, false));
+		chance.add(new CarteDeplacement("Henri-Martin", "Rendez-vous Ã  l'Avenue Henri-Martin. \nSi vous passez par la case dÃ©part, recevez 200â‚¬.", 24, false));
+		chance.add(new CarteDeplacement("Boulevard de la Villette", "Avancez au Boulevard de la Vilette. \nSi vous passez par la case dÃ©part, recevez 200â‚¬.", 11, false));
+		chance.add(new CarteDeplacement("Gare de Lyon", "Avancez Ã  la gare de Lyon. \nSi vous passez par la case dÃ©part, recevez 200â‚¬.", 15, false));
 		chance.add(new CarteDeplacement("Reculez", "Reculez de 3 cases.", -3, true));
-		chance.add(new CarteDeplacement("Nv Depart", "Le joueur déménage et prend un \nnouveau départ au Technopole.", 0, false));
+		chance.add(new CarteDeplacement("Nv Depart", "Le joueur dÃ©mÃ©nage et prend un \nnouveau dÃ©part au Technopole.", 0, false));
 
-		/*chance.add(new CarteDeplacement("Prison", "Allez en prison. \nAvancez tout droit en prison. \nNe passez pas par la case départ, ne recevez pas 200€.", 10, false));
-		chance.add(new CarteSortirPrison("Sortie", "Vous êtes libéré de prison. \n(Cette carte doit être conservée)"));
+		/*chance.add(new CarteDeplacement("Prison", "Allez en prison. \nAvancez tout droit en prison. \nNe passez pas par la case dÃ©part, ne recevez pas 200â‚¬.", 10, false));
+		chance.add(new CarteSortirPrison("Sortie", "Vous Ãªtes libÃ©rÃ© de prison. \n(Cette carte doit Ãªtre conservÃ©e)"));
 		*/
-		Collections.shuffle(chance); //Mélange des cartes
+		Collections.shuffle(chance); //MÃ©lange des cartes
 		
 		
-		/* INITIALISATION DES CARTES COMMUNAUTÉS */
-		communauté.add(new CartePayerArgent("Frais de scolarité", "Payez 150€ de frais de scolarité.", 150));
-		communauté.add(new CartePayerArgent("Frais d'hospitalisation", "Payez 100€ de frais d'hospitalisation.", 100));
-		communauté.add(new CartePayerArgent("Médecin", "Visite chez le médecin : payez 50€.", 50));
+		/* INITIALISATION DES CARTES COMMUNAUTÃ‰S */
+		communautÃ©.add(new CartePayerArgent("Frais de scolaritÃ©", "Payez 150â‚¬ de frais de scolaritÃ©.", 150));
+		communautÃ©.add(new CartePayerArgent("Frais d'hospitalisation", "Payez 100â‚¬ de frais d'hospitalisation.", 100));
+		communautÃ©.add(new CartePayerArgent("MÃ©decin", "Visite chez le mÃ©decin : payez 50â‚¬.", 50));
 		
-		communauté.add(new CarteRecevoirArgent("Remboursement", "Les impôts vous remboursent 20€.", 20));
-		communauté.add(new CarteRecevoirArgent("Assurance vie", "Votre assurance vie vous rapporte 100€.", 100));
-		communauté.add(new CarteRecevoirArgent("Anniversaire", "C'est votre anniversaire ! \nChaque joueur doit vous donner 10€.", 10));
-		communauté.add(new CarteRecevoirArgent("Commission d'expert", "Commission d'expert immobilier. \nRecevez 25€.", 25));
-		communauté.add(new CarteRecevoirArgent("Prix de beauté", "Vous avez gagné le deuxième prix de beauté. \nRecevez 10€.", 10));
-		communauté.add(new CarteRecevoirArgent("Stock", "La vente de votre stock vous rapporte 50€.", 50));
-		communauté.add(new CarteRecevoirArgent("Héritage", "Vous héritez de 100€.", 100));
-		communauté.add(new CarteRecevoirArgent("Placement", "Votre placement vous rapporte. \nRecevez 100€.", 100));
-		communauté.add(new CarteRecevoirArgent("Erreur de la Banque", "Erreur de la Banque en votre faveur. \nRecevez 200€.", 200));
+		communautÃ©.add(new CarteRecevoirArgent("Remboursement", "Les impÃ´ts vous remboursent 20â‚¬.", 20));
+		communautÃ©.add(new CarteRecevoirArgent("Assurance vie", "Votre assurance vie vous rapporte 100â‚¬.", 100));
+		communautÃ©.add(new CarteRecevoirArgent("Anniversaire", "C'est votre anniversaire ! \nChaque joueur doit vous donner 10â‚¬.", 10));
+		communautÃ©.add(new CarteRecevoirArgent("Commission d'expert", "Commission d'expert immobilier. \nRecevez 25â‚¬.", 25));
+		communautÃ©.add(new CarteRecevoirArgent("Prix de beautÃ©", "Vous avez gagnÃ© le deuxiÃ¨me prix de beautÃ©. \nRecevez 10â‚¬.", 10));
+		communautÃ©.add(new CarteRecevoirArgent("Stock", "La vente de votre stock vous rapporte 50â‚¬.", 50));
+		communautÃ©.add(new CarteRecevoirArgent("HÃ©ritage", "Vous hÃ©ritez de 100â‚¬.", 100));
+		communautÃ©.add(new CarteRecevoirArgent("Placement", "Votre placement vous rapporte. \nRecevez 100â‚¬.", 100));
+		communautÃ©.add(new CarteRecevoirArgent("Erreur de la Banque", "Erreur de la Banque en votre faveur. \nRecevez 200â‚¬.", 200));
 		
-		communauté.add(new CarteDeplacement("Prison", "Allez en prison. \nAvancez tout droit en prison. \nNe passez pas par la case départ, ne recevez pas 200€.", 10, false));
-		communauté.add(new CarteSortirPrison("Sortie", "Vous êtes libéré de prison. \n(Cette carte doit être conservée)"));
+		communautÃ©.add(new CarteDeplacement("Prison", "Allez en prison. \nAvancez tout droit en prison. \nNe passez pas par la case dÃ©part, ne recevez pas 200â‚¬.", 10, false));
+		communautÃ©.add(new CarteSortirPrison("Sortie", "Vous Ãªtes libÃ©rÃ© de prison. \n(Cette carte doit Ãªtre conservÃ©e)"));
 		
-		Collections.shuffle(communauté); //Mélange des cartes
+		Collections.shuffle(communautÃ©); //MÃ©lange des cartes
 	}
 	
 	/* PARTIE JOUEUR */
 	
 	/**
-	 * Permet de déplacer un joueur d'un certain nombre de cases
+	 * Permet de dÃ©placer un joueur d'un certain nombre de cases
 	 * @param joueur
 	 * @param nombreDeCases
 	 * @see Joueur
@@ -173,7 +173,7 @@ public class PlateauMonopoly extends jeudeplateau.Plateau {
 		
 		if((joueur.getPosition() + nombreDeCases) >= getNbCases()) {
 			pos = (joueur.getPosition() + nombreDeCases) % getNbCases();
-			System.out.println(" > " + joueur.getNom() + " passe par la case départ et gagne 200€ !");
+			System.out.println(" > " + joueur.getNom() + " passe par la case dÃ©part et gagne 200â‚¬ !");
 			joueur.ajouterArgent(200);
 		}
 		else
@@ -218,7 +218,7 @@ public class PlateauMonopoly extends jeudeplateau.Plateau {
 	/* PARTIE CASE */
 	
 	/**
-	 * Renvoie la case où est le joueur actif
+	 * Renvoie la case oÃ¹ est le joueur actif
 	 * @return Case
 	 */
 	public Case getCaseActive() {
@@ -228,7 +228,7 @@ public class PlateauMonopoly extends jeudeplateau.Plateau {
 	/* PARTIE JEU */
 	
 	/**
-	 * Met fin à la partie
+	 * Met fin Ã  la partie
 	 * return boolean
 	 */
 	@Override
@@ -255,19 +255,19 @@ public class PlateauMonopoly extends jeudeplateau.Plateau {
 	}
 	
 	/**
-	 * Renvoie la liste des cartes communautés 
+	 * Renvoie la liste des cartes communautÃ©s 
 	 * @return c
 	 * @see Carte
 	 */
-	public Carte tirerCarteCommunauté() {
-		Carte c = communauté.remove(0);
+	public Carte tirerCarteCommunautÃ©() {
+		Carte c = communautÃ©.remove(0);
 		if(!c.getNom().equals("Sortie"))
-			communauté.add(c);
+			communautÃ©.add(c);
 		return c;
 	}
 	
 	/**
-	 * Permet l'ajout de la carte Sortie Prison lorsqu'un joueur qui la possède l'utilise
+	 * Permet l'ajout de la carte Sortie Prison lorsqu'un joueur qui la possÃ¨de l'utilise
 	 * @see Carte
 	 */
 	public void remettreCarteSortiePrisonDansPaquet() {
@@ -275,13 +275,13 @@ public class PlateauMonopoly extends jeudeplateau.Plateau {
 		boolean carteDansPaquetChance = false;
 		for(Carte c:chance) {
 			if(c.getNom().equals("Sortie"))
-				carteDansPaquetChance = true;  // TRÈS TRÈS MOCHE, OUI
+				carteDansPaquetChance = true;  // TRÃˆS TRÃˆS MOCHE, OUI
 		}
 		
 		if(carteDansPaquetChance)
-			chance.add(new CarteSortirPrison("Sortie", "Vous êtes libéré de prison. \n(Cette carte doit être conservée)"));
+			chance.add(new CarteSortirPrison("Sortie", "Vous Ãªtes libÃ©rÃ© de prison. \n(Cette carte doit Ãªtre conservÃ©e)"));
 		else
-			communauté.add(new CarteSortirPrison("Sortie", "Vous êtes libéré de prison. \n(Cette carte doit être conservée)"));
+			communautÃ©.add(new CarteSortirPrison("Sortie", "Vous Ãªtes libÃ©rÃ© de prison. \n(Cette carte doit Ãªtre conservÃ©e)"));
 	}
 
 	
